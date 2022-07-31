@@ -1,5 +1,6 @@
 import {
   ASTEROIDS,
+  COLONISERS,
   HABITATS,
   MOTHER_SHIPS,
 } from '../../../common/constants/sprites';
@@ -8,13 +9,16 @@ import { AutomatonFactory } from '../../../common/models/AutomatonFactory';
 export class ColoniserService {
   static generateHabitat(asteroids = 2, alphabet = [0, 1], planets = 1) {
     const entityCount = asteroids + planets;
-    const dfa = AutomatonFactory.generateDFA(
+    const automaton = AutomatonFactory.generateDFA(
       entityCount,
       alphabet,
       planets,
-    ).parse();
+    );
+
+    const dfa = automaton.parse();
 
     return {
+      automaton,
       nodes: dfa.nodes.map((node) => {
         // If there is no planet then it means the ship must return to the mothership at the end of its mission
         const image = new Image();
@@ -63,5 +67,25 @@ export class ColoniserService {
     };
   }
 
-  static generateColoniser() {}
+  static generateColonisers(habitat, length = 4, count = 1) {
+    const colonisers = habitat.generateRandomAcceptedInputs(length, count);
+    return colonisers.map((coloniser) => {
+      let id = coloniser.join('');
+
+      if (id === '') {
+        id = 'e';
+      }
+
+      return {
+        id,
+        x: 0,
+        y: 0,
+        sprite: COLONISERS[Math.floor(Math.random() * COLONISERS.length)],
+      };
+    });
+  }
+
+  static validateJourney(habitat, coloniser) {
+    return habitat.automaton.isInputAccepted(coloniser.id);
+  }
 }

@@ -1,16 +1,14 @@
 import React from 'react';
+import { ICONS } from '../common/constants/icons';
 import { DefeatScreen } from '../components/DefeatScreen';
-import { useToggle } from '../hooks/useToggle';
 import { PauseScreen } from '../components/PauseScreen';
 export const GameScene = (props) => {
-  const [pause, togglePause] = useToggle();
-
   return (
     <div className='flex flex-col h-screen box-border'>
-      {props.defeat ? (
+      {props.gameOver ? (
         <DefeatScreen />
-      ) : pause ? (
-        <PauseScreen onResume={togglePause} />
+      ) : props.isPaused ? (
+        <PauseScreen onResume={props.onResume} />
       ) : (
         <>
           <div className='flex flex-row p-4'>
@@ -19,7 +17,13 @@ export const GameScene = (props) => {
               <p className='text-xl text-white'>{props.score}</p>
             </div>
 
-            <div className='flex flex-col ml-auto' onClick={togglePause}></div>
+            <div
+              className='flex flex-col ml-auto justify-center'
+              onClick={props.pause}
+            >
+              <img src={ICONS.Pause} alt='Pause' />
+              <p className='text-xl text-white'>{props.countdown}</p>
+            </div>
 
             <div className='flex flex-col ml-auto'>
               <p className='text-xl text-white'>Next:</p>

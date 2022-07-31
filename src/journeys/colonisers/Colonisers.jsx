@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
-import { useRef } from 'react';
-import { useEffect } from 'react';
-import { COLONISERS } from '../../common/constants/sprites';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
+import {
+  elementsOverlap,
+  getVerticalGap,
+} from '../../common/helpers/collision';
+import { useCountdown } from '../../hooks/useCountdown';
+import { useInterval } from '../../hooks/useInterval';
 import { GameScene } from '../../scenes/GameScene';
 import { ColoniserService } from './services/coloniser-service';
-import { useCallback } from 'react';
 
 export const Colonisers = () => {
+  // TODO: Move this state into context
   const [gameState, setGameState] = React.useState({
     gameOver: false,
     score: 0,
-    speed: 1,
+    speed: 0,
+    intervalRate: 100,
+    countdownRate: 5,
     habitats: [],
     selectedHabitat: 1,
     currentColoniser: null,
     nextColoniser: null,
   });
+  // TODO: Move this state into context
+  const { countdown, isPaused, pause, resume, reset } = useCountdown(
+    gameState.countdownRate,
+  );
   const habitatRef = useRef();
   const coloniserRef = useRef();
   const graphRef = useRef();
@@ -35,7 +44,7 @@ export const Colonisers = () => {
         <div
           className={`transform rotate-180`}
           style={{
-            backgroundImage: `url(${COLONISERS[0]})`,
+            backgroundImage: `url(${gameState.currentColoniser?.sprite})`,
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
@@ -53,68 +62,113 @@ export const Colonisers = () => {
       const habitat = ColoniserService.generateHabitat();
       habitats.push(habitat);
     }
-    setGameState((prevState) => ({ ...prevState, habitats }));
+
+    return habitats;
+  }, []);
+
+  const generateColonisers = useCallback((habitats) => {
+    // Select a random index from the habitats array
+    const colonisers = [];
+
+    if (gameState.nextColoniser) {
+      colonisers.push(gameState.nextColoniser);
+    }
+
+    const count = 2 - colonisers.length;
+
+    for (let i = 0; i < count; i++) {
+      let randomIndex = Math.floor(Math.random() * habitats.length);
+      let randomHabitat = habitats[randomIndex];
+      let coloniser = ColoniserService.generateColonisers(
+        randomHabitat.automaton,
+      );
+      colonisers.push(coloniser[0]);
+    }
+
+    return colonisers;
+  }, []);
+
+  const calculateSpeed = useCallback(() => {
+    if (!coloniserRef.current || !habitatRef.current) {
+      return;
+    }
+
+    const distance = getVerticalGap(habitatRef.current, coloniserRef.current);
+
+    const ratio = 0.1 / gameState.countdownRate;
+
+    const speed = distance * ratio;
+
+    return speed;
   }, []);
 
   useEffect(() => {
-    generateHabitats();
+    const habitats = generateHabitats();
+    const colonisers = generateColonisers(habitats);
+
     setGameState((prevState) => ({
       ...prevState,
-      colonisers: ['coloniser1', 'coloniser2', 'coloniser3'],
+      habitats,
+      currentColoniser: colonisers[0],
+      nextColoniser: colonisers[1],
+    }));
+  }, [generateHabitats, generateColonisers]);
+
+  // Game loop, all game lifecycle logic goes here
+  useInterval(() => {
+    if (!coloniserRef.current || !habitatRef.current) {
+      return;
+    }
+
+    if (elementsOverlap(coloniserRef.current, habitatRef.current)) {
+      // Check if the coloniser reached the correct habitat
+      const successfulJourney = ColoniserService.validateJourney(
+        gameState.habitats[gameState.selectedHabitat],
+        gameState.currentColoniser,
+      );
+      // If yes then get points
+      if (successfulJourney) {
+        const colonisers = generateColonisers(gameState.habitats);
+
+        reset(gameState.countdownRate);
+
+        setGameState((prevState) => ({
+          ...prevState,
+          score: prevState.score + 100,
+          currentColoniser: colonisers[0],
+          nextColoniser: colonisers[1],
+        }));
+
+        return;
+      }
+      // If no then game over
+      setGameState((prevState) => ({
+        ...prevState,
+        gameOver: true,
+        intervalRate: null,
+      }));
+
+      return;
+    }
+
+    setGameState((prevState) => ({
+      ...prevState,
       currentColoniser: {
-        x: 0,
-        y: 0,
-        id: 'coloniser1',
-        icon: COLONISERS[0],
+        ...prevState.currentColoniser,
+        y: prevState.currentColoniser.y + gameState.speed,
       },
     }));
-  }, [generateHabitats]);
+  }, gameState.intervalRate);
 
-  // useEffect(() => {
-  //   if (!coloniserRef.current || !habitatRef.current) {
-  //     return;
-  //   }
+  useEffect(() => {
+    const speed = !gameState.speed ? calculateSpeed() : gameState.speed;
 
-  //   if (elementsOverlap(coloniserRef.current, habitatRef.current)) {
-  //     setGameState((prevState) => ({
-  //       ...prevState,
-  //       gameOver: true,
-  //     }));
+    setGameState((prevState) => ({
+      ...prevState,
+      speed,
+    }));
+  }, [calculateSpeed, gameState.speed]);
 
-  //     return;
-  //   }
-  //   const interval = setInterval(() => {
-  //     console.log('fire');
-
-  //     setGameState((prevState) => ({
-  //       ...prevState,
-  //       currentColoniser: {
-  //         ...prevState.currentColoniser,
-  //         y: prevState.currentColoniser.y + 1,
-  //       },
-  //     }));
-  //   }, gameState.speed * 100);
-
-  //   return () => clearInterval(interval);
-  // }, [gameState.currentColoniser?.y, gameState.speed]);
-
-  // const paintNode = ({ icon, x, y }, ctx) => {
-  //   const image = new Image();
-  //   image.src = icon;
-
-  //   // Draw the image to fit the node and keep the resolution of the image
-  //   ctx.drawImage(
-  //     image,
-  //     0,
-  //     0,
-  //     image.width,
-  //     image.height,
-  //     0,
-  //     0,
-  //     ctx.canvas.width,
-  //     ctx.canvas.height,
-  //   );
-  // };
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
 
@@ -154,8 +208,18 @@ export const Colonisers = () => {
       return;
     }
   };
+
   return (
-    <GameScene score={gameState.score} next={gameState.nextColoniser}>
+    <GameScene
+      score={gameState.score}
+      next={gameState.nextColoniser?.id}
+      countdown={countdown}
+      isPaused={isPaused}
+      pause={pause}
+      resume={resume}
+      reset={reset}
+      gameOver={false}
+    >
       <div className='flex flex-col z-10 items-center h-fill'>
         {renderColoniser()}
       </div>

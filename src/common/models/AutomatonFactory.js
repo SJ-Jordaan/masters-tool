@@ -1,6 +1,9 @@
 export class AutomatonFactory {
-  automaton;
+  constructor() {
+    this.schematic = null;
+  }
 
+  // Static Factory Methods which are chained to generate the desired construct
   static generateSchematic = (nodes, alphabet) => {
     return nodes.map((n) => {
       const state = {
@@ -66,6 +69,101 @@ export class AutomatonFactory {
 
     af.schematic = schematic;
     return af;
+  };
+
+  // Classes tied to the generated automaton to simplify processes
+  generateAcceptedInputs = (length = 4, count = 1) => {
+    // Treat this.automaton as a DFA and generate a random accepted input
+    const acceptedInput = [];
+    let currentNode = this.getStartingNode();
+    const queue = [{ node: currentNode, path: [] }];
+
+    while (queue.length > 0 && acceptedInput.length < count) {
+      const { node, path } = queue.shift();
+
+      if (node.isAccepting) {
+        acceptedInput.push(path);
+      }
+
+      for (const symbol of Object.keys(node)) {
+        if (
+          symbol !== 'id' &&
+          symbol !== 'isAccepting' &&
+          symbol !== 'isStarting'
+        ) {
+          const nextNode = this.getNode(node[symbol]);
+          const nextPath = [...path, symbol];
+
+          if (!nextNode || nextPath.length > length) {
+            continue;
+          }
+
+          queue.push({ node: nextNode, path: nextPath });
+        }
+      }
+    }
+
+    return acceptedInput;
+  };
+
+  generateRandomAcceptedInputs = (length = 4, count = 1) => {
+    // Treat this.automaton as a DFA and generate a random accepted input
+    const acceptedInput = this.generateAcceptedInputs(length, count + 100);
+    // Generate count random indexes
+    const randomIndexes = [];
+    for (let i = 0; i < count; i++) {
+      // Check if the index is already in the array
+      const randomIndex = Math.floor(Math.random() * acceptedInput.length);
+      if (randomIndexes.includes(randomIndex)) {
+        i--;
+        continue;
+      }
+
+      randomIndexes.push(randomIndex);
+    }
+    // Return the random accepted inputs
+    return randomIndexes.map((i) => acceptedInput[i]);
+  };
+
+  isInputAccepted = (input) => {
+    // Treat this.automaton as a DFA and check if the input is accepted
+    let currentNode = this.getStartingNode();
+
+    for (const symbol of input) {
+      const nextNode = this.getNode(currentNode[symbol]);
+
+      if (!nextNode) {
+        return false;
+      }
+
+      currentNode = nextNode;
+    }
+
+    return currentNode.isAccepting;
+  };
+
+  /**
+   *
+   * @returns @object {id: number, isStarting: boolean, isAccepting: boolean}
+   */
+  getStartingNode = () => {
+    const startingNode = this.schematic.find((n) => n.isStarting);
+    return startingNode;
+  };
+
+  getNode = (id) => {
+    const node = this.schematic.find((n) => n.id === id);
+    return node;
+  };
+
+  /**
+   *
+   * @returns @array of accepting nodes
+   */
+  getAcceptingNodes = () => {
+    // Treat this.automaton as a DFA and return the accepting nodes
+    const dfa = this.automaton.parse();
+    return dfa.nodes.filter((n) => n.isAccepting);
   };
 
   parse = () => {

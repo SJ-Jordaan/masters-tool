@@ -9,3 +9,20 @@ export function elementsOverlap(el1, el2) {
     domRect1.left > domRect2.right
   );
 }
+
+export function elementsDistance(el1, el2) {
+  const domRect1 = el1.getBoundingClientRect();
+  const domRect2 = el2.getBoundingClientRect();
+
+  return Math.sqrt(
+    Math.pow(domRect1.left - domRect2.left, 2) +
+      Math.pow(domRect1.top - domRect2.top, 2),
+  );
+}
+
+export function getVerticalGap(el1, el2) {
+  const domRect1 = el1.getBoundingClientRect();
+  const domRect2 = el2.getBoundingClientRect();
+
+  return domRect1.top - domRect2.bottom;
+}
