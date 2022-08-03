@@ -24,7 +24,7 @@ export const RadialContextMenu = ({ x, y, toggleButton, items }) => {
         rotationAngleInclusive
         itemSize={2}
         radius={items.length <= 3 ? 3 : 5}
-        className={` absolute w-fit  bg-sky-500`}
+        className={`w-fit bg-sky-500`}
       >
         {items.map(({ label, icon, action }, idx) => {
           return (

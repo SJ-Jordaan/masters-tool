@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
 import { RadialContextMenu } from "../../components/context-menus/RadialContextMenu";
-import { AiOutlinePlus, AiOutlineBgColors } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import { IoResize } from "react-icons/io5";
 import useMouse from "@react-hook/mouse-position";
 import { useLongPress } from "use-long-press";
+import { VscSymbolColor } from "react-icons/vsc";
 
 const menuItems = [
   {
@@ -13,13 +14,13 @@ const menuItems = [
   },
   {
     label: "Change Background",
-    icon: <AiOutlineBgColors />,
+    icon: <VscSymbolColor />,
     action: () => console.log("Change Background"),
   },
   {
     label: "Resize States",
     icon: <IoResize />,
-    action: () => console.log("Resize State"),
+    action: () => console.log("Resize States"),
   },
 ];
 
@@ -27,12 +28,10 @@ export const AutomatonTutor = () => {
   const containerRef = useRef(null);
   const toggleButtonRef = useRef(null);
   const mouse = useMouse(containerRef);
-
   const [contextMenuState, setContextMenuState] = useState({
     x: 0,
     y: 0,
   });
-
   const bind = useLongPress(() => {
     toggleButtonRef.current.click();
     setContextMenuState({
@@ -44,7 +43,7 @@ export const AutomatonTutor = () => {
     <div
       {...bind()}
       ref={containerRef}
-      className="relative w-full h-screen bg-slate-300 "
+      className="relative w-full h-screen bg-gray-200"
     >
       <RadialContextMenu
         position={contextMenuState}
