@@ -7,9 +7,9 @@ import { useLongPress } from "use-long-press";
 
 const menuItems = [
   {
-    label: "Add Automata",
+    label: "Add State",
     icon: <AiOutlinePlus />,
-    action: () => console.log("Add Automata"),
+    action: () => console.log("Add State"),
   },
   {
     label: "Change Background",
@@ -17,9 +17,9 @@ const menuItems = [
     action: () => console.log("Change Background"),
   },
   {
-    label: "Resize Automatons",
+    label: "Resize States",
     icon: <IoResize />,
-    action: () => console.log("Resize Automatons"),
+    action: () => console.log("Resize State"),
   },
 ];
 
