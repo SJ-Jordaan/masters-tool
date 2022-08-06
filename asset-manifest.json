@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/masters-tool/static/css/main.ec662b72.css",
+    "main.js": "/masters-tool/static/js/main.fd4d5dd4.js",
+    "index.html": "/masters-tool/index.html",
+    "main.ec662b72.css.map": "/masters-tool/static/css/main.ec662b72.css.map",
+    "main.fd4d5dd4.js.map": "/masters-tool/static/js/main.fd4d5dd4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ec662b72.css",
+    "static/js/main.fd4d5dd4.js"
+  ]
+}
