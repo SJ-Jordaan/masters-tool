@@ -1,4 +1,4 @@
-const SPRITE_PATH = `${process.env.REACT_APP_HOST}/sprites`;
+const SPRITE_PATH = `${process.env.PUBLIC_URL}/sprites`;
 const ASTEROID_PATH = `${SPRITE_PATH}/asteroids`;
 const HABITATS_PATH = `${SPRITE_PATH}/habitats`;
 const COLONISERS_PATH = `${SPRITE_PATH}/colonisers`;
