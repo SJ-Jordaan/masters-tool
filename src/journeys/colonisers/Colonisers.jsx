@@ -1,9 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
-import {
-  elementsOverlap,
-  getVerticalGap,
-} from '../../common/helpers/collision';
+import { getVerticalGap } from '../../common/helpers/collision';
 import { useCountdown } from '../../hooks/useCountdown';
 import { useInterval } from '../../hooks/useInterval';
 import { GameScene } from '../../scenes/GameScene';
@@ -181,6 +178,7 @@ export const Colonisers = () => {
 
   useEffect(() => {
     increaseLevel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Game loop, all game lifecycle logic goes here
