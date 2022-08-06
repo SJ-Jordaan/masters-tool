@@ -16,6 +16,8 @@ export const Colonisers = () => {
     gameOver: false,
     score: 0,
     speed: 0,
+    level: 0,
+    showLevel: false,
     intervalRate: 100,
     countdownRate: 5,
     habitats: [],
@@ -97,7 +99,27 @@ export const Colonisers = () => {
     return speed;
   }, [gameState.countdownRate]);
 
-  useEffect(() => {
+  const isTimeUp = () => {
+    return countdown === 0;
+  };
+
+  const isCorrectHabitat = () => {
+    const successfulJourney = ColoniserService.validateJourney(
+      gameState.habitats[gameState.selectedHabitat],
+      gameState.colonisers?.[0],
+    );
+
+    return successfulJourney;
+  };
+
+  const updateScore = (score = 100) => {
+    setGameState((prevState) => ({
+      ...prevState,
+      score: prevState.score + score,
+    }));
+  };
+
+  const increaseLevel = () => {
     const habitats = generateHabitats();
     const colonisers = generateColonisers(habitats);
 
@@ -105,52 +127,48 @@ export const Colonisers = () => {
       ...prevState,
       habitats,
       colonisers,
+      level: gameState.level + 1,
+      showLevel: true,
     }));
-  }, [generateHabitats, generateColonisers]);
 
-  // Game loop, all game lifecycle logic goes here
-  useInterval(() => {
-    if (!coloniserRef.current || !habitatRef.current) {
-      return;
-    }
-
-    if (elementsOverlap(coloniserRef.current, habitatRef.current)) {
-      // Check if the coloniser reached the correct habitat
-      const successfulJourney = ColoniserService.validateJourney(
-        gameState.habitats[gameState.selectedHabitat],
-        gameState.colonisers?.[0],
-      );
-      // If yes then get points
-      if (successfulJourney) {
-        const [, colonisers] = gameState.colonisers;
-
-        if (colonisers.length === 0) {
-          setGameState((prevState) => ({
-            ...prevState,
-            gameOver: true,
-          }));
-        }
-
-        reset(gameState.countdownRate);
-
-        setGameState((prevState) => ({
-          ...prevState,
-          score: prevState.score + 100,
-          colonisers,
-        }));
-
-        return;
-      }
-      // If no then game over
+    setTimeout(() => {
       setGameState((prevState) => ({
         ...prevState,
-        gameOver: true,
-        intervalRate: null,
+        showLevel: false,
       }));
+    }, 1000);
+  };
 
+  const handleSuccessfulJourney = () => {
+    const [, colonisers] = gameState.colonisers;
+
+    updateScore();
+    reset(gameState.countdownRate);
+
+    if (!colonisers) {
+      increaseLevel();
       return;
     }
 
+    setGameState((prevState) => ({
+      ...prevState,
+      colonisers,
+    }));
+
+    return;
+  };
+
+  const handleFailedJourney = () => {
+    setGameState((prevState) => ({
+      ...prevState,
+      gameOver: true,
+      intervalRate: null,
+    }));
+
+    return;
+  };
+
+  const handleGameStep = () => {
     const colonisers = gameState.colonisers;
     const currentColoniser = colonisers[0];
     currentColoniser.y += gameState.speed;
@@ -159,6 +177,28 @@ export const Colonisers = () => {
       ...prevState,
       colonisers: [currentColoniser, ...colonisers.slice(1)],
     }));
+  };
+
+  useEffect(() => {
+    increaseLevel();
+  }, []);
+
+  // Game loop, all game lifecycle logic goes here
+  useInterval(() => {
+    if (!coloniserRef.current || !habitatRef.current) {
+      return;
+    }
+
+    if (isTimeUp()) {
+      if (isCorrectHabitat()) {
+        handleSuccessfulJourney();
+        return;
+      }
+
+      handleFailedJourney();
+    }
+
+    handleGameStep();
   }, gameState.intervalRate);
 
   useEffect(() => {
@@ -195,18 +235,23 @@ export const Colonisers = () => {
   return (
     <GameScene
       score={gameState.score}
-      next={gameState.colonisers?.[1]?.id || 'END'}
+      next={gameState.colonisers?.[1]?.id || 'Level Up'}
       countdown={countdown}
       isPaused={isPaused}
       pause={pause}
       resume={resume}
       reset={reset}
-      gameOver={false}
+      gameOver={gameState.gameOver}
     >
       <div className='flex flex-col z-10 items-center h-fill'>
         {renderColoniser()}
       </div>
 
+      {gameState.showLevel && (
+        <p className='text-center text-3xl my-auto text-white animate-pulse'>
+          Level {gameState.level}
+        </p>
+      )}
       <SwipeScene
         _ref={habitatRef}
         css={'flex mt-auto justify-center items-center h-fill'}

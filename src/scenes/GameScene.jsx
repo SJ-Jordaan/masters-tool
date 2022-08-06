@@ -2,6 +2,7 @@ import React from 'react';
 import { ICONS } from '../common/constants/icons';
 import { DefeatScreen } from '../components/DefeatScreen';
 import { PauseScreen } from '../components/PauseScreen';
+
 export const GameScene = (props) => {
   return (
     <div className='flex flex-col h-screen box-border'>
@@ -22,7 +23,9 @@ export const GameScene = (props) => {
               onClick={props.pause}
             >
               <img src={ICONS.Pause} alt='Pause' />
-              <p className='text-xl text-white'>{props.countdown}</p>
+              <p className='text-xl text-white text-center'>
+                {props.countdown}
+              </p>
             </div>
 
             <div className='flex flex-col ml-auto'>
