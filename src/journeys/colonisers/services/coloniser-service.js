@@ -49,6 +49,7 @@ export class ColoniserService {
         const asteroid =
           ASTEROIDS[Math.floor(Math.random() * ASTEROIDS.length)];
         image.src = asteroid;
+        image.alt = asteroid.split('.png')[0];
 
         return {
           ...node,

@@ -130,6 +130,10 @@ export class AutomatonFactory {
     let currentNode = this.getStartingNode();
 
     for (const symbol of input) {
+      if (currentNode.isAccepting && symbol === 'e') {
+        return true;
+      }
+
       const nextNode = this.getNode(currentNode[symbol]);
 
       if (!nextNode) {

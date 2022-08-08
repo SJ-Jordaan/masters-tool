@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useInterval } from './useInterval';
-import { useToggle } from './useToggle';
 
 export const useCountdown = (initialCountdown, onEnd, onPause) => {
   const [countdown, setCountdown] = useState(initialCountdown);
-  const [isPaused, toggleIsPaused] = useToggle(false);
+  const [isPaused, toggleIsPaused] = useState(false);
   const [delay, setDelay] = useState(1000);
 
   useEffect(() => {
@@ -15,17 +14,23 @@ export const useCountdown = (initialCountdown, onEnd, onPause) => {
   }, [countdown, onEnd]);
 
   const pause = () => {
-    toggleIsPaused();
+    toggleIsPaused(true);
     onPause?.();
   };
 
   const resume = () => {
-    toggleIsPaused();
+    toggleIsPaused(false);
   };
 
   const reset = (newCountdown = initialCountdown) => {
     setCountdown(newCountdown);
+    toggleIsPaused(false);
     setDelay(1000);
+  };
+
+  const halt = () => {
+    setDelay(null);
+    setCountdown(null);
   };
 
   const tick = () => {
@@ -42,5 +47,6 @@ export const useCountdown = (initialCountdown, onEnd, onPause) => {
     pause,
     resume,
     reset,
+    halt,
   };
 };
