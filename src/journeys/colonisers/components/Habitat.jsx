@@ -21,8 +21,10 @@ export const Habitat = (props) => {
         graphData={props.habitat}
         linkDirectionalArrowLength={3.5}
         linkDirectionalArrowRelPos={1}
-        cooldownTicks={10}
-        onEngineStop={() => props.graphRef.current.zoomToFit(0, 64)}
+        cooldownTicks={1}
+        onEngineStop={() => {
+          props.graphRef.current.zoomToFit(0, 70);
+        }}
         nodeCanvasObject={(node, ctx) => {
           const size = 12;
           ctx.drawImage(
