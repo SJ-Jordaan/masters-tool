@@ -14,7 +14,7 @@ export const AutomatonTutor = () => {
     if (defaultOrientation !== screenOrientation) {
       window.location.reload(false);
     }
-  }, [defaultOrientation, graphData, screenOrientation]);
+  }, [defaultOrientation, screenOrientation]);
 
   return (
     <div className="relative">
