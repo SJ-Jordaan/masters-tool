@@ -20,20 +20,20 @@ const ContextMenu = () => {
         <div className="dropdown dropdown-end">
           <AiOutlineMenu
             tabIndex={0}
-            className="w-10 h-full px-2 py-2 text-black bg-gray-300 rounded-md "
+            className="w-10 h-full px-2 py-2 text-black bg-gray-300 rounded-md cursor-pointer "
           />
           <ul
             tabIndex="0"
             className="p-2 mt-4 text-sm font-semibold shadow-xl bg-slate-200 dropdown-content menu rounded-box w-52"
           >
             <li>
-              <a>Save game</a>
+              <a>Save Automata</a>
             </li>
             <li>
               <a>Restart</a>
             </li>
             <li>
-              <a href="/">Exit game</a>
+              <a href="/">Exit Builder</a>
             </li>
           </ul>
         </div>
