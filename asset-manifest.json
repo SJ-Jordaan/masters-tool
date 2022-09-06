@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/masters-tool/static/css/main.aa101cc2.css",
-    "main.js": "/masters-tool/static/js/main.b346b62f.js",
+    "main.css": "/masters-tool/static/css/main.31d8cd4f.css",
+    "main.js": "/masters-tool/static/js/main.f3123466.js",
     "service-worker.js": "/masters-tool/service-worker.js",
     "index.html": "/masters-tool/index.html",
-    "main.aa101cc2.css.map": "/masters-tool/static/css/main.aa101cc2.css.map",
-    "main.b346b62f.js.map": "/masters-tool/static/js/main.b346b62f.js.map"
+    "main.31d8cd4f.css.map": "/masters-tool/static/css/main.31d8cd4f.css.map",
+    "main.f3123466.js.map": "/masters-tool/static/js/main.f3123466.js.map"
   },
   "entrypoints": [
-    "static/css/main.aa101cc2.css",
-    "static/js/main.b346b62f.js"
+    "static/css/main.31d8cd4f.css",
+    "static/js/main.f3123466.js"
   ]
 }
