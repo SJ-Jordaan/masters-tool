@@ -1,17 +1,15 @@
 import React from "react";
-import useAutomatonTutorStore, { Context } from "../state/zustand";
-import {
-  StateContext,
-  CanvasContext,
-  TransitionContext,
-} from "./context-menu/ContextItems";
+import useAutomatonTutorStore, {
+  Context,
+} from "../state/useAutomatonTutorStore";
+import { StateContext, TransitionContext, CanvasContext } from "./context-menu";
 import { AiOutlineMenu } from "react-icons/ai";
 
 const ContextMenu = () => {
   const { activeContexMenu } = useAutomatonTutorStore();
   return (
     <div className="fixed flex items-center justify-center w-full pt-2 gap-x-2 h-fit">
-      <div className="flex px-4 h-full py-2  text-black rounded-md dark:text-white jusify-between bg-gray-300 [&>*]:transition-all gap-x-8 [&>*]:tooltip-bottom [&>*]:tooltip">
+      <div className="flex px-4 h-full py-2  text-black rounded-md dark:text-white transition-all jusify-between bg-gray-300 [&>*]:transition-all gap-x-8 [&>*]:tooltip-bottom [&>*]:tooltip">
         {activeContexMenu === Context.State && <StateContext />}
         {activeContexMenu === Context.Canvas && <CanvasContext />}
         {activeContexMenu === Context.Transition && <TransitionContext />}
@@ -27,13 +25,13 @@ const ContextMenu = () => {
             className="p-2 mt-4 text-sm font-semibold shadow-xl bg-slate-200 dropdown-content menu rounded-box w-52"
           >
             <li>
-              <a>Save Automata</a>
+              <a href="/masters-tool">Save Automata</a>
             </li>
             <li>
-              <a>Restart</a>
+              <a href="/masters-tool">Restart</a>
             </li>
             <li>
-              <a href="/">Exit Builder</a>
+              <a href="/masters-tool">Exit Builder</a>
             </li>
           </ul>
         </div>
