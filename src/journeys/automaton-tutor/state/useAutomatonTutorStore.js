@@ -1,5 +1,4 @@
 import create from "zustand";
-import { persist } from "zustand/middleware";
 
 export const Context = {
   State: "State",
@@ -10,33 +9,34 @@ export const Context = {
 const useAutomatonTutorStore = create(
   (set, get) => ({
     graphData: {
-      nodes: [
-        {
-          id: "id1",
-          name: "name1",
-          val: 5,
-          isInitial: true,
-        },
-        {
-          id: "id2",
-          name: "name2",
-          val: 5,
-          isFinal: true,
-        },
-        {
-          id: "id3",
-          name: "name2",
-          val: 5,
-        },
-      ],
-      links: [
-        {
-          source: "id1",
-          target: "id3",
-        },
-      ],
+      nodes: [],
+      links: [],
     },
+    makeTransition: false,
     selectedEntity: null,
+    finalStateIds: [],
+    initialStateId: null,
+    addFinalState: (newStateId) =>
+      set((state) => {
+        if (state.finalStateIds.includes(newStateId))
+          return {
+            finalStateIds: [
+              ...state.finalStateIds.filter((id) => id !== newStateId),
+            ],
+          };
+        return {
+          finalStateIds: [...state.finalStateIds, newStateId],
+        };
+      }),
+    removeFinalStateIds: (stateId) => (state) => ({
+      finalStateIds: state.finalStateIds.filter((id) => id !== stateId),
+    }),
+    setInitialState: (stateId) =>
+      set((state) => ({
+        initialStateId: stateId === state.initialStateId ? null : stateId,
+      })),
+    toggleMakeTransition: () =>
+      set((state) => ({ makeTransition: !state.makeTransition })),
     setSelectedEntity: (entity) =>
       set((state) => ({ ...state, selectedEntity: entity })),
     activeContexMenu: Context.Canvas,
@@ -71,7 +71,7 @@ const useAutomatonTutorStore = create(
           nodes: state.graphData.nodes,
           links: [
             ...state.graphData.links.filter(
-              (link) => link.id !== transitionIndex
+              (link) => link.index !== transitionIndex
             ),
           ],
         },
