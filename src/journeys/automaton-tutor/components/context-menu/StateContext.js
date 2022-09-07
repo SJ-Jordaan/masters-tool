@@ -3,22 +3,15 @@ import { BsArrowLeftRight, BsArrowRight } from "react-icons/bs";
 import { CgRename } from "react-icons/cg";
 import { FiCheckCircle } from "react-icons/fi";
 import useAutomatonTutorStore from "../../state/useAutomatonTutorStore.js";
-import { useState } from "react";
 
 const TransitionContextMenuItem = () => {
-  const { toggleMakeTransition } = useAutomatonTutorStore();
-  const [itemState, setItemState] = useState("Add Transition");
-  const handleMouseLeave = () => setItemState("Add Transition");
-  const handleClick = () => {
-    setItemState("Select target state");
-    toggleMakeTransition();
-  };
-
+  const { toggleMakeTransition, makeTransition } = useAutomatonTutorStore();
+  const handleClick = () => toggleMakeTransition();
   return (
     <button
-      data-tip={itemState}
-      onMouseLeave={handleMouseLeave}
+      data-tip={makeTransition ? "Select target state" : "Add Transition"}
       onClick={handleClick}
+      className={`tooltip ${makeTransition && "tooltip-open"}`}
     >
       <BsArrowLeftRight className="w-6 h-6 md:w-7 md:h-7" />
     </button>
