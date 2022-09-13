@@ -72,6 +72,11 @@ export const AutomatonTutor = () => {
     if (makeTransition) toggleMakeTransition();
   };
 
+  const linkColor = (link) =>
+    !selectedEntity?.id && selectedEntity?.index === link?.index
+      ? "purple"
+      : "black";
+
   return (
     <div className="relative">
       <div className="absolute w-screen h-screen z-1">
@@ -85,7 +90,7 @@ export const AutomatonTutor = () => {
           linkDirectionalArrowLength={7}
           linkDirectionalArrowRelPos={1}
           onNodeDragEnd={onNodeDragEnd}
-          linkColor={() => "black"}
+          linkColor={linkColor}
           onBackgroundClick={onBackgroundClick}
           onNodeClick={onNodeClick}
           onLinkClick={onLinkClick}
