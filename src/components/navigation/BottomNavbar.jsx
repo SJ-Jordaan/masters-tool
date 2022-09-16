@@ -10,7 +10,7 @@ const NavItems = [
   {
     label: 'Tutor',
     Icon: AcademicCapIcon,
-    to: '/colonisers',
+    to: '/tutor',
   },
   {
     label: 'Home',
