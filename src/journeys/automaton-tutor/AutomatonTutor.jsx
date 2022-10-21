@@ -5,6 +5,8 @@ import useAutomatonTutorStore, {
   Context,
 } from "./state/useAutomatonTutorStore";
 import useScreenOrientation from "react-hook-screen-orientation";
+import TestInputModal from "./components/modals/TestInputModal";
+import NameTransitionModal from "./components/modals/NameTransitionModal";
 
 export const AutomatonTutor = () => {
   const {
@@ -14,13 +16,14 @@ export const AutomatonTutor = () => {
     selectedEntity,
     toggleMakeTransition,
     makeTransition,
-    addTransition,
     initialStateId,
     finalStateIds,
+    setTargetState,
   } = useAutomatonTutorStore();
   const screenOrientation = useScreenOrientation();
   const [defaultOrientation] = useState(screenOrientation);
   const graphRef = useRef();
+  const nameTransitionModalToggleRef = useRef();
 
   useEffect(() => {
     if (defaultOrientation !== screenOrientation) {
@@ -29,8 +32,8 @@ export const AutomatonTutor = () => {
   }, [defaultOrientation, screenOrientation, graphData]);
 
   const handleAddTransition = (node) => {
-    addTransition({ source: selectedEntity.id, target: node.id });
-    toggleMakeTransition();
+    setTargetState(node);
+    nameTransitionModalToggleRef.current.click();
   };
 
   const colorNodes = (node) => {
@@ -63,7 +66,11 @@ export const AutomatonTutor = () => {
   };
 
   const linkCurvature = (link) => {
-    if (link.source === link.target) return 0.7;
+    if (link.source === link.target) return 0.5;
+    const oppositeLink = graphData.links.filter(
+      (glink) => glink.source === link.target && glink.target === link.source
+    )[0];
+    if (oppositeLink) return 0.5;
   };
 
   const onBackgroundClick = () => {
@@ -87,7 +94,7 @@ export const AutomatonTutor = () => {
           linkWidth={1}
           onEngineStop={() => graphRef.current.zoomToFit(300, 60)}
           nodeColor={colorNodes}
-          linkDirectionalArrowLength={7}
+          linkDirectionalArrowLength={4}
           linkDirectionalArrowRelPos={1}
           onNodeDragEnd={onNodeDragEnd}
           linkColor={linkColor}
@@ -95,11 +102,21 @@ export const AutomatonTutor = () => {
           onNodeClick={onNodeClick}
           onLinkClick={onLinkClick}
           linkCurvature={linkCurvature}
+          linkLabel={(link) => `${link.values.toString()}`}
         />
+        <div>
+          <label
+            ref={nameTransitionModalToggleRef}
+            htmlFor="nameTransitionModal"
+            className="hidden btn modal-button"
+          />
+        </div>
       </div>
       <div className="fixed -z-1">
         <ContextMenu />
       </div>
+      <TestInputModal />
+      <NameTransitionModal />
     </div>
   );
 };
