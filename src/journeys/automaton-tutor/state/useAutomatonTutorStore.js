@@ -12,6 +12,7 @@ const useAutomatonTutorStore = create(
       nodes: [],
       links: [],
     },
+    targetState: null,
     makeTransition: false,
     selectedEntity: null,
     finalStateIds: [],
@@ -35,6 +36,7 @@ const useAutomatonTutorStore = create(
       set((state) => ({
         initialStateId: stateId === state.initialStateId ? null : stateId,
       })),
+    setTargetState: (state) => set({ targetState: state }),
     toggleMakeTransition: () =>
       set((state) => ({ makeTransition: !state.makeTransition })),
     setSelectedEntity: (entity) =>

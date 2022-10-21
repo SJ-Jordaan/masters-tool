@@ -6,7 +6,7 @@ import useAutomatonTutorStore, {
 } from "./state/useAutomatonTutorStore";
 import useScreenOrientation from "react-hook-screen-orientation";
 import TestInputModal from "./components/modals/TestInputModal";
-import NameTransitionModal from "./components/modals/NameTransitionModal";
+import NameTransitionModal from "./components/modals/EditTransitionModal";
 
 export const AutomatonTutor = () => {
   const {
