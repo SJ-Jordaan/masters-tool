@@ -13,7 +13,7 @@ export const TransitionContext = () => {
         <AiOutlineDelete className="w-6 h-6 md:w-7 md:h-7" />
       </button>
       <button
-        data-tip="Rename Transition"
+        data-tip="Transition Values"
         onClick={() => console.log("Rename Transition Clicked")}
       >
         <CgRename className="w-6 h-6 md:w-7 md:h-7" />
