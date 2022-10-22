@@ -1,13 +1,14 @@
 import React from "react";
 import useAutomatonTutorStore, {
   Context,
+  Modal,
 } from "../state/useAutomatonTutorStore";
 import { StateContext, TransitionContext, CanvasContext } from "./context-menu";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const ContextMenu = () => {
-  const { activeContexMenu } = useAutomatonTutorStore();
+  const { activeContexMenu, setActiveModal } = useAutomatonTutorStore();
   const [parent] = useAutoAnimate();
   return (
     <div className="fixed flex items-center justify-center w-full p-2 text-black dark:text-white gap-x-2">
@@ -33,7 +34,9 @@ const ContextMenu = () => {
               <a href="/masters-tool">Save Automata</a>
             </li>
             <li>
-              <label htmlFor="testInputModal">Test Input</label>
+              <button onClick={() => setActiveModal(Modal.TestInput)}>
+                Test Input
+              </button>
             </li>
             <li>
               <a href="/masters-tool">Restart</a>

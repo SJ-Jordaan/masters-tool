@@ -2,7 +2,9 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { BsArrowLeftRight, BsArrowRight } from "react-icons/bs";
 import { CgRename } from "react-icons/cg";
 import { FiCheckCircle } from "react-icons/fi";
-import useAutomatonTutorStore from "../../state/useAutomatonTutorStore.js";
+import useAutomatonTutorStore, {
+  Modal,
+} from "../../state/useAutomatonTutorStore.js";
 
 const TransitionContextMenuItem = () => {
   const { toggleMakeTransition, makeTransition } = useAutomatonTutorStore();
@@ -28,6 +30,7 @@ export const StateContext = () => {
     finalStateIds,
     setInitialState,
     addFinalState,
+    setActiveModal,
   } = useAutomatonTutorStore();
   const handleRemoveState = () => {
     removeState(selectedEntity.id);
@@ -65,7 +68,7 @@ export const StateContext = () => {
       <TransitionContextMenuItem />
       <button
         data-tip="Rename"
-        onClick={() => console.log("Rename State Clicked")}
+        // onClick={() => setActiveModal(Modal?.EditState)}
       >
         <CgRename className="w-6 h-6 md:w-7 md:h-7" />
       </button>
