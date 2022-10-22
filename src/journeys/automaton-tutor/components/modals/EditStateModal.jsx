@@ -7,8 +7,7 @@ import useAutomatonTutorStore, {
 } from "../../state/useAutomatonTutorStore";
 
 const EditStateModal = ({ closeModal }) => {
-  const { activeModal, selectedEntity, removeState, addState } =
-    useAutomatonTutorStore();
+  const { activeModal, selectedEntity } = useAutomatonTutorStore();
   const [parent] = useAutoAnimate();
   const {
     reset,

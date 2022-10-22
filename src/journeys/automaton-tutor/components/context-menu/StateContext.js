@@ -2,9 +2,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { BsArrowLeftRight, BsArrowRight } from "react-icons/bs";
 import { CgRename } from "react-icons/cg";
 import { FiCheckCircle } from "react-icons/fi";
-import useAutomatonTutorStore, {
-  Modal,
-} from "../../state/useAutomatonTutorStore.js";
+import useAutomatonTutorStore from "../../state/useAutomatonTutorStore.js";
 
 const TransitionContextMenuItem = () => {
   const { toggleMakeTransition, makeTransition } = useAutomatonTutorStore();
@@ -30,7 +28,6 @@ export const StateContext = () => {
     finalStateIds,
     setInitialState,
     addFinalState,
-    setActiveModal,
   } = useAutomatonTutorStore();
   const handleRemoveState = () => {
     removeState(selectedEntity.id);
