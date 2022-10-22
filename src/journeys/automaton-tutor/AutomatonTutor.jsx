@@ -3,10 +3,10 @@ import ForceGraph2D from "react-force-graph-2d";
 import ContextMenu from "./components/ContextMenu";
 import useAutomatonTutorStore, {
   Context,
+  Modal,
 } from "./state/useAutomatonTutorStore";
 import useScreenOrientation from "react-hook-screen-orientation";
-import TestInputModal from "./components/modals/TestInputModal";
-import NameTransitionModal from "./components/modals/EditTransitionModal";
+import ModalManager from "./components/modals/ModalManager";
 
 export const AutomatonTutor = () => {
   const {
@@ -14,6 +14,7 @@ export const AutomatonTutor = () => {
     setActiveContexMenu,
     setSelectedEntity,
     selectedEntity,
+    setActiveModal,
     toggleMakeTransition,
     makeTransition,
     initialStateId,
@@ -33,7 +34,7 @@ export const AutomatonTutor = () => {
 
   const handleAddTransition = (node) => {
     setTargetState(node);
-    nameTransitionModalToggleRef.current.click();
+    setActiveModal(Modal.EditTransition);
   };
 
   const colorNodes = (node) => {
@@ -70,7 +71,7 @@ export const AutomatonTutor = () => {
     const oppositeLink = graphData.links.filter(
       (glink) => glink.source === link.target && glink.target === link.source
     )[0];
-    if (oppositeLink) return 0.5;
+    if (oppositeLink) return 0.15;
   };
 
   const onBackgroundClick = () => {
@@ -115,8 +116,7 @@ export const AutomatonTutor = () => {
       <div className="fixed -z-1">
         <ContextMenu />
       </div>
-      <TestInputModal />
-      <NameTransitionModal />
+      <ModalManager />
     </div>
   );
 };
