@@ -65,7 +65,7 @@ export const StateContext = () => {
       <TransitionContextMenuItem />
       <button
         data-tip="Rename"
-        onClick={() => console.log("Rename State Clicked")}
+        // onClick={() => setActiveModal(Modal?.EditState)}
       >
         <CgRename className="w-6 h-6 md:w-7 md:h-7" />
       </button>

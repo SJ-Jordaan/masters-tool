@@ -6,16 +6,25 @@ export const Context = {
   Transition: "Transition",
 };
 
+export const Modal = {
+  TestInput: "TestInput",
+  EditTransition: "EditTransition",
+  EditState: "EditState",
+};
+
 const useAutomatonTutorStore = create(
   (set, get) => ({
     graphData: {
       nodes: [],
       links: [],
     },
+    targetState: null,
     makeTransition: false,
     selectedEntity: null,
     finalStateIds: [],
     initialStateId: null,
+    activeModal: null,
+    setActiveModal: (modal) => set({ activeModal: modal }),
     addFinalState: (newStateId) =>
       set((state) => {
         if (state.finalStateIds.includes(newStateId))
@@ -35,6 +44,7 @@ const useAutomatonTutorStore = create(
       set((state) => ({
         initialStateId: stateId === state.initialStateId ? null : stateId,
       })),
+    setTargetState: (state) => set({ targetState: state }),
     toggleMakeTransition: () =>
       set((state) => ({ makeTransition: !state.makeTransition })),
     setSelectedEntity: (entity) =>
