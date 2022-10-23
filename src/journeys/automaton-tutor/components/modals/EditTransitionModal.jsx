@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Portal } from "react-portal";
 import useAutomatonTutorStore, {
   Modal,
+  Context,
 } from "../../state/useAutomatonTutorStore";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { AiOutlineClose } from "react-icons/ai";
@@ -20,6 +21,7 @@ const EditTransitionModal = ({ closeModal }) => {
     setTargetState,
     targetState,
     activeModal,
+    setActiveContexMenu,
   } = useAutomatonTutorStore();
   const {
     register,
@@ -42,7 +44,7 @@ const EditTransitionModal = ({ closeModal }) => {
 
       append(values ? values : []);
     }
-  }, [append, graphData?.links, remove, selectedEntity?.id, targetState]);
+  }, [append, remove, selectedEntity?.id, targetState, graphData?.links]);
 
   const handleEditTransition = (data) => {
     const transition = graphData?.links.filter(
@@ -55,10 +57,18 @@ const EditTransitionModal = ({ closeModal }) => {
       removeTransition(transition.index);
     } else if (data.values.length > 0) {
       if (transition) removeTransition(transition.index);
+      let uniqueValues = [];
+      data.values
+        .map((val) => val[0])
+        .forEach((item) => {
+          if (uniqueValues.indexOf(item.trim()) < 0) {
+            uniqueValues.push(item.trim());
+          }
+        });
       const transitionObj = {
         source: selectedEntity.id,
         target: targetState.id,
-        values: data.values.map((val) => val[0]),
+        values: uniqueValues,
       };
       addTransition(transitionObj);
     }
@@ -129,6 +139,7 @@ const EditTransitionModal = ({ closeModal }) => {
             <button
               onClick={(e) => {
                 e.preventDefault();
+                setActiveContexMenu(Context.Canvas);
                 closeModal();
               }}
               className="text-black underline bg-transparent border-none btn dark:text-white"
