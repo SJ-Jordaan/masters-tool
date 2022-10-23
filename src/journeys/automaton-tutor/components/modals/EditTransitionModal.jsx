@@ -22,6 +22,7 @@ const EditTransitionModal = ({ closeModal }) => {
     targetState,
     activeModal,
     setActiveContexMenu,
+    setSelectedEntity,
   } = useAutomatonTutorStore();
   const {
     register,
@@ -139,6 +140,9 @@ const EditTransitionModal = ({ closeModal }) => {
             <button
               onClick={(e) => {
                 e.preventDefault();
+                setSelectedEntity(null);
+                setTargetState(null);
+                toggleMakeTransition();
                 setActiveContexMenu(Context.Canvas);
                 closeModal();
               }}
