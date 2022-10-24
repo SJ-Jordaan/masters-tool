@@ -54,7 +54,10 @@ const EditStateModal = ({ closeModal }) => {
           <div className="flex modal-action gap-x-2">
             <button className=" btn btn-primary">Save</button>
             <button
-              onClick={closeModal}
+              onClick={(e) => {
+                e.preventDefault();
+                closeModal();
+              }}
               className="text-black underline bg-transparent border-none btn dark:text-white"
             >
               close
