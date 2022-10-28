@@ -3,6 +3,7 @@ import { BsArrowLeftRight, BsArrowRight } from "react-icons/bs";
 import { CgRename } from "react-icons/cg";
 import { FiCheckCircle } from "react-icons/fi";
 import useAutomatonTutorStore, {
+  Context,
   Modal,
 } from "../../state/useAutomatonTutorStore.js";
 
@@ -31,6 +32,7 @@ export const StateContext = () => {
     setInitialState,
     addFinalState,
     setActiveModal,
+    setActiveContexMenu 
   } = useAutomatonTutorStore();
   const handleRemoveState = () => {
     removeState(selectedEntity.id);
@@ -44,6 +46,7 @@ export const StateContext = () => {
       ) {
         removeTransition(link.index);
       }
+      setActiveContexMenu(Context.Canvas);
     });
   };
   const handleSetIsInitial = () => setInitialState(selectedEntity.id);
