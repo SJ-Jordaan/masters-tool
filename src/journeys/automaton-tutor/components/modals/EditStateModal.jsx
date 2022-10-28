@@ -52,13 +52,13 @@ const EditStateModal = ({ closeModal }) => {
             )}
           </div>
           <div className="flex modal-action gap-x-2">
-            <button className=" btn btn-primary">Save</button>
+            <button className=" btn btn-primary btn-sm">Save</button>
             <button
               onClick={(e) => {
                 e.preventDefault();
                 closeModal();
               }}
-              className="text-black underline bg-transparent border-none btn dark:text-white"
+              className="text-black btn-sm underline bg-transparent border-none btn dark:text-white"
             >
               close
             </button>

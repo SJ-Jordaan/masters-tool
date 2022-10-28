@@ -24,13 +24,13 @@ const TestInputModal = ({ closeModal }) => {
             </div>
           </div>
           <div className="flex modal-action gap-x-2">
-            <button className=" btn btn-primary">Verify</button>
-            <button className="bg-transparent btn text-secondary border-secondary">
+            <button className=" btn btn-primary btn-sm">Verify</button>
+            <button className="bg-transparent btn btn-sm text-secondary border-secondary">
               Simulate
             </button>
             <button
               onClick={closeModal}
-              className="text-black underline bg-transparent border-none btn dark:text-white"
+              className="text-black btn-sm underline bg-transparent border-none btn dark:text-white"
             >
               close
             </button>
