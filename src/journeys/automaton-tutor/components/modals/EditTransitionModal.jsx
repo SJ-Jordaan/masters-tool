@@ -7,6 +7,7 @@ import useAutomatonTutorStore, {
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useForm, useFieldArray } from "react-hook-form";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
 const EditTransitionModal = ({ closeModal }) => {
   const inputRef = useRef();
@@ -96,7 +97,14 @@ const EditTransitionModal = ({ closeModal }) => {
         }`}
       >
         <div className="modal-box">
-          <h3 className="text-lg font-bold">Transition Values</h3>
+          <div className="flex justify-between">
+            <h3 className="text-lg font-bold flex">Transition Values</h3>
+            <div className="flex items-center gap-x-2">
+              <span>{selectedEntity?.name}</span>
+              <HiOutlineArrowNarrowRight />
+              <span>{targetState?.name}</span>
+            </div>
+          </div>
           <div className="py-4">
             <ul
               className="flex flex-wrap items-center grid-cols-3 gap-2 sm:grid"
@@ -133,10 +141,10 @@ const EditTransitionModal = ({ closeModal }) => {
             )}
           </div>
           <div className="flex modal-action gap-x-2">
-            <button className="mr-auto btn" onClick={addNewValue}>
+            <button className="mr-auto btn btn-sm" onClick={addNewValue}>
               New Value
             </button>
-            <button className="btn btn-primary">Save</button>
+            <button className="btn btn-primary btn-sm">Save</button>
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -146,7 +154,7 @@ const EditTransitionModal = ({ closeModal }) => {
                 setActiveContexMenu(Context.Canvas);
                 closeModal();
               }}
-              className="text-black underline bg-transparent border-none btn dark:text-white"
+              className="text-black btn-sm underline bg-transparent border-none btn dark:text-white"
             >
               Close
             </button>
