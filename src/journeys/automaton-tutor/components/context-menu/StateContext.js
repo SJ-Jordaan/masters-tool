@@ -32,7 +32,7 @@ export const StateContext = () => {
     setInitialState,
     addFinalState,
     setActiveModal,
-    setActiveContexMenu 
+    setActiveContexMenu,
   } = useAutomatonTutorStore();
   const handleRemoveState = () => {
     removeState(selectedEntity.id);
@@ -46,8 +46,8 @@ export const StateContext = () => {
       ) {
         removeTransition(link.index);
       }
-      setActiveContexMenu(Context.Canvas);
     });
+    setActiveContexMenu(Context.Canvas);
   };
   const handleSetIsInitial = () => setInitialState(selectedEntity.id);
   const handleAddToFinalStates = () => addFinalState(selectedEntity.id);
