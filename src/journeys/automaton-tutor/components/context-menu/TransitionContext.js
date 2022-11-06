@@ -1,8 +1,11 @@
 import { AiOutlineDelete } from "react-icons/ai";
-import { CgRename } from "react-icons/cg";
+import { MdOutlineEditNote } from "react-icons/md";
 import useAutomatonTutorStore, {
   Modal,
+  Context,
 } from "../../state/useAutomatonTutorStore.js";
+import { iconStyleClasses } from "../ContextMenu.jsx";
+
 export const TransitionContext = () => {
   const {
     removeTransition,
@@ -10,25 +13,38 @@ export const TransitionContext = () => {
     setActiveModal,
     setSelectedEntity,
     setTargetState,
+    setActiveContexMenu,
   } = useAutomatonTutorStore();
-  const handleRemoveTransition = () => {
-    removeTransition(selectedEntity.index);
-  };
 
-  const handleEditTransition = () => {
-    setTargetState(selectedEntity?.target);
-    setSelectedEntity(selectedEntity?.source);
-    setActiveModal(Modal?.EditTransition);
-  };
+  const actions = [
+    {
+      text: "Edit Transition",
+      icon: <MdOutlineEditNote />,
+      action: () => {
+        setTargetState(selectedEntity?.target);
+        setSelectedEntity(selectedEntity?.source);
+        setActiveModal(Modal?.EditTransition);
+      },
+    },
+    {
+      text: "Delete Transition",
+      icon: <AiOutlineDelete />,
+      action: () => {
+        removeTransition(selectedEntity.index);
+        setActiveContexMenu(Context.Canvas);
+      },
+    },
+  ];
 
   return (
     <>
-      <button data-tip="Transition Values" onClick={handleEditTransition}>
-        <CgRename className="w-6 h-6 md:w-7 md:h-7" />
-      </button>
-      <button data-tip="Delete Transition" onClick={handleRemoveTransition}>
-        <AiOutlineDelete className="w-6 h-6 md:w-7 md:h-7" />
-      </button>
+      {actions.map(({ text, icon, action }, index) => {
+        return (
+          <button data-tip={text} key={index} onClick={action}>
+            <span className={iconStyleClasses}>{icon}</span>
+          </button>
+        );
+      })}
     </>
   );
 };
