@@ -3,28 +3,38 @@ import useAutomatonTutorStore, {
   Context,
   Modal,
 } from "../state/useAutomatonTutorStore";
-import { StateContext, TransitionContext, CanvasContext } from "./context-menu";
+import {
+  StateContext,
+  TransitionContext,
+  CanvasContext,
+  SimulationContext,
+} from "./context-menu";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+
+export const iconStyleClasses =
+  "[&>*]:w-5 [&>*]:h-5 dark:text-white/70 text-black/50";
 
 const ContextMenu = () => {
   const { activeContexMenu, setActiveModal } = useAutomatonTutorStore();
   const [parent] = useAutoAnimate();
   return (
     <div className="fixed flex items-center justify-center w-full p-2 text-black dark:text-white gap-x-2">
-      <div
-        className="flex px-4 h-full py-2  rounded-md transition-all jusify-between bg-gray-300 dark:bg-gray-700 [&>*]:transition-all gap-x-8 [&>*]:tooltip-bottom [&>*]:tooltip"
-        ref={parent}
-      >
-        {activeContexMenu === Context.State && <StateContext />}
-        {activeContexMenu === Context.Canvas && <CanvasContext />}
-        {activeContexMenu === Context.Transition && <TransitionContext />}
-      </div>
-      <div className="flex items-center p-2 bg-gray-300 rounded-md dark:bg-gray-700">
-        <div className="dropdown dropdown-end ">
+      <div className="flex justify-between h-full px-4 py-2 transition-all bg-gray-300 divide-x rounded-md divide-black/40 dark:divide-white/40 gap-x-4 dark:bg-gray-700">
+        <div
+          ref={parent}
+          className="flex items-center [&>*]:transition-all gap-x-6 [&>*]:tooltip-bottom [&>*]:tooltip "
+        >
+          {activeContexMenu === Context.State && <StateContext />}
+          {activeContexMenu === Context.Canvas && <CanvasContext />}
+          {activeContexMenu === Context.Transition && <TransitionContext />}
+          {activeContexMenu === Context.Simulation && <SimulationContext />}
+        </div>
+
+        <div className="pl-4 dropdown dropdown-end">
           <AiOutlineMenu
             tabIndex={0}
-            className="w-6 h-6 text-black rounded-md cursor-pointer dark:text-white md:w-7 md:h-7 "
+            className="w-5 h-5 cursor-pointer dark:text-white/70 text-black/50 "
           />
           <ul
             tabIndex="0"
@@ -39,10 +49,10 @@ const ContextMenu = () => {
               </button>
             </li>
             <li>
-              <a href="/masters-tool">Restart</a>
+              <a href="/">Restart</a>
             </li>
             <li>
-              <a href="/masters-tool">Exit Builder</a>
+              <a href="/">Exit Builder</a>
             </li>
           </ul>
         </div>
