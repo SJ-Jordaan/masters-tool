@@ -4,6 +4,7 @@ export const Context = {
   State: "State",
   Canvas: "Canvas",
   Transition: "Transition",
+  Simulation: "Simulation",
 };
 
 export const Modal = {

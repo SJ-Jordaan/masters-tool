@@ -6,7 +6,11 @@ import useAutomatonTutorStore, {
   Modal,
 } from "./state/useAutomatonTutorStore";
 import useScreenOrientation from "react-hook-screen-orientation";
-import ModalManager from "./components/modals/ModalManager";
+import ModalManager from "./components/ModalManager";
+import SimulationInput from "./components/simulation/SimulationInput";
+import useSimulationStore from "./state/useSimulation";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import useGraphStore from "./state/useGraphSettings";
 
 export const AutomatonTutor = () => {
   const {
@@ -21,11 +25,13 @@ export const AutomatonTutor = () => {
     finalStateIds,
     setTargetState,
   } = useAutomatonTutorStore();
+  const { isLocked } = useGraphStore();
+  const { currentState, isSimulating } = useSimulationStore();
   const screenOrientation = useScreenOrientation();
   const [defaultOrientation] = useState(screenOrientation);
   const graphRef = useRef();
   const nameTransitionModalToggleRef = useRef();
-
+  const [parentRef] = useAutoAnimate();
   useEffect(() => {
     if (defaultOrientation !== screenOrientation) {
       window.location.reload(false);
@@ -38,6 +44,7 @@ export const AutomatonTutor = () => {
   };
 
   const colorNodes = (node) => {
+    if (isSimulating && currentState === node.id) return "red";
     if (node.id === selectedEntity?.id) return "purple";
     if (node.id === initialStateId && finalStateIds.includes(node.id))
       return "yellow";
@@ -53,6 +60,8 @@ export const AutomatonTutor = () => {
   };
 
   const onNodeClick = (node) => {
+    if (isSimulating) return;
+
     if (makeTransition) {
       handleAddTransition(node);
       return;
@@ -62,6 +71,7 @@ export const AutomatonTutor = () => {
   };
 
   const onLinkClick = (link) => {
+    if (isSimulating) return;
     setSelectedEntity(link);
     setActiveContexMenu(Context.Transition);
   };
@@ -75,15 +85,24 @@ export const AutomatonTutor = () => {
   };
 
   const onBackgroundClick = () => {
+    if (isSimulating) return;
     setActiveContexMenu(Context.Canvas);
     setSelectedEntity(null);
     if (makeTransition) toggleMakeTransition();
   };
 
-  const linkColor = (link) =>
-    !selectedEntity?.id && selectedEntity?.index === link?.index
-      ? "purple"
-      : "black";
+  const linkColor = (link) => {
+    if (!selectedEntity?.id && selectedEntity?.index === link?.index)
+      return "purple";
+
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    )
+      return "white";
+
+    return "black";
+  };
 
   return (
     <div className="relative">
@@ -104,6 +123,9 @@ export const AutomatonTutor = () => {
           onLinkClick={onLinkClick}
           linkCurvature={linkCurvature}
           linkLabel={(link) => `${link.values.toString()}`}
+          enableZoomInteraction={!(isLocked || isSimulating)}
+          enablePanInteraction={!(isLocked || isSimulating)}
+          enableNodeDrag={!(isLocked || isSimulating)}
         />
         <div>
           <label
@@ -115,6 +137,9 @@ export const AutomatonTutor = () => {
       </div>
       <div className="fixed -z-1">
         <ContextMenu />
+      </div>
+      <div className="fixed bottom-0 -z-1" ref={parentRef}>
+        {isSimulating && <SimulationInput />}
       </div>
       <ModalManager />
     </div>

@@ -1,8 +1,5 @@
-import TestInputModal from "./TestInputModal";
-import EditTransitionModal from "./EditTransitionModal";
-import useAutomatonTutorStore from "../../state/useAutomatonTutorStore";
-import EditStateModal from "./EditStateModal";
-
+import useAutomatonTutorStore from "../state/useAutomatonTutorStore";
+import { TestInputModal, EditStateModal, EditTransitionModal } from "./modals";
 const ModalManager = () => {
   const { setActiveModal } = useAutomatonTutorStore();
   const closeModal = () => setActiveModal(null);

@@ -3,6 +3,7 @@ import { BsArrowLeftRight, BsArrowRight } from "react-icons/bs";
 import { CgRename } from "react-icons/cg";
 import { FiCheckCircle } from "react-icons/fi";
 import useAutomatonTutorStore, {
+  Context,
   Modal,
 } from "../../state/useAutomatonTutorStore.js";
 
@@ -15,7 +16,7 @@ const TransitionContextMenuItem = () => {
       onClick={handleClick}
       className={`tooltip ${makeTransition && "tooltip-open"}`}
     >
-      <BsArrowLeftRight className="w-6 h-6 md:w-7 md:h-7" />
+      <BsArrowLeftRight className="w-5 h-5 dark:text-white/50 text-black/50" />
     </button>
   );
 };
@@ -31,50 +32,76 @@ export const StateContext = () => {
     setInitialState,
     addFinalState,
     setActiveModal,
+    setActiveContexMenu,
   } = useAutomatonTutorStore();
-  const handleRemoveState = () => {
-    removeState(selectedEntity.id);
-    if (selectedEntity.id === initialStateId) setInitialState(null);
-    if (finalStateIds.includes(selectedEntity.id))
-      addFinalState(selectedEntity.id);
-    graphData.links.forEach((link) => {
-      if (
-        link.source.id === selectedEntity.id ||
-        link.target.id === selectedEntity.id
-      ) {
-        removeTransition(link.index);
-      }
-    });
-  };
-  const handleSetIsInitial = () => setInitialState(selectedEntity.id);
-  const handleAddToFinalStates = () => addFinalState(selectedEntity.id);
 
-  return (
-    <>
-      <button data-tip="Initial State" onClick={handleSetIsInitial}>
+  const actions = [
+    {
+      text: "Set as Initial State",
+      icon: (
         <BsArrowRight
-          className={`w-6 h-6 md:w-7 md:h-7 ${
+          className={`${
             selectedEntity.id === initialStateId && "text-primary"
           }`}
         />
-      </button>
-      <button data-tip="Final State" onClick={handleAddToFinalStates}>
+      ),
+      action: () => {
+        setInitialState(selectedEntity.id);
+      },
+    },
+    {
+      text: "Final State",
+      icon: (
         <FiCheckCircle
-          className={`w-6 h-6 md:w-7 md:h-7 ${
+          className={` ${
             finalStateIds.includes(selectedEntity.id) && "text-primary"
           }`}
         />
-      </button>
+      ),
+      action: () => {
+        addFinalState(selectedEntity.id);
+      },
+    },
+    {
+      text: " Rename State",
+      icon: <CgRename />,
+      action: () => {
+        setActiveModal(Modal?.EditState);
+      },
+    },
+    {
+      text: "Delete State",
+      icon: <AiOutlineDelete />,
+      action: () => {
+        removeState(selectedEntity.id);
+        if (selectedEntity.id === initialStateId) setInitialState(null);
+        if (finalStateIds.includes(selectedEntity.id))
+          addFinalState(selectedEntity.id);
+        graphData.links.forEach((link) => {
+          if (
+            link.source.id === selectedEntity.id ||
+            link.target.id === selectedEntity.id
+          ) {
+            removeTransition(link.index);
+          }
+        });
+        setActiveContexMenu(Context.Canvas);
+      },
+    },
+  ];
+
+  return (
+    <>
       <TransitionContextMenuItem />
-      <button
-        data-tip="Rename"
-        onClick={() => setActiveModal(Modal?.EditState)}
-      >
-        <CgRename className="w-6 h-6 md:w-7 md:h-7" />
-      </button>
-      <button data-tip="Delete State" onClick={handleRemoveState}>
-        <AiOutlineDelete className="w-6 h-6 md:w-7 md:h-7" />
-      </button>
+      {actions.map(({ text, icon, action }, index) => {
+        return (
+          <button data-tip={text} key={index} onClick={action}>
+            <span className="[&>*]:w-5 [&>*]:h-5 dark:text-white/70 text-black/50">
+              {icon}
+            </span>
+          </button>
+        );
+      })}
     </>
   );
 };

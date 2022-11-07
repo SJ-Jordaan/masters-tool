@@ -6,7 +6,7 @@ import useAutomatonTutorStore, {
   Modal,
 } from "../../state/useAutomatonTutorStore";
 
-const EditStateModal = ({ closeModal }) => {
+export const EditStateModal = ({ closeModal }) => {
   const { activeModal, selectedEntity } = useAutomatonTutorStore();
   const [parent] = useAutoAnimate();
   const {
@@ -40,7 +40,7 @@ const EditStateModal = ({ closeModal }) => {
               <input
                 {...register("name", { required: true })}
                 type="text"
-                className="w-full p-2 mt-2 rounded ring-1 ring-primary/50"
+                className="w-full px-2 py-1 mt-2 rounded bg-inherit ring-1 ring-primary/50"
               />
             </div>
           </div>
@@ -52,13 +52,13 @@ const EditStateModal = ({ closeModal }) => {
             )}
           </div>
           <div className="flex modal-action gap-x-2">
-            <button className=" btn btn-primary">Save</button>
+            <button className="rounded btn btn-primary btn-sm">Save</button>
             <button
               onClick={(e) => {
                 e.preventDefault();
                 closeModal();
               }}
-              className="text-black underline bg-transparent border-none btn dark:text-white"
+              className="text-black underline bg-transparent border-none rounded btn-sm btn dark:text-white"
             >
               close
             </button>
@@ -68,5 +68,3 @@ const EditStateModal = ({ closeModal }) => {
     </Portal>
   );
 };
-
-export default EditStateModal;
