@@ -1,7 +1,6 @@
-import { AiOutlineDelete } from "react-icons/ai";
-import { BsArrowLeftRight, BsArrowRight } from "react-icons/bs";
+import { AiOutlineDelete, AiOutlineCheckCircle } from "react-icons/ai";
+import { BsLink, BsArrowRight } from "react-icons/bs";
 import { CgRename } from "react-icons/cg";
-import { FiCheckCircle } from "react-icons/fi";
 import useAutomatonTutorStore, {
   Context,
   Modal,
@@ -16,7 +15,7 @@ const TransitionContextMenuItem = () => {
       onClick={handleClick}
       className={`tooltip ${makeTransition && "tooltip-open"}`}
     >
-      <BsArrowLeftRight className="w-5 h-5 dark:text-white/50 text-black/50" />
+      <BsLink className="w-5 h-5 dark:text-white/50 text-black/50" />
     </button>
   );
 };
@@ -52,7 +51,7 @@ export const StateContext = () => {
     {
       text: "Final State",
       icon: (
-        <FiCheckCircle
+        <AiOutlineCheckCircle
           className={` ${
             finalStateIds.includes(selectedEntity.id) && "text-primary"
           }`}
