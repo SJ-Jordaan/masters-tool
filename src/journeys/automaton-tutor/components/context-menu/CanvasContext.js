@@ -4,8 +4,9 @@ import { AiOutlinePlus, AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
 import { MdOutlineCenterFocusWeak } from "react-icons/md";
 import useGraphStore from "../../state/useGraphSettings.js";
 import { iconStyleClasses } from "../ContextMenu.jsx";
+import { forwardRef } from "react";
 
-export const CanvasContext = () => {
+export const CanvasContext = forwardRef((props, ref) => {
   const { isLocked, setIsLocked } = useGraphStore();
   const actions = [
     {
@@ -33,10 +34,10 @@ export const CanvasContext = () => {
       },
     },
     {
-      text: "Fit Canvas",
+      text: "Scroll To Content",
       icon: <MdOutlineCenterFocusWeak />,
       action: () => {
-        console.log("Fit to canvas clicked");
+        ref.current.zoomToFit(300, 60);
       },
     },
   ];
@@ -54,4 +55,4 @@ export const CanvasContext = () => {
       })}
     </>
   );
-};
+});
