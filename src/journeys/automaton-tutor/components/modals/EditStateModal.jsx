@@ -32,6 +32,7 @@ export const EditStateModal = ({ closeModal }) => {
         className={`modal modal-bottom sm:modal-middle  ${
           activeModal === Modal.EditState && "modal-open"
         }`}
+        autoComplete="off"
       >
         <div className="modal-box">
           <h3 className="text-lg font-bold">Rename {selectedEntity?.name}</h3>

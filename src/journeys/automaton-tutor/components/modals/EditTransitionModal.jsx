@@ -96,6 +96,7 @@ export const EditTransitionModal = ({ closeModal }) => {
         className={`modal modal-bottom sm:modal-middle ${
           activeModal === Modal.EditTransition && "modal-open"
         }`}
+        autoComplete="off"
       >
         <div className="modal-box">
           <div className="flex justify-between">

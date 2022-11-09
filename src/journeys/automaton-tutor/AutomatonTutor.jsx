@@ -136,7 +136,7 @@ export const AutomatonTutor = () => {
         </div>
       </div>
       <div className="fixed -z-1">
-        <ContextMenu />
+        <ContextMenu ref={graphRef} />
       </div>
       <div className="fixed bottom-0 -z-1" ref={parentRef}>
         {isSimulating && <SimulationInput />}
