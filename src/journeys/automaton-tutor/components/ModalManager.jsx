@@ -1,5 +1,11 @@
 import useAutomatonTutorStore from "../state/useAutomatonTutorStore";
-import { TestInputModal, EditStateModal, EditTransitionModal } from "./modals";
+import {
+  TestInputModal,
+  EditStateModal,
+  EditTransitionModal,
+  SelectAlphabetModal,
+  CustomAlphabetModal,
+} from "./modals";
 const ModalManager = () => {
   const { setActiveModal } = useAutomatonTutorStore();
   const closeModal = () => setActiveModal(null);
@@ -8,6 +14,8 @@ const ModalManager = () => {
       <TestInputModal closeModal={closeModal} />
       <EditTransitionModal closeModal={closeModal} />
       <EditStateModal closeModal={closeModal} />
+      <SelectAlphabetModal closeModal={closeModal} />
+      <CustomAlphabetModal closeModal={closeModal} />
     </>
   );
 };
