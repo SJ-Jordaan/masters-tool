@@ -114,7 +114,7 @@ export const TestInputModal = ({ closeModal }) => {
       >
         <div className="modal-box">
           <h3 className="text-lg font-bold">Test Input</h3>
-          <div className="py-4">
+          <div className="py-2">
             <p>Enter consecutive symbols with no delimiters.</p>
             <div
               className={`relative ring-1 ring-primary/30 ${
@@ -158,19 +158,19 @@ export const TestInputModal = ({ closeModal }) => {
           <div className="flex modal-action gap-x-2">
             <button
               onClick={handleVerifyInput}
-              className="rounded btn btn-primary btn-sm"
+              className="rounded btn btn-primary btn-sm lowercase"
             >
               Verify
             </button>
             <button
               onClick={handleSimulation}
-              className="bg-transparent rounded dark:text-white text-black btn btn-sm border dark:border-white"
+              className="bg-transparent rounded dark:text-white text-black btn btn-sm border dark:border-white lowercase"
             >
               Simulate
             </button>
             <button
               onClick={closeModal}
-              className="text-black underline bg-transparent border-none rounded btn-sm btn dark:text-white"
+              className="text-black underline bg-transparent border-none rounded btn-sm btn dark:text-white lowercase"
             >
               close
             </button>

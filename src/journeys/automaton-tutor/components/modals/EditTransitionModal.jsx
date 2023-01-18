@@ -8,8 +8,10 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useForm, useFieldArray } from "react-hook-form";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import useGraphStore from "../../state/useGraphSettings";
 
 export const EditTransitionModal = ({ closeModal }) => {
+  const { alphabet } = useGraphStore();
   const inputRef = useRef();
   const [parent] = useAutoAnimate();
   const [parentError] = useAutoAnimate();
@@ -58,6 +60,7 @@ export const EditTransitionModal = ({ closeModal }) => {
 
     if (data.values.length === 0 && transition) {
       removeTransition(transition.index);
+      setActiveContexMenu(Context.Canvas);
     } else if (data.values.length > 0) {
       if (transition) removeTransition(transition.index);
       let uniqueValues = [];
@@ -75,7 +78,7 @@ export const EditTransitionModal = ({ closeModal }) => {
       };
       addTransition(transitionObj);
     }
-    toggleMakeTransition();
+    if (makeTransition) toggleMakeTransition();
     setTargetState(null);
     closeModal();
   };
@@ -84,9 +87,8 @@ export const EditTransitionModal = ({ closeModal }) => {
     remove(index);
   };
 
-  const addNewValue = (e) => {
-    e.preventDefault();
-    append({ 0: "" });
+  const handleCharacterClick = (character) => {
+    append({ 0: character });
   };
 
   return (
@@ -124,6 +126,7 @@ export const EditTransitionModal = ({ closeModal }) => {
                     className="flex items-center w-full gap-2 px-2 py-1 mt-2 rounded ring-1 ring-primary/50"
                   >
                     <input
+                      readOnly
                       className="w-full bg-inherit"
                       ref={inputRef}
                       defaultValue={value["0"]}
@@ -132,7 +135,10 @@ export const EditTransitionModal = ({ closeModal }) => {
                     />
                     <AiOutlineClose
                       className="w-5 h-5"
-                      onClick={() => removeTransitionValue(index)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        removeTransitionValue(index);
+                      }}
                     />
                   </li>
                 );
@@ -146,27 +152,41 @@ export const EditTransitionModal = ({ closeModal }) => {
               </p>
             )}
           </div>
-          <div className="flex modal-action gap-x-2">
-            <button
-              className="mr-auto rounded btn btn-sm"
-              onClick={addNewValue}
-            >
-              New Value
-            </button>
-            <button className="rounded btn btn-primary btn-sm">Save</button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedEntity(null);
-                setTargetState(null);
-                if (makeTransition) toggleMakeTransition();
-                setActiveContexMenu(Context.Canvas);
-                closeModal();
-              }}
-              className="text-black underline bg-transparent border-none rounded btn-sm btn dark:text-white"
-            >
-              Close
-            </button>
+          <div className="flex modal-action gap-2 items-center flex-wrap">
+            <div className="mr-auto flex items-center gap-x-2">
+              {alphabet.split("").map((character, index) => {
+                return (
+                  <button
+                    className="btn btn-sm lowercase"
+                    key={character + index}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCharacterClick(character);
+                    }}
+                  >
+                    {character}
+                  </button>
+                );
+              })}
+            </div>
+            <div>
+              <button className="rounded btn btn-primary btn-sm mr-2 lowercase">
+                Save
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedEntity(null);
+                  setTargetState(null);
+                  if (makeTransition) toggleMakeTransition();
+                  setActiveContexMenu(Context.Canvas);
+                  closeModal();
+                }}
+                className="text-black underline bg-transparent border-none rounded btn-sm btn dark:text-white lowercase"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </form>

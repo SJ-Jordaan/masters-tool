@@ -8,6 +8,8 @@ import { forwardRef } from "react";
 
 export const CanvasContext = forwardRef((props, ref) => {
   const { isLocked, setIsLocked } = useGraphStore();
+  const { addState, graphData } = useAutomatonTutorStore();
+
   const actions = [
     {
       text: "Add State",
@@ -41,8 +43,6 @@ export const CanvasContext = forwardRef((props, ref) => {
       },
     },
   ];
-
-  const { addState, graphData } = useAutomatonTutorStore();
 
   return (
     <>
