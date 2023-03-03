@@ -127,7 +127,14 @@ export const EditTransitionModal = ({ closeModal }) => {
                   >
                     <input
                       readOnly
-                      className="w-full bg-inherit"
+                      className="flex w-full bg-inherit md:hidden"
+                      ref={inputRef}
+                      defaultValue={value["0"]}
+                      type="text"
+                      {...register(`values.${index}.0`, { required: true })}
+                    />
+                    <input
+                      className="hidden w-full bg-inherit md:flex"
                       ref={inputRef}
                       defaultValue={value["0"]}
                       type="text"
@@ -152,12 +159,12 @@ export const EditTransitionModal = ({ closeModal }) => {
               </p>
             )}
           </div>
-          <div className="flex modal-action gap-2 items-center flex-wrap">
-            <div className="mr-auto flex items-center gap-x-2">
+          <div className="flex flex-wrap items-center gap-2 modal-action">
+            <div className="flex items-center mr-auto gap-x-2">
               {alphabet.split("").map((character, index) => {
                 return (
                   <button
-                    className="btn btn-sm lowercase"
+                    className="lowercase btn btn-sm"
                     key={character + index}
                     onClick={(e) => {
                       e.preventDefault();
@@ -170,7 +177,7 @@ export const EditTransitionModal = ({ closeModal }) => {
               })}
             </div>
             <div>
-              <button className="rounded btn btn-primary btn-sm mr-2 lowercase">
+              <button className="mr-2 lowercase rounded btn btn-primary btn-sm">
                 Save
               </button>
               <button
@@ -182,7 +189,7 @@ export const EditTransitionModal = ({ closeModal }) => {
                   setActiveContexMenu(Context.Canvas);
                   closeModal();
                 }}
-                className="text-black underline bg-transparent border-none rounded btn-sm btn dark:text-white lowercase"
+                className="text-black underline lowercase bg-transparent border-none rounded btn-sm btn dark:text-white"
               >
                 Close
               </button>

@@ -4,10 +4,10 @@ import useAutomatonTutorStore, {
   Modal,
 } from "../state/useAutomatonTutorStore";
 import {
-  StateContext,
-  TransitionContext,
-  CanvasContext,
-  SimulationContext,
+  StateToolbar,
+  TransitionToolbar,
+  CanvasToolbar,
+  SimulationToolbar,
 } from "./context-menu";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -25,10 +25,10 @@ const ContextMenu = forwardRef((props, ref) => {
           ref={parent}
           className="flex items-center [&>*]:transition-all gap-x-6 [&>*]:tooltip-bottom [&>*]:tooltip"
         >
-          {activeContexMenu === Context.State && <StateContext />}
-          {activeContexMenu === Context.Canvas && <CanvasContext ref={ref} />}
-          {activeContexMenu === Context.Transition && <TransitionContext />}
-          {activeContexMenu === Context.Simulation && <SimulationContext />}
+          {activeContexMenu === Context.State && <StateToolbar />}
+          {activeContexMenu === Context.Canvas && <CanvasToolbar ref={ref} />}
+          {activeContexMenu === Context.Transition && <TransitionToolbar />}
+          {activeContexMenu === Context.Simulation && <SimulationToolbar />}
         </div>
 
         <div className="pl-4 dropdown dropdown-end">

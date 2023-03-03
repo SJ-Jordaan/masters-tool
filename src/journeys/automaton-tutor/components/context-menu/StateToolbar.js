@@ -20,7 +20,7 @@ const TransitionContextMenuItem = () => {
   );
 };
 
-export const StateContext = () => {
+export const StateToolbar = () => {
   const {
     removeState,
     selectedEntity,

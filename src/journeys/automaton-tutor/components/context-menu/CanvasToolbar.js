@@ -6,7 +6,7 @@ import useGraphStore from "../../state/useGraphSettings.js";
 import { iconStyleClasses } from "../ContextMenu.jsx";
 import { forwardRef } from "react";
 
-export const CanvasContext = forwardRef((props, ref) => {
+export const CanvasToolbar = forwardRef((props, ref) => {
   const { isLocked, setIsLocked } = useGraphStore();
   const { addState, graphData } = useAutomatonTutorStore();
 

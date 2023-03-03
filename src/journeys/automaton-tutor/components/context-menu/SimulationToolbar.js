@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { iconStyleClasses } from "../ContextMenu";
 
-export const SimulationContext = () => {
+export const SimulationToolbar = () => {
   const {
     setIsSimulating,
     currentInput,

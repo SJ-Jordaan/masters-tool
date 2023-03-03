@@ -6,7 +6,7 @@ import useAutomatonTutorStore, {
 } from "../../state/useAutomatonTutorStore.js";
 import { iconStyleClasses } from "../ContextMenu.jsx";
 
-export const TransitionContext = () => {
+export const TransitionToolbar = () => {
   const {
     removeTransition,
     selectedEntity,

@@ -9,9 +9,9 @@ const SimulationInput = () => {
   const [acceptanceParentRef] = useAutoAnimate();
   const [itemsRef] = useAutoAnimate();
   return (
-    <div className="bottom-0 flex justify-center w-screen">
+    <div className="bottom-0 justify-center">
       <div
-        className={`flex mb-2 overflow-hidden border-2 divide-x-2 rounded border-black/60 dark:border-white/60 divide-black/60 dark:divide-white/60 ${
+        className={`flex w-screen  overflow-x-auto mb-2 overflow-hidden snap-x snap-mandatory snap-en border-2 divide-x-2 rounded border-black/60 dark:border-white/60 divide-black/60 dark:divide-white/60 ${
           isDoneSimulating &&
           isAccepting &&
           "border-success dark:border-success divide-success dark:divide-success"

@@ -134,13 +134,13 @@ export const TestInputModal = ({ closeModal }) => {
               />
               <div ref={isAcceptingAnimationRef}>
                 {isInputAccepted === TestInputResult.Rejected && (
-                  <div className="px-2 py-1 right-0 top-0 text-sm font-semibold rounded-r bg-error/10 text-error w-fit h-full flex items-center gap-2 min-w-fit">
+                  <div className="top-0 right-0 flex items-center h-full gap-2 px-2 py-1 text-sm font-semibold rounded-r bg-error/10 text-rose-700 w-fit min-w-fit">
                     <BiErrorCircle className="w-4 h-4" />
                     <p>Rejected</p>
                   </div>
                 )}
                 {isInputAccepted === TestInputResult.Accepted && (
-                  <div className="px-2 py-1 right-0 top-0 text-sm font-semibold rounded-r bg-success/10 text-success w-fit h-full flex items-center gap-2 min-w-fit">
+                  <div className="top-0 right-0 flex items-center h-full gap-2 px-2 py-1 text-sm font-semibold rounded-r bg-success/10 text-lime-700 w-fit min-w-fit">
                     <BsCheckCircle className="w-4 h-4" />
                     <p>Accepted</p>
                   </div>
@@ -150,7 +150,7 @@ export const TestInputModal = ({ closeModal }) => {
           </div>
           <div ref={parentError}>
             {error && (
-              <p className="px-2 py-1 text-sm font-semibold rounded bg-rose-100 text-error w-fit">
+              <p className="px-2 py-1 text-sm font-semibold rounded bg-rose-100 text-rose-700 w-fit">
                 {error}
               </p>
             )}
@@ -158,19 +158,19 @@ export const TestInputModal = ({ closeModal }) => {
           <div className="flex modal-action gap-x-2">
             <button
               onClick={handleVerifyInput}
-              className="rounded btn btn-primary btn-sm lowercase"
+              className="lowercase rounded btn btn-primary btn-sm"
             >
               Verify
             </button>
             <button
               onClick={handleSimulation}
-              className="bg-transparent rounded dark:text-white text-black btn btn-sm border dark:border-white lowercase"
+              className="text-black lowercase bg-transparent border rounded dark:text-white btn btn-sm dark:border-white"
             >
               Simulate
             </button>
             <button
               onClick={closeModal}
-              className="text-black underline bg-transparent border-none rounded btn-sm btn dark:text-white lowercase"
+              className="text-black underline lowercase bg-transparent border-none rounded btn-sm btn dark:text-white"
             >
               close
             </button>
