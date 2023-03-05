@@ -11,6 +11,7 @@ import SimulationInput from "./components/simulation/SimulationInput";
 import useSimulationStore from "./state/useSimulation";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import useGraphStore from "./state/useGraphSettings";
+import threeSpritetext from "three-spritetext";
 
 export const AutomatonTutor = () => {
   const {
@@ -24,6 +25,7 @@ export const AutomatonTutor = () => {
     initialStateId,
     finalStateIds,
     setTargetState,
+    fixStates
   } = useAutomatonTutorStore();
   const { isLocked } = useGraphStore();
   const { currentState, isSimulating } = useSimulationStore();
@@ -44,13 +46,11 @@ export const AutomatonTutor = () => {
   };
 
   const colorNodes = (node) => {
-    if (isSimulating && currentState === node.id) return "red";
-    if (node.id === selectedEntity?.id) return "purple";
+    if (isSimulating && currentState === node.id) return "yellow";
+    if (node.id === selectedEntity?.id) return "yellow";
     if (node.id === initialStateId && finalStateIds.includes(node.id))
       return "yellow";
-    if (node.id === initialStateId) return "lightpink";
-    if (finalStateIds.includes(node.id)) return "lightgreen";
-    return "lightblue";
+    return "grey";
   };
 
   const onNodeDragEnd = (node) => {
@@ -66,6 +66,20 @@ export const AutomatonTutor = () => {
       handleAddTransition(node);
       return;
     }
+
+    // If any of nodes in the graph do not have fixed position, then we lock the graph
+    const notFixed = graphData.nodes.find((node) => !node.fx);
+    if (notFixed) {
+      const newGraphNodes = graphData.nodes.map((node) => ({
+        ...node,
+        fx: node.x,
+        fy: node.y,
+        fz: node.z,
+      }));
+
+      fixStates(newGraphNodes);
+    }
+
     setActiveContexMenu(Context.State);
     setSelectedEntity(node);
   };
@@ -92,8 +106,8 @@ export const AutomatonTutor = () => {
   };
 
   const linkColor = (link) => {
-    if (!selectedEntity?.id && selectedEntity?.index === link?.index)
-      return "purple";
+    if (!selectedEntity?.id && link && selectedEntity?.index === link.index)
+      return "yellow";
 
     if (
       window.matchMedia &&
@@ -112,15 +126,16 @@ export const AutomatonTutor = () => {
       y
     } = node;
 
-    const nodeSize = 10;
-    const fontSize = 6;
-    const arrowSize = 6;
+    const nodeSize = 9;
+    const fontSize = 4;
+    const arrowSize = 4;
     const lineWidth = 0.5;
     ctx.lineWidth = lineWidth;
 
     if (initialStateId === node.id) {
-      ctx.fillStyle = "black"
-      ctx.strokeStyle = "black";
+      const arrowColor = linkColor();
+      ctx.fillStyle = arrowColor;
+      ctx.strokeStyle = arrowColor;
       // Draw a line from outside the circle to the left circumference
       ctx.beginPath();
       ctx.moveTo(x - nodeSize - arrowSize, y);
@@ -151,15 +166,26 @@ export const AutomatonTutor = () => {
       ctx.fill();
       // Add the border
       ctx.strokeStyle = "black";
-      ctx.stroke(); 
+      ctx.stroke();
+
+      
+      // Add the text below the circle
+      ctx.fillStyle = "black";
+      ctx.font = `${fontSize}px sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "black";
+      ctx.fillText(name, x, y + (nodeSize - nodeSize / 4) - (fontSize / 2) - 1);
+      return;
     }
 
-    // Add the text
+    // Add the text below the circle
+    ctx.fillStyle = "black";
     ctx.font = `${fontSize}px sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "black";
-    ctx.fillText(name, x, y);
+    ctx.fillText(name, x, y + nodeSize - fontSize / 2 - 1);
   }
 
   return (
@@ -171,20 +197,38 @@ export const AutomatonTutor = () => {
           cooldownTicks={10}
           linkWidth={1}
           onEngineStop={() => graphRef.current.zoomToFit(300, 60)}
-          nodeColor={colorNodes}
           linkDirectionalArrowLength={4}
           linkDirectionalArrowRelPos={1}
           onNodeDragEnd={onNodeDragEnd}
+          onNodeDrag={onNodeClick}
           linkColor={linkColor}
           onBackgroundClick={onBackgroundClick}
           onNodeClick={onNodeClick}
           onLinkClick={onLinkClick}
           linkCurvature={linkCurvature}
+          nodeLabel=""
           linkLabel={(link) => `${link.values.toString()}`}
+          linkThreeObjectExtend={true}
+          linkThreeObject={link => {
+            // extend link with text sprite
+            const sprite = new threeSpritetext(`${link.source} > ${link.target}`);
+            sprite.color = 'lightgrey';
+            sprite.textHeight = 1.5;
+            console.log(sprite)
+            return sprite;
+          }}
+          linkPositionUpdate={(sprite, { start, end }) => {
+            const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
+              [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+            })));
+
+            // Position sprite
+            Object.assign(sprite.position, middlePos);
+          }}
           enablePanInteraction={!(isLocked || isSimulating)}
           enableNodeDrag={!(isLocked || isSimulating)}
           nodePointerAreaPaint={nodePaint}
-          nodeCanvasObject={(node, ctx) => nodePaint(node, "grey", ctx)}
+          nodeCanvasObject={(node, ctx) => nodePaint(node, colorNodes(node), ctx)}
         />
         <div>
           <label

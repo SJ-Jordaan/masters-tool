@@ -89,6 +89,12 @@ const useAutomatonTutorStore = create(
           ],
         },
       })),
+    fixStates: (fixedNodes) => set((state) => ({
+      graphData: {
+        nodes: fixedNodes,
+        links: [...state.graphData.links],
+      },
+    })),
   }),
   {
     name: "automaton-tutor",
