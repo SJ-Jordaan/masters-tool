@@ -11,7 +11,6 @@ import SimulationInput from "./components/simulation/SimulationInput";
 import useSimulationStore from "./state/useSimulation";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import useGraphStore from "./state/useGraphSettings";
-import threeSpritetext from "three-spritetext";
 
 export const AutomatonTutor = () => {
   const {
