@@ -133,7 +133,7 @@ export const AutomatonTutor = () => {
     ctx.lineWidth = lineWidth;
 
     if (initialStateId === node.id) {
-      const arrowColor = linkColor();
+      const arrowColor = colorNodes(node);
       ctx.fillStyle = arrowColor;
       ctx.strokeStyle = arrowColor;
       // Draw a line from outside the circle to the left circumference
@@ -144,8 +144,8 @@ export const AutomatonTutor = () => {
       // Draw an arrowhead at the end of the line touching the circumference
       ctx.beginPath();
       ctx.moveTo(x - nodeSize, y);
-      ctx.lineTo(x - nodeSize - arrowSize, y - arrowSize / 2);
-      ctx.lineTo(x - nodeSize - arrowSize, y + arrowSize / 2);
+      ctx.lineTo(x - nodeSize - arrowSize, y - arrowSize / 3);
+      ctx.lineTo(x - nodeSize - arrowSize, y + arrowSize / 3);
       ctx.fill();
     }
 
@@ -157,11 +157,48 @@ export const AutomatonTutor = () => {
     // Add the border
     ctx.strokeStyle = "black";
     ctx.stroke();
+
+    // There is a transition being made
+    if (makeTransition && node.id === selectedEntity?.id) {
+      const arrowColor = linkColor();
+      ctx.fillStyle = arrowColor;
+      ctx.strokeStyle = arrowColor;
+
+      const startPointX = x;
+      const startPointY = y - nodeSize;
+
+      const quadPointX = x;
+      const quadPointY = y - nodeSize * 2;
+      
+      const endPointX = x + nodeSize;
+      const endPointY = y - nodeSize * 2;
+      
+      const arrowAngle = Math.atan2(quadPointX - endPointX, quadPointY - endPointY) + Math.PI;
+      
+      ctx.beginPath();
+      ctx.setLineDash([1, 2]);
+      ctx.moveTo(startPointX, startPointY);
+      
+      ctx.quadraticCurveTo(quadPointX, quadPointY, endPointX, endPointY);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.setLineDash([]);
+      
+      ctx.moveTo(endPointX - (2 * Math.sin(arrowAngle - Math.PI / 4)), 
+                  endPointY - (2 * Math.cos(arrowAngle - Math.PI / 4)));
+      
+      ctx.lineTo(endPointX, endPointY);
+      
+      ctx.lineTo(endPointX - (2 * Math.sin(arrowAngle + Math.PI / 4)), 
+                  endPointY - (2 * Math.cos(arrowAngle + Math.PI / 4)));
+      
+      ctx.stroke();
+    }
     
     if (finalStateIds.includes(node.id)) {
       // Draw a second circle inside the first one
       ctx.beginPath();
-      ctx.arc(x, y, nodeSize - (nodeSize / 4), 0, 2 * Math.PI, false);
+      ctx.arc(x, y, nodeSize - (nodeSize / 6), 0, 2 * Math.PI, false);
       ctx.fillStyle = color;
       ctx.fill();
       // Add the border
@@ -169,22 +206,20 @@ export const AutomatonTutor = () => {
       ctx.stroke();
 
       
-      // Add the text below the circle
+      // Add the text at the bottom of the circle
       ctx.fillStyle = "black";
       ctx.font = `${fontSize}px sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "black";
-      ctx.fillText(name, x, y + (nodeSize - nodeSize / 4) - (fontSize / 2) - 1);
+      ctx.fillText(name, x, y + (nodeSize - nodeSize / 6) - (fontSize / 2) - 1);
       return;
     }
 
-    // Add the text below the circle
+    // Add the text at the bottom of the circle
     ctx.fillStyle = "black";
     ctx.font = `${fontSize}px sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = "black";
     ctx.fillText(name, x, y + nodeSize - fontSize / 2 - 1);
   }
 
@@ -195,7 +230,7 @@ export const AutomatonTutor = () => {
           ref={graphRef}
           graphData={graphData}
           cooldownTicks={10}
-          linkWidth={1}
+          linkWidth={2}
           onEngineStop={() => graphRef.current.zoomToFit(300, 60)}
           linkDirectionalArrowLength={4}
           linkDirectionalArrowRelPos={1}
@@ -208,23 +243,6 @@ export const AutomatonTutor = () => {
           linkCurvature={linkCurvature}
           nodeLabel=""
           linkLabel={(link) => `${link.values.toString()}`}
-          linkThreeObjectExtend={true}
-          linkThreeObject={link => {
-            // extend link with text sprite
-            const sprite = new threeSpritetext(`${link.source} > ${link.target}`);
-            sprite.color = 'lightgrey';
-            sprite.textHeight = 1.5;
-            console.log(sprite)
-            return sprite;
-          }}
-          linkPositionUpdate={(sprite, { start, end }) => {
-            const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
-              [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
-            })));
-
-            // Position sprite
-            Object.assign(sprite.position, middlePos);
-          }}
           enablePanInteraction={!(isLocked || isSimulating)}
           enableNodeDrag={!(isLocked || isSimulating)}
           nodePointerAreaPaint={nodePaint}

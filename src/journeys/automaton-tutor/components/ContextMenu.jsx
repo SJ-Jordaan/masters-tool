@@ -16,7 +16,7 @@ export const iconStyleClasses =
   "[&>*]:w-5 [&>*]:h-5 dark:text-white/80 text-black/80";
 
 const ContextMenu = forwardRef((props, ref) => {
-  const { activeContexMenu, setActiveModal } = useAutomatonTutorStore();
+  const { activeContexMenu, setActiveModal, setSelectedEntity, setActiveContexMenu } = useAutomatonTutorStore();
   const [parent] = useAutoAnimate();
   return (
     <div className="fixed flex items-center justify-center w-full p-2 text-black dark:text-white gap-x-2">
@@ -44,7 +44,11 @@ const ContextMenu = forwardRef((props, ref) => {
               <a href="/masters-tool">Save Automata</a>
             </li>
             <li>
-              <button onClick={() => setActiveModal(Modal.TestInput)}>
+              <button onClick={() => {
+                setActiveModal(Modal.TestInput);
+                setSelectedEntity(null);
+                setActiveContexMenu(Context.Canvas)
+              }}>
                 Test Input
               </button>
             </li>
