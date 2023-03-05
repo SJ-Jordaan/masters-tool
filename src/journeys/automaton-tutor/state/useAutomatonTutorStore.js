@@ -11,6 +11,8 @@ export const Modal = {
   TestInput: "TestInput",
   EditTransition: "EditTransition",
   EditState: "EditState",
+  SelectAlphabet: "SelectAlphabet",
+  CustomAlphabet: "CustomAlphabet",
 };
 
 const useAutomatonTutorStore = create(
