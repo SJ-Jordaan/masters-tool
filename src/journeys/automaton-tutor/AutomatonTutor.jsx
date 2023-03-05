@@ -104,6 +104,64 @@ export const AutomatonTutor = () => {
     return "black";
   };
 
+  function nodePaint(node, color = "black", ctx) {
+    // Make a white circle with a black border, with text inside using name
+    const {
+      name,
+      x,
+      y
+    } = node;
+
+    const nodeSize = 10;
+    const fontSize = 6;
+    const arrowSize = 6;
+    const lineWidth = 0.5;
+    ctx.lineWidth = lineWidth;
+
+    if (initialStateId === node.id) {
+      ctx.fillStyle = "black"
+      ctx.strokeStyle = "black";
+      // Draw a line from outside the circle to the left circumference
+      ctx.beginPath();
+      ctx.moveTo(x - nodeSize - arrowSize, y);
+      ctx.lineTo(x - nodeSize - arrowSize * 2, y);
+      ctx.stroke();
+      // Draw an arrowhead at the end of the line touching the circumference
+      ctx.beginPath();
+      ctx.moveTo(x - nodeSize, y);
+      ctx.lineTo(x - nodeSize - arrowSize, y - arrowSize / 2);
+      ctx.lineTo(x - nodeSize - arrowSize, y + arrowSize / 2);
+      ctx.fill();
+    }
+
+    // Draw the circle
+    ctx.beginPath();
+    ctx.arc(x, y, nodeSize, 0, 2 * Math.PI, false);
+    ctx.fillStyle = color;
+    ctx.fill();
+    // Add the border
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+    
+    if (finalStateIds.includes(node.id)) {
+      // Draw a second circle inside the first one
+      ctx.beginPath();
+      ctx.arc(x, y, nodeSize - (nodeSize / 4), 0, 2 * Math.PI, false);
+      ctx.fillStyle = color;
+      ctx.fill();
+      // Add the border
+      ctx.strokeStyle = "black";
+      ctx.stroke(); 
+    }
+
+    // Add the text
+    ctx.font = `${fontSize}px sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "black";
+    ctx.fillText(name, x, y);
+  }
+
   return (
     <div className="relative">
       <div className="absolute w-screen h-screen z-1">
@@ -123,9 +181,10 @@ export const AutomatonTutor = () => {
           onLinkClick={onLinkClick}
           linkCurvature={linkCurvature}
           linkLabel={(link) => `${link.values.toString()}`}
-          enableZoomInteraction={!(isLocked || isSimulating)}
           enablePanInteraction={!(isLocked || isSimulating)}
           enableNodeDrag={!(isLocked || isSimulating)}
+          nodePointerAreaPaint={nodePaint}
+          nodeCanvasObject={(node, ctx) => nodePaint(node, "grey", ctx)}
         />
         <div>
           <label
