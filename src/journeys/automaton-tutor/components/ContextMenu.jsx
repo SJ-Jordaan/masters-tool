@@ -41,9 +41,6 @@ const ContextMenu = forwardRef((props, ref) => {
             className="p-2 mt-4 -mr-5 text-xs font-semibold shadow-xl bg-slate-200 dropdown-content menu rounded-box w-52 dark:bg-gray-800"
           >
             <li>
-              <a href="/masters-tool">Save Automata</a>
-            </li>
-            <li>
               <button onClick={() => {
                 setActiveModal(Modal.TestInput);
                 setSelectedEntity(null);
@@ -58,10 +55,10 @@ const ContextMenu = forwardRef((props, ref) => {
               </button>
             </li>
             <li>
-              <a href="/">Restart</a>
+              <a href="/masters-tool/tutor">Restart</a>
             </li>
             <li>
-              <a href="/">Exit Builder</a>
+              <a href="/masters-tool">Exit Builder</a>
             </li>
           </ul>
         </div>

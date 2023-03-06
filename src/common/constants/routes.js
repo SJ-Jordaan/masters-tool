@@ -1,6 +1,7 @@
 import { AutomatonTutor, Homepage, Library, NotFound } from '../../journeys';
 
 import { Colonisers } from '../../journeys/colonisers/Colonisers';
+import { RegexCalc } from '../../journeys/regex-calc/RegexCalc';
 
 export const AppRoutes = [
   {
@@ -22,6 +23,12 @@ export const AppRoutes = [
   {
     path: '/colonisers',
     element: <Colonisers />,
+    isAuthenticated: false,
+    exact: true,
+  },
+  {
+    path: '/regex/calculator',
+    element: <RegexCalc />,
     isAuthenticated: false,
     exact: true,
   },

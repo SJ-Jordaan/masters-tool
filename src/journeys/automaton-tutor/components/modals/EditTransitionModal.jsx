@@ -1,19 +1,19 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Portal } from "react-portal";
 import useAutomatonTutorStore, {
   Modal,
   Context,
 } from "../../state/useAutomatonTutorStore";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { AiOutlineClose } from "react-icons/ai";
+// import { AiOutlineClose } from "react-icons/ai";
 import { useForm, useFieldArray } from "react-hook-form";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import useGraphStore from "../../state/useGraphSettings";
 
 export const EditTransitionModal = ({ closeModal }) => {
   const { alphabet } = useGraphStore();
-  const inputRef = useRef();
-  const [parent] = useAutoAnimate();
+  // const inputRef = useRef();
+  // const [parent] = useAutoAnimate();
   const [parentError] = useAutoAnimate();
   const {
     toggleMakeTransition,
@@ -29,7 +29,7 @@ export const EditTransitionModal = ({ closeModal }) => {
     makeTransition,
   } = useAutomatonTutorStore();
   const {
-    register,
+    // register,
     control,
     handleSubmit,
     formState: { errors },
@@ -83,12 +83,20 @@ export const EditTransitionModal = ({ closeModal }) => {
     closeModal();
   };
 
-  const removeTransitionValue = (index) => {
-    remove(index);
-  };
+  // const removeTransitionValue = (index) => {
+  //   remove(index);
+  // };
 
   const handleCharacterClick = (character) => {
-    append({ 0: character });
+
+    const existingIndex = fields.findIndex(value => value["0"] === character);
+
+    if (existingIndex === -1) {
+
+      append({ 0: character });
+      return;
+    }
+    remove(existingIndex);
   };
 
   return (
@@ -109,7 +117,7 @@ export const EditTransitionModal = ({ closeModal }) => {
               <span>{targetState?.name}</span>
             </div>
           </div>
-          <div className="py-4">
+          {/* <div className="py-4">
             <ul
               className="flex flex-wrap items-center grid-cols-3 gap-2 sm:grid"
               ref={parent}
@@ -144,7 +152,7 @@ export const EditTransitionModal = ({ closeModal }) => {
                 );
               })}
             </ul>
-          </div>
+          </div> */}
           <div ref={parentError}>
             {errors.values && (
               <p className="px-2 py-1 text-sm font-semibold rounded min-w-fit w-fit bg-rose-100 text-error">
@@ -155,9 +163,11 @@ export const EditTransitionModal = ({ closeModal }) => {
           <div className="flex modal-action gap-2 items-center flex-wrap">
             <div className="mr-auto flex items-center gap-x-2">
               {alphabet.split("").map((character, index) => {
+                const isSelected = fields.find(value => value["0"] === character);
+                
                 return (
                   <button
-                    className="btn btn-sm lowercase"
+                    className={`btn btn-sm lowercase ${ isSelected ? "bg-primary text-white" : "bg-white text-primary" }`}
                     key={character + index}
                     onClick={(e) => {
                       e.preventDefault();
