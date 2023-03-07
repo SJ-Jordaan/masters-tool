@@ -43,7 +43,7 @@ function App() {
                 A new version is available of the app is available.
               </p>
               <p className="mt-1 text-sm leading-5 text-gray-500">
-                Click here to reload the page.
+                Click here to update.
               </p>
             </div>
             <div className="ml-4 flex-shrink-0 flex">
