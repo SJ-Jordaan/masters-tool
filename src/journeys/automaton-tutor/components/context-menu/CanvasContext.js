@@ -8,7 +8,7 @@ import { forwardRef } from "react";
 
 export const CanvasContext = forwardRef((props, ref) => {
   const { isLocked, setIsLocked } = useGraphStore();
-  const { addState, graphData } = useAutomatonTutorStore();
+  const { addState, graphData, initialStateId, setInitialState } = useAutomatonTutorStore();
 
   const actions = [
     {
@@ -16,6 +16,11 @@ export const CanvasContext = forwardRef((props, ref) => {
       icon: <AiOutlinePlus />,
       action: () => {
         const stateId = uuid();
+
+        if (!initialStateId) {
+          setInitialState(stateId);
+        }
+
         const newState = {
           id: stateId,
           name: `q${graphData.nodes.length + 1}`,
