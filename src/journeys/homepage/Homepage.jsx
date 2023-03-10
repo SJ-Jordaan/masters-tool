@@ -1,7 +1,6 @@
 import React from "react";
 import { BottomNavbar } from "../../components";
 
-
 const steps = [
   {
     title:
@@ -48,7 +47,7 @@ const steps = [
 
 export const Homepage = () => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col mb-60">
       {/* <div className="bg-gray-100">
             <header className="bg-white shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -125,14 +124,14 @@ export const Homepage = () => {
           </p>
         </div>
       </header>
-      <main className=" container mx-auto mt-8 mb-40 px-2">
+      <main className=" container mx-auto mt-8  px-2">
         <div>
           <h2 className=" text-2xl">Sandbox</h2>
-          <ol className=" mt-4 grid grid-cols-1 gap-4 md:gap-x-20 md:grid-cols-2 sm:gap-8 xl:gap-5 xl:grid-cols-3">
+          <ol className=" mt-4 grid grid-cols-1 gap-4 md:gap-x-20 sm:grid-cols-2 sm:gap-8 xl:gap-28 xl:grid-cols-3">
             {steps.map(({ img, title }, index) => {
               return (
                 <li key={img} className="">
-                  <div className=" flex flex-col md:w-96 max-h-96 h-full">
+                  <div className=" flex flex-col w-full max-h-96 h-full">
                     <h3
                       title={title}
                       className=" md:text-base text-sm md:line-clamp-2 flex-grow "
@@ -143,7 +142,7 @@ export const Homepage = () => {
                     <img
                       src={`${process.env.PUBLIC_URL}/${img}`}
                       alt=""
-                      className=" object-cover aspect-video mt-1 md:mt-4 rounded-lg ring ring-gray-600"
+                      className=" object-cover aspect-video mt-2 md:mt-4 rounded-lg ring ring-gray-600 w-full"
                     />
                   </div>
                 </li>
@@ -152,6 +151,13 @@ export const Homepage = () => {
           </ol>
         </div>
       </main>
+      <footer className="container mx-auto mt-20 w-full ">
+        <div>
+          <a href="/masters-tool/tutor" className=" btn btn-primary">
+            Get Started Now
+          </a>
+        </div>
+      </footer>
       <BottomNavbar />
     </div>
   );
