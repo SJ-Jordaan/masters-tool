@@ -151,7 +151,7 @@ export const Homepage = () => {
           </ol>
         </div>
       </main>
-      <footer className="container mx-auto mt-20 w-full ">
+      <footer className="container mx-auto mt-20 w-full px-2">
         <div>
           <a href="/masters-tool/tutor" className=" btn btn-primary">
             Get Started Now
