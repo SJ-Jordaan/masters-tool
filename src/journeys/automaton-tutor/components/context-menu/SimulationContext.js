@@ -68,7 +68,6 @@ export const SimulationContext = () => {
     const [currentChar, ...restOfInput] = localCurrentInput.split("");
     if (!currentChar && currentState.length <= 1) {
       setIsAcceptingFunc();
-      console.log("Done from empty string");
       return;
     }
     const index = currentInput.length - (restOfInput.length + 1);
@@ -78,7 +77,6 @@ export const SimulationContext = () => {
     const states = getNextStates(links);
     if (states.length < 1 && currentState.length <= 1) {
       setIsAcceptingFunc();
-      console.log("Done from empty string 2");
       return;
     }
 
