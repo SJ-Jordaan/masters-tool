@@ -20,7 +20,7 @@ function App() {
       </Routes>
 
       {showReload && waitingWorker && (
-        <div className="fixed top-0 right-0 left-0 w-full bg-white shadow-lg rounded-lg p-4">
+        <div className="fixed top-0 right-0 left-0 w-full bg-white shadow-lg rounded-lg p-4 antialiased">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg

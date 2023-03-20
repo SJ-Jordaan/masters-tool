@@ -9,9 +9,9 @@ const SimulationInput = () => {
   const [acceptanceParentRef] = useAutoAnimate();
   const [itemsRef] = useAutoAnimate();
   return (
-    <div className="bottom-0 flex justify-center w-screen">
+    <div className="bottom-0 flex justify-center  w-screen">
       <div
-        className={`flex mb-2 overflow-hidden border-2 divide-x-2 rounded border-black/60 dark:border-white/60 divide-black/60 dark:divide-white/60 ${
+        className={`flex mb-2 w-fit max-w-xs md:max-w-screen-md overflow-hidden border-2 divide-x-2 overflow-x-auto rounded border-black/60 dark:border-white/60 divide-black/60 dark:divide-white/60 ${
           isDoneSimulating &&
           isAccepting &&
           "border-success dark:border-success divide-success dark:divide-success"
@@ -42,11 +42,13 @@ const SimulationInput = () => {
           >
             {isAccepting ? (
               <BsCheckCircle
+                aria-label="Accepted"
                 data-tip="Accepted"
                 className="w-4 h-4 text-success"
               />
             ) : (
               <BiErrorCircle
+                aria-label="Rejected"
                 data-tip="Rejected"
                 className="w-4 h-4 text-error"
               />

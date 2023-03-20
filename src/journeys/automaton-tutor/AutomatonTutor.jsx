@@ -45,7 +45,7 @@ export const AutomatonTutor = () => {
   };
 
   const colorNodes = (node) => {
-    if (isSimulating && currentState === node.id) return "yellow";
+    if (isSimulating && currentState.includes(node.id)) return "yellow";
     if (node.id === selectedEntity?.id) return "yellow";
     if (node.id === initialStateId && finalStateIds.includes(node.id))
       return "yellow";

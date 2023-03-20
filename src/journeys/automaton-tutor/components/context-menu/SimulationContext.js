@@ -51,29 +51,31 @@ export const SimulationContext = () => {
 
   const getNextStates = (links) => {
     const states = links.map((link) => {
-      if (link.source.id === currentState) return link.target.id;
+      if (currentState.includes(link.source.id)) return link.target.id;
       return null;
     });
     return states;
   };
 
   const setIsAcceptingFunc = () => {
+    const [state] = currentState;
     setIsAccepting(
-      localCurrentInput.length === 0 && finalStateIds.includes(currentState)
+      localCurrentInput.length === 0 && finalStateIds.includes(state)
     );
   };
 
   const handleNext = () => {
     const [currentChar, ...restOfInput] = localCurrentInput.split("");
-    if (!currentChar) {
+    if (!currentChar && currentState.length <= 1) {
       setIsAcceptingFunc();
       return;
     }
     const index = currentInput.length - (restOfInput.length + 1);
     setCurrentCharIndex(index);
-    const links = getLinks(currentState, currentChar);
+    const [firstState, ...restOfStates] = currentState;
+    const links = getLinks(firstState, currentChar);
     const states = getNextStates(links);
-    if (states.length < 1) {
+    if (states.length < 1 && currentState.length <= 1) {
       setIsAcceptingFunc();
       return;
     }
@@ -86,14 +88,14 @@ export const SimulationContext = () => {
     }
 
     setLocalCurrentInput(restOfInput.join(""));
-    setCurrentState(states[0]);
+    setCurrentState([...restOfStates, ...states]);
   };
 
   useInterval(handleNext, isPlaying ? 1000 : null);
 
   useEffect(() => {
     setLocalCurrentInput(currentInput);
-    setCurrentState(initialStateId);
+    setCurrentState([initialStateId]);
     setCurrentCharIndex(0);
   }, [currentInput, initialStateId, setCurrentCharIndex, setCurrentState]);
 

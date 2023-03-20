@@ -39,7 +39,7 @@ const useSimulationStore = create(
       set({
         highlitedTransitions: [...get().highlitedTransitions, transition],
       }),
-    setCurrentState: (state) => set({ currentState: state }),
+    setCurrentState: (state) => set({ currentState: [...state] }),
     setCurrentTransition: (transition) =>
       set({ currentTransition: transition }),
     setCurrentInput: (input) => set({ currentInput: input }),
