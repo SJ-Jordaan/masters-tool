@@ -1,23 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AppRoutes } from './common/constants';
-import {useServiceWorker} from "./hooks";
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AppRoutes } from "./common/constants";
+import { useServiceWorker } from "./hooks";
+import { UserContext } from "./context/UserContext";
+import ProfileView from "./components/user-profile/ProfileView";
 
 function App() {
   const { waitingWorker, reloadPage, showReload } = useServiceWorker();
+  const { user } = useContext(UserContext);
+
+  function getRoutes() {
+    if (!user) {
+      return <Route path={"/"} element={<ProfileView />} />;
+    }
+
+    return AppRoutes.map((route, i) => (
+      <Route
+        key={`${route.path}-${i}`}
+        path={route.path}
+        element={route.element}
+        isAuthenticated={route.isAuthenticated}
+      />
+    ));
+  }
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <Routes>
-        {AppRoutes.map((route, i) => (
-          <Route
-            key={`${route.path}-${i}`}
-            path={route.path}
-            element={route.element}
-            isAuthenticated={route.isAuthenticated}
-          />
-        ))}
-      </Routes>
+      <Routes>{getRoutes()}</Routes>
 
       {showReload && waitingWorker && (
         <div className="fixed top-0 right-0 left-0 w-full bg-white shadow-lg rounded-lg p-4 antialiased">

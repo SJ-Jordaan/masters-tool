@@ -1,0 +1,42 @@
+[
+  {
+    "levelId": "1",
+    "levelName": "Novice",
+    "description": "This is the novice level.",
+    "questionIds": [
+      "1",
+      "2",
+      "3"
+    ]
+  },
+  {
+    "levelId": "2",
+    "levelName": "Apprentice",
+    "description": "This is the apprentice level.",
+    "questionIds": [
+      "4",
+      "5",
+      "6"
+    ]
+  },
+  {
+    "levelId": "3",
+    "levelName": "Intermediate",
+    "description": "This is the intermediate level.",
+    "questionIds": [
+      "7",
+      "8",
+      "9"
+    ]
+  },
+  {
+    "levelId": "4",
+    "levelName": "Advanced",
+    "description": "This is the advanced level.",
+    "questionIds": [
+      "10",
+      "11",
+      "12"
+    ]
+  }
+]
