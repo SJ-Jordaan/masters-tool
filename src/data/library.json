@@ -1,0 +1,23 @@
+[
+  {
+    "id": "2",
+    "title": "Regular Expressions",
+    "shortDescription": "Learn and practice regular expressions",
+    "description": "Regular expressions are a powerful tool for matching various kinds of patterns when used appropriately. They are an integral part of many programming languages and other types of applications. In this course, we will learn about the syntax, the basic building blocks, and the fundamental uses of regular expressions. Learning how to construct regular expressions and understand the patterns you are matching can be a lot of fun, so let's get started!",
+    "route": "/library/2"
+  },
+  {
+    "id": "1",
+    "title": "Automata Theory",
+    "shortDescription": "Learn and practice automata theory",
+    "route": "/library/1",
+    "description": "Automata theory is the study of abstract machines and automata, as well as the computational problems that can be solved using them. It is a theory in theoretical computer science and discrete mathematics (a subject of study in both mathematics and computer science). The word automata (the plural of automaton) comes from the Greek word αὐτόματα, which means \"self-acting\". The figure at right illustrates a finite-state machine, which belongs to a well-known type of automaton. This automaton consists of states (represented in the figure by circles) and transitions (represented by arrows). As the automaton sees a symbol of input, it makes a transition (or jump) to another state, according to its transition function, which takes the current state and the recent symbol as its inputs."
+  },
+  {
+    "id": "3",
+    "title": "Custom",
+    "shortDescription": "Create and practice custom exercises",
+    "route": "/library/3",
+    "description": "You can create your own exercises and practice them in this section."
+  }
+]

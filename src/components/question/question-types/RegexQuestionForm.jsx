@@ -56,7 +56,7 @@ const RegexQuestionForm = ({ question, onSubmit }) => {
     <div className="flex flex-col items-center w-full px-2">
       <h2 className="text-2xl font-bold mb-2">{question.questionType}</h2>
       <p>{question.questionContent}</p>
-      <div className="w-full max-w-sm border rounded-md p-2 text-center my-2 overflow-auto">
+      <div className="w-full max-w-sm border rounded-md p-2 text-center my-2 overflow-auto min-h-12 flex justify-center items-center">
         {answer.split("").map((char, index) => (
           <span
             key={index}

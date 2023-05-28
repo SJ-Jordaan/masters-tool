@@ -23,7 +23,7 @@ const ProfileEdit = ({ setEditing }) => {
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-4 p-4">
       <h2 className="text-4xl font-bold mb-2">Edit User Profile</h2>
-      <form className="w-full max-w-md" onSubmit={handleSubmit}>
+      <form className="w-full max-w-md space-y-4" onSubmit={handleSubmit}>
         <div>
           <label className="block mb-1" htmlFor="username">
             Username
@@ -54,7 +54,7 @@ const ProfileEdit = ({ setEditing }) => {
             ))}
           </div>
         </div>
-        <button className="btn btn-primary mt-4" type="submit">
+        <button className="btn btn-primary w-full" type="submit">
           Save
         </button>
       </form>

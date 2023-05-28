@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const LevelProgress = () => {
   const navigate = useNavigate();
   const { levelId } = useParams();
-  const { evaluateAnswer } = useContext(QuestionContext);
+  const { questions, evaluateAnswer } = useContext(QuestionContext);
   const {
     levels,
     completeQuestion,
@@ -75,10 +75,15 @@ const LevelProgress = () => {
   };
 
   if (level && level.isCompleted) {
-    return <LevelEnd {...level} />;
+    return (
+      <LevelEnd
+        {...level}
+        levels={levels.filter((l) => l.categoryId === level.categoryId)}
+      />
+    );
   }
 
-  return level ? (
+  return (
     <div className="space-y-4">
       <QuestionWrapper
         questionId={level.currentQuestion}
@@ -89,10 +94,11 @@ const LevelProgress = () => {
         prevQuestion={navigateToPrevQuestion}
         quitLevel={quitAndNavigateHome}
         onHintRequest={requestHint}
+        levelProgress={level.questionIds.map(
+          (id) => questions.find((q) => q.questionId === id).isCompleted
+        )}
       />
     </div>
-  ) : (
-    <div>Loading...</div>
   );
 };
 

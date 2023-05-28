@@ -24,7 +24,7 @@ const LevelOverview = ({ level }) => {
   return (
     <div className="bg-gray-700 rounded-lg shadow p-4 mb-4 space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-yellow-400">{levelName}</h2>
+        <h2 className="text-2xl font-bold">{levelName}</h2>
         <span
           className={`inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 ${
             isCompleted
@@ -43,36 +43,45 @@ const LevelOverview = ({ level }) => {
       <div className="space-y-2">
         <p className="text-sm">
           Progress:{" "}
-          <span className="text-yellow-400">{progress.toFixed(2)}%</span>
+          <span className="text-green-400">{progress.toFixed(2)}%</span>
         </p>
         <div className="h-2 bg-gray-800 rounded">
           <div
-            className="h-full bg-blue-600 rounded"
+            className="h-full bg-green-500 rounded"
             style={{ width: `${progress}%` }}
           ></div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 text-sm text-center">
-          <div className="flex justify-center items-center flex-col">
-            <div>Hints used</div>
-            <span className="text-yellow-400">{hintsUsed}</span>
+        {isStarted && (
+          <div className="grid grid-cols-3 gap-2 text-sm text-center">
+            <div className="flex justify-center items-center flex-col">
+              <div>Hints used</div>
+              <span className="text-green-400">{hintsUsed}</span>
+            </div>
+            <div className="flex justify-center items-center flex-col">
+              <div>Time taken</div>
+              <span className="text-green-400">{formattedTime}</span>
+            </div>
+            <div className="flex justify-center items-center flex-col">
+              <div>Attempts</div>
+              <span className="text-green-400">{incorrectAttempts}</span>
+            </div>
           </div>
-          <div className="flex justify-center items-center flex-col">
-            <div>Time taken</div>
-            <span className="text-yellow-400">{formattedTime}</span>
-          </div>
-          <div className="flex justify-center items-center flex-col">
-            <div>Attempts</div>
-            <span className="text-yellow-400">{incorrectAttempts}</span>
-          </div>
-        </div>
+        )}
       </div>
 
       <Link
         to={`/level/${levelId}`}
-        className="inline-block bg-blue-600 w-full text-center hover:bg-blue-700 text-white px-4 py-2 rounded"
+        onClick={(e) => {
+          if (isCompleted) {
+            e.preventDefault();
+          }
+        }}
+        className={`btn btn-outline w-full text-center hover:bg-blue-700 text-white px-4 py-2 rounded ${
+          isCompleted && "hidden"
+        }`}
       >
-        Start Level
+        {isCompleted ? "Completed" : "Start Level"}
       </Link>
     </div>
   );

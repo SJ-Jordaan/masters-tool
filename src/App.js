@@ -4,6 +4,8 @@ import { AppRoutes } from "./common/constants";
 import { useServiceWorker } from "./hooks";
 import { UserContext } from "./context/UserContext";
 import ProfileView from "./components/user-profile/ProfileView";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const { waitingWorker, reloadPage, showReload } = useServiceWorker();
@@ -66,6 +68,7 @@ function App() {
           </div>
         </div>
       )}
+      <ToastContainer position={"bottom-center"} pauseOnHover />
     </Router>
   );
 }

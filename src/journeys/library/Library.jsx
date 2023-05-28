@@ -1,54 +1,33 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ICONS } from "../../common/constants";
-import { BottomNavbar } from "../../components/navigation/BottomNavbar";
-
-const Games = [
-  {
-    image: ICONS.Colonisers.Banner,
-    title: "Colonisers",
-    description: "A game about colonising planets",
-    to: "/colonisers",
-    badges: ["Automata", "Regex"],
-    isNew: true,
-  },
-  {
-    title: "Regex Exercise",
-    description: "A game about regular expressions",
-    to: "/exercise/regex",
-    badges: ["Regex"],
-  },
-];
+import { BottomNavbar } from "../../components";
+import { Header } from "../../components/layout/Header";
+import categories from "../../data/library.json";
 
 export const Library = () => {
   return (
-    <div className="flex flex-col items-center h-screen bg-slate-700">
-      {Games.map(({ image, title, description, isNew, badges, to }, i) => (
-        <Link key={`${title}-${i}`} to={to}>
-          <div className="card w-fit my-6 mx-2 shadow-xl image-full">
-            <figure>
-              <img src={image} alt={title} />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                {title}
-                {isNew && <div className="badge badge-secondary">NEW</div>}
-              </h2>
-              <p>{description}</p>
-              <div className="card-actions justify-end">
-                <div className="badge badge-accent">
-                  {"High Score: " + Math.floor(Math.random() * 100)}
-                </div>
-                {badges.map((badge, i) => (
-                  <div key={`${badge}-${i}`} className="badge badge-outline">
-                    {badge}
-                  </div>
-                ))}
+    <div className="min-h-screen pb-12">
+      <Header />
+      <div className="hero">
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold">Library</h1>
+            <p className="py-6">Select a category to learn and practice</p>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+        {categories.map((category) => (
+          <Link to={category.route} key={category.id}>
+            <div className="card card-compact bordered shadow bg-grey-800">
+              <div className="card-body">
+                <h2 className="card-title mt-4">{category.title}</h2>
+                <p>{category.shortDescription}</p>
               </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))}
+      </div>
       <BottomNavbar />
     </div>
   );

@@ -1,8 +1,9 @@
 [
   {
     "levelId": "1",
-    "levelName": "Novice",
-    "description": "This is the novice level.",
+    "categoryId": "2",
+    "levelName": "Regex Novice",
+    "description": "Tests your basic comprehension of regex",
     "questionIds": [
       "1",
       "2",
@@ -11,8 +12,9 @@
   },
   {
     "levelId": "2",
-    "levelName": "Apprentice",
-    "description": "This is the apprentice level.",
+    "categoryId": "2",
+    "levelName": "Regex Grad",
+    "description": "Requires you to apply regex to solve problems",
     "questionIds": [
       "4",
       "5",
@@ -21,8 +23,9 @@
   },
   {
     "levelId": "3",
-    "levelName": "Intermediate",
-    "description": "This is the intermediate level.",
+    "categoryId": "2",
+    "levelName": "Regex Expert",
+    "description": "Regex problems that require you to think out of the box",
     "questionIds": [
       "7",
       "8",
@@ -31,8 +34,9 @@
   },
   {
     "levelId": "4",
-    "levelName": "Advanced",
-    "description": "This is the advanced level.",
+    "categoryId": "2",
+    "levelName": "Regex Master",
+    "description": "Regex problems that test your mastery",
     "questionIds": [
       "10",
       "11",

@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlineDelete, AiOutlineRedo, AiOutlineUndo } from "react-icons/ai";
 
 export const RegExpKeyboard = ({
   alphabet,
@@ -13,44 +14,35 @@ export const RegExpKeyboard = ({
   };
 
   return (
-    <div className="flex flex-wrap justify-center mt-2 space-x-1 space-y-1">
-      <div className="flex flex-wrap">
-        <button
-          onClick={onDelete}
-          className="w-16 h-16 m-1 bg-red-500 text-white rounded-md shadow"
-        >
-          {"<"}
+    <div className="flex flex-wrap flex-col justify-center mt-2 space-y-4">
+      <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
+        <button onClick={onUndo} className="btn btn-square">
+          <AiOutlineUndo className="w-6 h-6" />
         </button>
-        <button
-          onClick={onUndo}
-          className="w-16 h-16 m-1 bg-yellow-500 text-white rounded-md shadow"
-        >
-          {"Undo"}
+        <button onClick={onDelete} className="btn btn-square">
+          <AiOutlineDelete className="w-6 h-6" />
         </button>
-        <button
-          onClick={onRedo}
-          className="w-16 h-16 m-1 bg-yellow-500 text-white rounded-md shadow"
-        >
-          {"Redo"}
+        <button onClick={onRedo} className="btn btn-square">
+          <AiOutlineRedo className="w-6 h-6" />
         </button>
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
         {operators.map((operator) => (
           <button
             key={operator}
             onClick={() => handleButtonClick(operator)}
-            className="w-16 h-16 m-1 bg-blue-500 text-white rounded-md shadow"
+            className="btn btn-square"
           >
             {operator}
           </button>
         ))}
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
         {alphabet.map((char) => (
           <button
             key={char}
             onClick={() => handleButtonClick(char)}
-            className="w-16 h-16 m-1 bg-green-500 text-white rounded-md shadow"
+            className="btn btn-square"
           >
             {char}
           </button>

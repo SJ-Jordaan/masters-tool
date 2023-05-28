@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LevelEnd = ({
   score,
@@ -8,6 +9,7 @@ const LevelEnd = ({
   hintsUsed,
   incorrectAttempts,
   achievements,
+  levels,
 }) => {
   const navigate = useNavigate();
 
@@ -70,7 +72,16 @@ const LevelEnd = ({
         </button>
         <button
           className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-          onClick={() => console.log("Next level")}
+          onClick={() => {
+            const nextLevel = levels.find((level) => !level.isCompleted);
+
+            if (!nextLevel) {
+              navigate("/");
+              toast("You have completed all levels!");
+              return;
+            }
+            navigate(`/level/${nextLevel.levelId}`);
+          }}
         >
           Next Level
         </button>

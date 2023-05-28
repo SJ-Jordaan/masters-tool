@@ -2,6 +2,7 @@ export class Level {
   constructor({
     levelId,
     levelName,
+    categoryId,
     description,
     questionIds,
     currentQuestionIndex = 0,
@@ -15,6 +16,7 @@ export class Level {
   }) {
     this.levelId = levelId;
     this.levelName = levelName;
+    this.categoryId = categoryId;
     this.description = description;
     this.questionIds = questionIds;
     this.currentQuestionIndex = currentQuestionIndex;
@@ -25,9 +27,14 @@ export class Level {
     this.hintsUsed = hintsUsed;
     this.timeTaken = timeTaken;
     this.incorrectAttempts = incorrectAttempts;
+    this.lastAccessed = undefined;
   }
 
   get currentQuestion() {
     return this.questionIds[this.currentQuestionIndex];
+  }
+
+  updateTimestamp() {
+    this.lastAccessed = Date.now();
   }
 }

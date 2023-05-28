@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Level } from "../common/models/Level";
 import levelsData from "../data/levels.json";
+import questionsData from "../data/questions.json";
 import {
   getFromLocalStorage,
   saveToLocalStorage,
@@ -12,11 +13,11 @@ export const LevelProvider = ({ children }) => {
   const [levels, setLevels] = useState([]);
 
   const calculateTotalScore = (level) => {
-    const savedQuestions = getFromLocalStorage("questions");
+    const savedQuestions = questionsData;
     return level.questionIds
       .map(
         (id) =>
-          savedQuestions.find((question) => question.questionId === id)?.score
+          savedQuestions.find((question) => question.questionId === id).score
       )
       .reduce((total, questionScore) => total + questionScore, 0);
   };
@@ -46,11 +47,15 @@ export const LevelProvider = ({ children }) => {
 
   const updateLevelState = (levelId, newValues) => {
     setLevels((prevLevels) =>
-      prevLevels.map((level) =>
-        level.levelId === levelId
-          ? new Level({ ...level, ...newValues })
-          : level
-      )
+      prevLevels.map((level) => {
+        if (level.levelId === levelId) {
+          const l = new Level({ ...level, ...newValues });
+          l.updateTimestamp();
+          return l;
+        }
+
+        return level;
+      })
     );
   };
 
@@ -60,8 +65,6 @@ export const LevelProvider = ({ children }) => {
 
   const completeQuestion = (levelId, score) => {
     const currentLevel = levels.find((level) => level.levelId === levelId);
-    console.log(score);
-    console.log(currentLevel.score);
     updateLevelState(levelId, {
       currentQuestionIndex: currentLevel.currentQuestionIndex + 1,
       score: currentLevel.score + score,

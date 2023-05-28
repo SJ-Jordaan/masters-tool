@@ -34,6 +34,10 @@ export const QuestionProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    saveToLocalStorage("questions", questions);
+  }, [questions]);
+
   const saveQuestions = (questionData) => {
     setQuestions(questionData.map(createQuestion));
     saveToLocalStorage("questions", questionData);
@@ -67,7 +71,6 @@ export const QuestionProvider = ({ children }) => {
     try {
       return to_NFA(s1, alphabet);
     } catch (e) {
-      console.log("error", e);
       return null;
     }
   }
@@ -77,8 +80,6 @@ export const QuestionProvider = ({ children }) => {
     if (!question) {
       return { equal: false, counterExamples: null };
     }
-    console.log("question", question);
-    console.log("answer", answer);
 
     switch (question.questionType) {
       case "Regex Equivalence":
@@ -86,21 +87,18 @@ export const QuestionProvider = ({ children }) => {
           return {
             equal: false,
             counterExamples: null,
+            message: "You can't use the same regex",
           };
         }
       // eslint-disable-next-line no-fallthrough
       case "Regex":
         let m1 = parse(answer.replace(/\s/g, ""), question.alphabet);
         let m2 = parse(question.answer.replace(/\s/g, ""), question.alphabet);
-        console.log("m1", m1);
-        console.log("m2", m2);
 
         if (!m1 || !m2) {
           return { equal: false, counterExamples: null };
         }
         let counterExamples = findEquivalenceCounterexamples(m1, m2);
-
-        console.log("counterExamples", counterExamples);
 
         return {
           equal: counterExamples[0] === null && counterExamples[1] === null,
