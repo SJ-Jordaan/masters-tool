@@ -6,15 +6,15 @@ export const Header = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="navbar">
-      <Link to={"/"} className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">AutomaTutor</a>
+    <div className="navbar justify-between">
+      <Link to={"/"} className="btn btn-ghost normal-case text-xl">
+        AutomaTutor
       </Link>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src={user.avatar} />
+              <img src={user.avatar} alt="" />
             </div>
           </label>
           <ul
