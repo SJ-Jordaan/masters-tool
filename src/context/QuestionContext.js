@@ -38,7 +38,7 @@ export const QuestionProvider = ({ children }) => {
     let savedQuestions = getFromLocalStorage("questions");
     savedQuestions = savedQuestions ? savedQuestions.map(createQuestion) : [];
 
-    const initializedQuestions = [...questionsData];
+    const initializedQuestions = [...questionsData].map(createQuestion);
 
     // Merge savedQuestions with initializedQuestions
     savedQuestions.forEach((savedQuestion) => {

@@ -6,6 +6,8 @@ const RegexQuestionForm = ({ question, onSubmit }) => {
   const history = useRef([answer]);
   const [historyIndex, setHistoryIndex] = useState(0);
 
+  console.log(question);
+
   const handleInput = useCallback(
     (char) => {
       const newAnswer = answer + char;

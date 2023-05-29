@@ -13,6 +13,8 @@ export const RegExpKeyboard = ({
     onInput(char);
   };
 
+  console.log(alphabet);
+
   return (
     <div className="flex flex-wrap flex-col justify-center mt-2 space-y-4">
       <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
@@ -42,7 +44,7 @@ export const RegExpKeyboard = ({
           <button
             key={char}
             onClick={() => handleButtonClick(char)}
-            className="btn btn-square"
+            className="btn btn-square normal-case"
           >
             {char}
           </button>
