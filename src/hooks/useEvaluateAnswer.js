@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import to_NFA from "dfa-lib/regex";
 import { displayAlphabet, normaliseAlphabet } from "../common/helpers/regex";
+import { toast } from "react-toastify";
 
 function union(l1, l2) {
   return l1
@@ -62,14 +63,29 @@ const useEvaluateAnswer = (questions) => {
           }
           let counterExamples = findEquivalenceCounterexamples(m1, m2);
 
+          if (counterExamples[0] === null && counterExamples[1] === null) {
+            toast(`Correct answer! +${question.score} points`, {
+              position: "bottom-center",
+              autoClose: 2000,
+              style: {
+                minHeight: "150px",
+                fontSize: "1.5rem",
+              },
+            });
+
+            return {
+              equal: true,
+              counterExamples: null,
+              score: question.score,
+            };
+          }
+
           return {
-            equal: counterExamples[0] === null && counterExamples[1] === null,
+            equal: false,
             counterExamples: displayAlphabet(counterExamples),
-            score:
-              counterExamples[0] === null && counterExamples[1] === null
-                ? question.score
-                : 0,
+            score: 0,
           };
+
         case "Regex Accepts String":
           let m = parse(
             normaliseAlphabet(question.answer.replace(/\s/g, "")),
@@ -81,6 +97,14 @@ const useEvaluateAnswer = (questions) => {
           }
 
           if (m.accepts(normaliseAlphabet(answer))) {
+            toast(`Correct answer! +${question.score} points`, {
+              position: "bottom-center",
+              autoClose: 2000,
+              style: {
+                minHeight: "150px",
+                fontSize: "1.5rem",
+              },
+            });
             return {
               equal: true,
               counterExamples: null,
@@ -90,7 +114,7 @@ const useEvaluateAnswer = (questions) => {
 
           return {
             equal: false,
-            counterExamples: ["The string is not accepted by the given regex."],
+            message: "The string is not accepted by the given regex.",
           };
 
         default:

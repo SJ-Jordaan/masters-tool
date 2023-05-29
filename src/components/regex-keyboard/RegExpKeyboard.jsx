@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineDelete, AiOutlineRedo, AiOutlineUndo } from "react-icons/ai";
+import { displayAlphabet } from "../../common/helpers/regex";
 
 export const RegExpKeyboard = ({
   alphabet,
@@ -16,13 +17,13 @@ export const RegExpKeyboard = ({
   return (
     <div className="flex flex-wrap flex-col justify-center mt-2 space-y-4">
       <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
-        <button onClick={onUndo} className="btn btn-square">
+        <button onClick={onUndo} className="btn btn-square w-14 h-14">
           <AiOutlineUndo className="w-6 h-6" />
         </button>
-        <button onClick={onDelete} className="btn btn-square">
+        <button onClick={onDelete} className="btn btn-square w-14 h-14">
           <AiOutlineDelete className="w-6 h-6" />
         </button>
-        <button onClick={onRedo} className="btn btn-square">
+        <button onClick={onRedo} className="btn btn-square w-14 h-14">
           <AiOutlineRedo className="w-6 h-6" />
         </button>
       </div>
@@ -31,9 +32,9 @@ export const RegExpKeyboard = ({
           <button
             key={operator}
             onClick={() => handleButtonClick(operator)}
-            className="btn btn-square"
+            className="btn btn-square w-14 h-14 text-2xl"
           >
-            {operator}
+            {displayAlphabet(operator)}
           </button>
         ))}
       </div>
@@ -42,9 +43,9 @@ export const RegExpKeyboard = ({
           <button
             key={char}
             onClick={() => handleButtonClick(char)}
-            className="btn btn-square normal-case"
+            className="btn btn-square w-14 h-14 normal-case text-2xl"
           >
-            {char}
+            {displayAlphabet(char)}
           </button>
         ))}
       </div>

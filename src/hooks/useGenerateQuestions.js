@@ -97,18 +97,12 @@ const useGenerateQuestions = (setQuestions) => {
             );
           case "Regex Accepts String":
             const regex2 = rf.randomRE((difficulty % 2) + 1, regexType);
-            const string2 = to_NFA(
-              normaliseAlphabet(regex2),
-              normaliseAlphabet(alphabet)
-            )
-              .to_DFA()
-              .find_passing();
 
             return new Question(
               questionStub.questionId,
               questionStub.type,
-              `Provide a regular expression accepts the string ${displayAlphabet(
-                string2
+              `Provide a string that is recognised by ${displayAlphabet(
+                regex2
               )}?`,
               alphabet.join(""),
               regex2,

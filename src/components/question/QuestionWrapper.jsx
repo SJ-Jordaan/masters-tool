@@ -11,7 +11,6 @@ import {
 
 const QuestionWrapper = ({
   questionId,
-  totalQuestions,
   currentQuestion,
   nextQuestion,
   prevQuestion,
@@ -28,6 +27,11 @@ const QuestionWrapper = ({
     toast(question.hint, {
       type: "info",
       autoClose: 10000,
+      position: "top-center",
+      style: {
+        minHeight: "150px",
+        fontSize: "1.5rem",
+      },
     });
   };
 
@@ -46,17 +50,32 @@ const QuestionWrapper = ({
         toast(`Your regex incorrectly recognised ${submission}`, {
           type: "error",
           autoClose: 10000,
+          position: "top-center",
+          style: {
+            minHeight: "150px",
+            fontSize: "1.5rem",
+          },
         });
       } else {
         toast(`Your regex incorrectly rejected ${memo}`, {
           type: "error",
           autoClose: 10000,
+          position: "top-center",
+          style: {
+            minHeight: "150px",
+            fontSize: "1.5rem",
+          },
         });
       }
     } else if (result.message) {
       toast(result.message, {
         type: "error",
         autoClose: 10000,
+        position: "top-center",
+        style: {
+          minHeight: "150px",
+          fontSize: "1.5rem",
+        },
       });
     }
 
@@ -88,7 +107,7 @@ const QuestionWrapper = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="">
       <div className="flex w-full items-center px-2">
         <AiOutlineLeft
           disabled={currentQuestion === 0}
@@ -107,7 +126,7 @@ const QuestionWrapper = ({
         </ul>
         <AiOutlineRight onClick={handleNextQuestion} className="w-6 h-6" />
       </div>
-      <div className="w-full p-4">{renderQuestionTypeComponent()}</div>
+      <div className="w-full p-2">{renderQuestionTypeComponent()}</div>
       <button
         className="h-16 w-16 btn btn-error btn-circle fixed bottom-4 left-4"
         onClick={quitLevel}
