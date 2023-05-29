@@ -18,6 +18,7 @@
     "title": "Custom",
     "shortDescription": "Create and practice custom exercises",
     "route": "/library/3",
-    "description": "You can create your own exercises and practice them in this section."
+    "description": "You can create your own exercises and practice them in this section.",
+    "isCustom": true
   }
 ]

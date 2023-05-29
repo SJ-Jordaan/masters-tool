@@ -8,7 +8,8 @@ export class Question {
     hint,
     score,
     isCompleted = false,
-    operators = []
+    operators = [],
+    isGenerated = false
   ) {
     this.questionId = questionId;
     this.questionType = questionType;
@@ -20,6 +21,7 @@ export class Question {
       typeof alphabet === "string" ? alphabet.split("") : alphabet;
     this.isCompleted = isCompleted;
     this.operators = operators;
+    this.isGenerated = isGenerated;
   }
 
   complete() {

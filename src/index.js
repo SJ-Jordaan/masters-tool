@@ -40,11 +40,11 @@ const ErrorFallback = ({ error, resetErrorBoundary }) => {
 root.render(
   <ErrorBoundary fallbackRender={ErrorFallback}>
     <UserProvider>
-      <LevelProvider>
-        <QuestionProvider>
+      <QuestionProvider>
+        <LevelProvider>
           <App />
-        </QuestionProvider>
-      </LevelProvider>
+        </LevelProvider>
+      </QuestionProvider>
     </UserProvider>
   </ErrorBoundary>
 );

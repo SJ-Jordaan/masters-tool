@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import ProfileEdit from "./ProfileEdit";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProfileView = () => {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [editing, setEditing] = useState(false);
 
@@ -14,6 +15,7 @@ const ProfileView = () => {
   const clearProgress = () => {
     localStorage.removeItem("levels");
     localStorage.removeItem("questions");
+    navigate("/");
     window.location.reload();
   };
 

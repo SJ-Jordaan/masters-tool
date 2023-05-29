@@ -5,6 +5,7 @@ import LevelSelector from "../../../components/level/LevelSelector";
 import { Header } from "../../../components/layout/Header";
 import { BottomNavbar } from "../../../components";
 import categories from "../../../data/library.json";
+import CreateLevel from "../../../components/question/question-types/CreateLevel";
 
 export const LibraryItemOverview = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -12,14 +13,19 @@ export const LibraryItemOverview = () => {
   const category = categories.find((c) => c.id === id);
 
   const renderOverview = () => (
-    <div className="hero">
-      <div className="hero-content">
-        <div className="max-w-md">
-          <h1 className="text-3xl font-bold">{category.title}</h1>
-          <p className="py-6">{category.description}</p>
+    <>
+      <div className="hero">
+        <div className="hero-content">
+          <div className="max-w-md">
+            <h1 className="text-3xl font-bold">{category.title}</h1>
+            <p className="py-6">{category.description}</p>
+          </div>
         </div>
       </div>
-    </div>
+      {category.isCustom && (
+        <CreateLevel onCreate={() => setActiveTab("exercises")} />
+      )}
+    </>
   );
 
   return (
