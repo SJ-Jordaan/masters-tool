@@ -1,6 +1,6 @@
-import React, {useContext, useState} from "react";
-import {LevelContext} from "../../../context/LevelContext";
-import {QuestionContext} from "../../../context/QuestionContext";
+import React, { useContext, useState } from "react";
+import { LevelContext } from "../../../context/LevelContext";
+import { QuestionContext } from "../../../context/QuestionContext";
 
 // Mock question types array. Replace this with your actual data source.
 const QUESTION_TYPES = ["Regex", "Regex Equivalence", "Regex Accepts String"];
@@ -99,6 +99,13 @@ const CreateLevel = ({ onCreate }) => {
                 value={difficulty}
                 onChange={(e) => setDifficulty(parseInt(e.target.value))}
               />
+              <div className="w-full flex justify-between text-xs px-2">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+              </div>
             </div>
             <div className="mb-4">
               <label
@@ -116,6 +123,11 @@ const CreateLevel = ({ onCreate }) => {
                 value={numQuestions}
                 onChange={(e) => setNumQuestions(parseInt(e.target.value))}
               />
+              <div className="w-full flex justify-between text-xs px-1">
+                {[...Array(10)].map((_, i) => (
+                  <span key={i}>{i + 1}</span>
+                ))}
+              </div>
             </div>
             <div className="flex flex-col mb-4">
               <span className="block text-sm font-bold mb-2">
