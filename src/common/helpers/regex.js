@@ -1,21 +1,41 @@
-export class RegExpUtils {
-  static regexpRecognisesString(regexp, string) {
-    const re = new RegExp(regexp);
-    return re.test(string);
+export const normaliseAlphabet = (alphabet) => {
+  if (Array.isArray(alphabet)) {
+    return alphabet.map((char) => normaliseAlphabet(char));
   }
 
-  static stringMatchesRegexp(string, regexp) {
-    const re = new RegExp(regexp);
-    return re.test(string);
+  if (typeof alphabet === "string" && alphabet.length > 1) {
+    return normaliseAlphabet(alphabet.split("")).join("");
   }
 
-  static regexpsAreEquivalent(regexp1, regexp2) {
-    // This is a complex task that requires more than a simple comparison.
-    // For simplicity's sake, let's say two regexps are equivalent if they match the same string.
-    const testString = "test";
-    return (
-      this.regexpRecognisesString(regexp1, testString) ===
-      this.regexpRecognisesString(regexp2, testString)
-    );
+  switch (alphabet) {
+    case "∅":
+      return "∅";
+    case "ε":
+      return "";
+    case "∪":
+      return "|";
+    default:
+      return alphabet;
   }
-}
+};
+
+export const displayAlphabet = (alphabet) => {
+  if (Array.isArray(alphabet)) {
+    return alphabet.map((char) => displayAlphabet(char));
+  }
+
+  if (typeof alphabet === "string" && alphabet.length > 1) {
+    return displayAlphabet(alphabet.split("")).join("");
+  }
+
+  switch (alphabet) {
+    case "∅":
+      return "∅";
+    case "":
+      return "ε";
+    case "|":
+      return "∪";
+    default:
+      return alphabet;
+  }
+};

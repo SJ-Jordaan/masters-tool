@@ -1,7 +1,7 @@
 export class RegexFactory {
   constructor(alphabet) {
     this.alphabet = alphabet;
-    this.alphabetString = alphabet.join("|");
+    this.alphabetString = alphabet.join("∪");
     this.alphabetStar = `(${this.alphabetString})*`;
   }
 
