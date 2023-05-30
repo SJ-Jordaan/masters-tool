@@ -1,5 +1,4 @@
-// useAnswerHistory.js
-import {useCallback, useRef, useState} from "react";
+import { useCallback, useRef, useState } from "react";
 
 const useAnswerHistory = () => {
   const [answer, setAnswer] = useState("");
@@ -55,7 +54,7 @@ const useAnswerHistory = () => {
     handleDelete,
     handleUndo,
     handleRedo,
-    resetAnswerHistory
+    resetAnswerHistory,
   };
 };
 

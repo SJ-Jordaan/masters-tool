@@ -4,10 +4,16 @@ import RegexQuestionForm from "./question-types/RegexQuestionForm";
 import { toast } from "react-toastify";
 import {
   AiOutlineBulb,
+  AiOutlineCheck,
   AiOutlineClose,
   AiOutlineLeft,
   AiOutlineRight,
 } from "react-icons/ai";
+import CircularMenu from "../circular-menu/CircularMenu";
+import useAnswerHistory from "../../hooks/useAnswerHistory";
+import useSound from "use-sound";
+import correct from "../../common/sounds/correct.mp3";
+import incorrect from "../../common/sounds/incorrect.mp3";
 
 const QuestionWrapper = ({
   questionId,
@@ -21,27 +27,42 @@ const QuestionWrapper = ({
 }) => {
   const { questions, completeQuestion } = useContext(QuestionContext);
   const question = questions.find((q) => q.questionId === questionId);
+  const [playCorrect] = useSound(correct, { volume: 0.25 });
+  const [playIncorrect] = useSound(incorrect, { volume: 0.25 });
+
+  const {
+    answer,
+    handleInput,
+    handleDelete,
+    handleUndo,
+    handleRedo,
+    resetAnswerHistory,
+  } = useAnswerHistory();
 
   const requestHint = () => {
     onHintRequest();
     toast(question.hint, {
       type: "info",
-      autoClose: 10000,
-      position: "top-center",
+      toastId: "hint",
+      autoClose: 5000,
+      position: "bottom-center",
       style: {
-        minHeight: "150px",
-        fontSize: "1.5rem",
+        fontSize: "1.2rem",
       },
     });
   };
 
-  const handleAnswerSubmission = (answer) => {
+  const handleAnswerSubmission = () => {
     const result = onSubmit(answer);
     if (result.equal) {
+      playCorrect();
+      resetAnswerHistory();
       completeQuestion(questionId);
       nextQuestion();
-      return true;
+      return;
     }
+
+    playIncorrect();
 
     if (result.counterExamples) {
       const [submission, memo] = result.counterExamples;
@@ -49,37 +70,35 @@ const QuestionWrapper = ({
       if (submission) {
         toast(`Your regex incorrectly recognised ${submission}`, {
           type: "error",
-          autoClose: 10000,
-          position: "top-center",
+          toastId: "counter-example",
+          autoClose: 5000,
+          position: "bottom-center",
           style: {
-            minHeight: "150px",
-            fontSize: "1.5rem",
+            fontSize: "1.2rem",
           },
         });
       } else {
         toast(`Your regex incorrectly rejected ${memo}`, {
           type: "error",
-          autoClose: 10000,
-          position: "top-center",
+          toastId: "counter-example",
+          autoClose: 5000,
+          position: "bottom-center",
           style: {
-            minHeight: "150px",
-            fontSize: "1.5rem",
+            fontSize: "1.2rem",
           },
         });
       }
     } else if (result.message) {
       toast(result.message, {
         type: "error",
-        autoClose: 10000,
-        position: "top-center",
+        toastId: "counter-example",
+        autoClose: 5000,
+        position: "bottom-center",
         style: {
-          minHeight: "150px",
-          fontSize: "1.5rem",
+          fontSize: "1.2rem",
         },
       });
     }
-
-    return false;
   };
 
   const renderQuestionTypeComponent = () => {
@@ -90,7 +109,12 @@ const QuestionWrapper = ({
         return (
           <RegexQuestionForm
             question={question}
-            onSubmit={handleAnswerSubmission}
+            answer={answer}
+            handleInput={handleInput}
+            handleDelete={handleDelete}
+            handleUndo={handleUndo}
+            handleRedo={handleRedo}
+            handleReset={resetAnswerHistory}
           />
         );
       default:
@@ -100,20 +124,17 @@ const QuestionWrapper = ({
 
   const handleNextQuestion = () => {
     nextQuestion();
+    resetAnswerHistory();
   };
 
   const handlePrevQuestion = () => {
     prevQuestion();
+    resetAnswerHistory();
   };
 
   return (
     <div className="">
-      <div className="flex w-full items-center px-2">
-        <AiOutlineLeft
-          disabled={currentQuestion === 0}
-          onClick={handlePrevQuestion}
-          className="w-6 h-6"
-        />
+      <div className="flex w-full items-center">
         <ul className="steps m-2 w-full">
           {levelProgress.map((completed, index) => (
             <li
@@ -124,20 +145,47 @@ const QuestionWrapper = ({
             ></li>
           ))}
         </ul>
-        <AiOutlineRight onClick={handleNextQuestion} className="w-6 h-6" />
       </div>
       <div className="w-full p-2">{renderQuestionTypeComponent()}</div>
+      <CircularMenu
+        items={[
+          <button
+            key="quit"
+            className="menu-item btn btn-error btn-circle"
+            onClick={quitLevel}
+          >
+            <AiOutlineClose className="h-6 w-6" />
+          </button>,
+          <button
+            key="prev"
+            className="menu-item btn btn-circle"
+            onClick={handlePrevQuestion}
+          >
+            <AiOutlineLeft className="h-6 w-6" />
+            <span className="text-xs">Prev</span>
+          </button>,
+          <button
+            key="next"
+            className="menu-item btn btn-circle"
+            onClick={handleNextQuestion}
+          >
+            <AiOutlineRight className="h-6 w-6" />
+            <span className="text-xs">Next</span>
+          </button>,
+          <button
+            key="hint"
+            className="menu-item btn btn-warning btn-circle"
+            onClick={requestHint}
+          >
+            <AiOutlineBulb className="h-6 w-6" />
+          </button>,
+        ]}
+      />
       <button
-        className="h-16 w-16 btn btn-error btn-circle fixed bottom-4 left-4"
-        onClick={quitLevel}
+        onClick={handleAnswerSubmission}
+        className="h-16 w-16 btn btn-success btn-circle fixed bottom-4 right-4"
       >
-        <AiOutlineClose className="h-8 w-8" />
-      </button>
-      <button
-        className="h-16 w-16 btn btn-warning btn-circle fixed bottom-4 right-4"
-        onClick={requestHint}
-      >
-        <AiOutlineBulb className="h-8 w-8" />
+        <AiOutlineCheck className="h-7 w-7" />
       </button>
     </div>
   );

@@ -1,43 +1,23 @@
 import React from "react";
 import { RegExpKeyboard } from "../../regex-keyboard/RegExpKeyboard";
-import useAnswerHistory from "../../../hooks/useAnswerHistory";
 import { displayAlphabet } from "../../../common/helpers/regex";
-import useSound from "use-sound";
-import correct from "../../../common/sounds/correct.mp3";
-import incorrect from "../../../common/sounds/incorrect.mp3";
 
-const RegexQuestionForm = ({ question, onSubmit }) => {
-  const [playCorrect] = useSound(correct, { volume: 0.25 });
-  const [playIncorrect] = useSound(incorrect, { volume: 0.25 });
-
-  const {
-    answer,
-    handleInput,
-    handleDelete,
-    handleUndo,
-    handleRedo,
-    resetAnswerHistory,
-  } = useAnswerHistory();
-
-  const submit = () => {
-    const correct = onSubmit(answer);
-
-    if (correct) {
-      playCorrect();
-      resetAnswerHistory();
-      return;
-    }
-
-    playIncorrect();
-  };
-
+const RegexQuestionForm = ({
+  question,
+  answer,
+  handleInput,
+  handleDelete,
+  handleUndo,
+  handleRedo,
+  handleReset,
+}) => {
   return (
     <div className="flex flex-col items-center w-full px-2">
       <div className="divider mt-0" />
       <p className="">
-        {`Given a language L with Σ = {${displayAlphabet(
-          question.alphabet
-        ).join(",")}}`}
+        {`Given the alphabet Σ = {${displayAlphabet(question.alphabet).join(
+          ","
+        )}}`}
       </p>
       <div className="divider" />
       <p className="text-xl">{question.questionContent}</p>
@@ -62,14 +42,8 @@ const RegexQuestionForm = ({ question, onSubmit }) => {
         onDelete={handleDelete}
         onUndo={handleUndo}
         onRedo={handleRedo}
+        onReset={handleReset}
       />
-      <button
-        onClick={submit}
-        disabled={question.isCompleted}
-        className="btn btn-success mt-12 w-full disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Submit
-      </button>
     </div>
   );
 };

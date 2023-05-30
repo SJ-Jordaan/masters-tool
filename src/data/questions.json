@@ -3,12 +3,12 @@
     "questionId": "1",
     "questionType": "Regex",
     "questionContent": "Provide a regular expression that matches either 'abc' or 'de'.",
-    "answer": "(abc)|(de)",
-    "hint": "Remember, the '|' operator denotes 'or' in regular expressions.",
+    "answer": "(abc)∪(de)",
+    "hint": "Remember, the '∪' operator denotes 'or' in regular expressions.",
     "score": 10,
     "alphabet": "abcde",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"
@@ -26,13 +26,13 @@
   {
     "questionId": "3",
     "questionType": "Regex Equivalence",
-    "questionContent": "Provide an equivalent regular expression to '(a|b)*'.",
-    "answer": "(a|b)*",
+    "questionContent": "Provide an equivalent regular expression to '(a∪b)*'.",
+    "answer": "(a∪b)*",
     "hint": "The order of 'a' and 'b' in the expression does not matter.",
     "score": 10,
     "alphabet": "ab",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"
@@ -47,7 +47,7 @@
     "score": 15,
     "alphabet": "abcd",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"
@@ -56,8 +56,8 @@
   {
     "questionId": "5",
     "questionType": "Regex Accepts String",
-    "questionContent": "Provide a string that is recognised by the given regular expression '(a|b)*c'.",
-    "answer": "(a|b)*c",
+    "questionContent": "Provide a string that is recognised by the given regular expression '(a∪b)*c'.",
+    "answer": "(a∪b)*c",
     "hint": "This regular expression matches strings with zero or more 'a' or 'b', followed by 'c'.",
     "score": 15,
     "alphabet": "abc"
@@ -65,13 +65,13 @@
   {
     "questionId": "6",
     "questionType": "Regex Equivalence",
-    "questionContent": "Provide an equivalent regular expression to '(a|b)*c'.",
-    "answer": "(a|b)*c",
+    "questionContent": "Provide an equivalent regular expression to '(a∪b)*c'.",
+    "answer": "(a∪b)*c",
     "hint": "The order of 'a' and 'b' in the expression does not matter.",
     "score": 15,
     "alphabet": "abc",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"
@@ -81,12 +81,12 @@
     "questionId": "7",
     "questionType": "Regex",
     "questionContent": "Provide a regular expression that matches 'abc' followed by any number of 'd' or 'e'.",
-    "answer": "abc((d|e)*)",
+    "answer": "abc((d∪e)*)",
     "hint": "Remember, the '*' operator allows for zero or more repetitions.",
     "score": 20,
     "alphabet": "abcde",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"
@@ -95,8 +95,8 @@
   {
     "questionId": "8",
     "questionType": "Regex Accepts String",
-    "questionContent": "Provide a string that is recognised by the given regular expression 'a*(b|c)d*'.",
-    "answer": "a*(b|c)d*",
+    "questionContent": "Provide a string that is recognised by the given regular expression 'a*(b∪c)d*'.",
+    "answer": "a*(b∪c)d*",
     "hint": "This regular expression matches strings with zero or more 'a', followed by 'b' or 'c', and then zero or more 'd'.",
     "score": 20,
     "alphabet": "abcd"
@@ -104,13 +104,13 @@
   {
     "questionId": "9",
     "questionType": "Regex Equivalence",
-    "questionContent": "Provide an equivalent regular expression to '(a|b)(c|d)*'.",
-    "answer": "(a|b)(c|d)*",
+    "questionContent": "Provide an equivalent regular expression to '(a∪b)(c∪d)*'.",
+    "answer": "(a∪b)(c∪d)*",
     "hint": "The order of 'a' and 'b', and 'c' and 'd' in the expression does not matter.",
     "score": 20,
     "alphabet": "abcd",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"
@@ -120,12 +120,12 @@
     "questionId": "10",
     "questionType": "Regex",
     "questionContent": "Provide a regular expression that matches any string containing 'abc' or 'de' anywhere in it.",
-    "answer": "(a | b | c | d | e)* (abc | de) (a | b | c | d | e)*",
-    "hint": "Remember, the dot character matches any character and the asterisk allows for zero or more repetitions.",
+    "answer": "(a ∪ b ∪ c ∪ d ∪ e)* (abc ∪ de) (a ∪ b ∪ c ∪ d ∪ e)*",
+    "hint": "Remember, the '*' operator allows for zero or more repetitions.",
     "score": 25,
     "alphabet": "abcde",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"
@@ -134,8 +134,8 @@
   {
     "questionId": "11",
     "questionType": "Regex Accepts String",
-    "questionContent": "Provide a string that is recognised by the given regular expression '(a|b)*c(d|e)*'.",
-    "answer": "(a|b)*c(d|e)*",
+    "questionContent": "Provide a string that is recognised by the given regular expression '(a∪b)*c(d∪e)*'.",
+    "answer": "(a∪b)*c(d∪e)*",
     "hint": "This regular expression matches strings with zero or more 'a' or 'b', followed by 'c', and then zero or more 'd' or 'e'.",
     "score": 25,
     "alphabet": "abcde"
@@ -143,13 +143,13 @@
   {
     "questionId": "12",
     "questionType": "Regex Equivalence",
-    "questionContent": "Provide an equivalent regular expression to '(a|b)*c(d|e)*'.",
-    "answer": "(a|b)*c(d|e)*",
+    "questionContent": "Provide an equivalent regular expression to '(a∪b)*c(d∪e)*'.",
+    "answer": "(a∪b)*c(d∪e)*",
     "hint": "The order of 'a' and 'b', and 'c' and 'd' in the expression does not matter.",
     "score": 25,
     "alphabet": "abcde",
     "operators": [
-      "|",
+      "∪",
       "*",
       "(",
       ")"

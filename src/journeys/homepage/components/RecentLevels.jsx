@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const RecentLevels = ({ levels }) => {
   const sortedLevels = [...levels]
@@ -14,14 +15,17 @@ const RecentLevels = ({ levels }) => {
     <div>
       <h2 className="text-2xl">Recently Accessed Levels</h2>
       {sortedLevels.map((level, index) => (
-        <div key={index}>
+        <Link
+          to={`/level/${level.levelId}`}
+          key={`recent-${level.levelId}-${index}`}
+        >
           <p>{level.levelName}</p>
           <progress
             className="progress progress-primary w-56"
             value={level.score}
             max={level.totalScore}
           ></progress>
-        </div>
+        </Link>
       ))}
     </div>
   );

@@ -14,6 +14,7 @@ export class Level {
     timeTaken = 0,
     incorrectAttempts = 0,
     isGenerated = false,
+    lastAccessed,
   }) {
     this.levelId = levelId;
     this.levelName = levelName;
@@ -28,7 +29,7 @@ export class Level {
     this.hintsUsed = hintsUsed;
     this.timeTaken = timeTaken;
     this.incorrectAttempts = incorrectAttempts;
-    this.lastAccessed = undefined;
+    this.lastAccessed = lastAccessed;
     this.isGenerated = isGenerated;
   }
 

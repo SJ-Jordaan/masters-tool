@@ -68,8 +68,7 @@ const useEvaluateAnswer = (questions) => {
               position: "bottom-center",
               autoClose: 2000,
               style: {
-                minHeight: "150px",
-                fontSize: "1.5rem",
+                fontSize: "1.2rem",
               },
             });
 
@@ -101,8 +100,7 @@ const useEvaluateAnswer = (questions) => {
               position: "bottom-center",
               autoClose: 2000,
               style: {
-                minHeight: "150px",
-                fontSize: "1.5rem",
+                fontSize: "1.2rem",
               },
             });
             return {
