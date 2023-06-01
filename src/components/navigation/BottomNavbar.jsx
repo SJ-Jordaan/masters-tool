@@ -32,7 +32,7 @@ export const BottomNavbar = () => {
       {NavItems.map(({ label, Icon, to }, i) => (
         <Link to={to}>
           <div
-            key={`${label}-${i}`}
+            key={`${label}-${i}-${to}`}
             className={`${location.pathname === to ? "text-info active" : ""}`}
           >
             <Icon className="h-6 w-6" />

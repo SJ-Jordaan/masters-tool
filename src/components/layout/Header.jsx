@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
+import { Build } from "../../common/constants/build";
 
 export const Header = () => {
   const { user } = useContext(UserContext);
@@ -8,7 +9,7 @@ export const Header = () => {
   return (
     <div className="navbar justify-between">
       <Link to={"/"} className="btn btn-ghost normal-case text-xl">
-        AutomaTutor
+        AutomaTutor <sub className="text-xs ml-1">v{Build.version}</sub>
       </Link>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
