@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/masters-tool/static/css/main.ca9dc54e.css",
-    "main.js": "/masters-tool/static/js/main.e4cb4c2a.js",
+    "main.css": "/masters-tool/static/css/main.1ecbb01a.css",
+    "main.js": "/masters-tool/static/js/main.b2c709a3.js",
     "static/js/845.594769e8.chunk.js": "/masters-tool/static/js/845.594769e8.chunk.js",
     "static/media/correct.mp3": "/masters-tool/static/media/correct.307ca4c89d7a93a49b16.mp3",
     "service-worker.js": "/masters-tool/service-worker.js",
     "static/media/incorrect.mp3": "/masters-tool/static/media/incorrect.371c6de6a480d9de852e.mp3",
     "index.html": "/masters-tool/index.html",
-    "main.ca9dc54e.css.map": "/masters-tool/static/css/main.ca9dc54e.css.map",
-    "main.e4cb4c2a.js.map": "/masters-tool/static/js/main.e4cb4c2a.js.map",
+    "main.1ecbb01a.css.map": "/masters-tool/static/css/main.1ecbb01a.css.map",
+    "main.b2c709a3.js.map": "/masters-tool/static/js/main.b2c709a3.js.map",
     "845.594769e8.chunk.js.map": "/masters-tool/static/js/845.594769e8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ca9dc54e.css",
-    "static/js/main.e4cb4c2a.js"
+    "static/css/main.1ecbb01a.css",
+    "static/js/main.b2c709a3.js"
   ]
 }
