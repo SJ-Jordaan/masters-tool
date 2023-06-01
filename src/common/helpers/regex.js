@@ -1,6 +1,10 @@
 export const normaliseAlphabet = (alphabet) => {
+  if (!alphabet) {
+    return "";
+  }
+
   if (Array.isArray(alphabet)) {
-    return alphabet.map((char) => normaliseAlphabet(char));
+    return alphabet.map((char) => normaliseAlphabet(char)).filter((char) => char !== "");
   }
 
   if (typeof alphabet === "string" && alphabet.length > 1) {

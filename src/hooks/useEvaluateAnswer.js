@@ -50,11 +50,11 @@ const useEvaluateAnswer = (questions) => {
         // eslint-disable-next-line no-fallthrough
         case "Regex":
           let m1 = parse(
-            normaliseAlphabet(answer.replace(/\s/g, "")),
+            normaliseAlphabet(answer),
             normaliseAlphabet(question.alphabet)
           );
           let m2 = parse(
-            normaliseAlphabet(question.answer.replace(/\s/g, "")),
+            normaliseAlphabet(question.answer),
             normaliseAlphabet(question.alphabet)
           );
 

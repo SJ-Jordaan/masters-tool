@@ -154,5 +154,80 @@
       "(",
       ")"
     ]
+  },
+  {
+    "questionId": "test-1-1",
+    "questionType": "Regex",
+    "questionContent": "Provide a regular expression that contains exactly one b and at least two a's",
+    "answer": "(baaa*)∪(abaa*)∪(aaba*)∪(aaa*b)",
+    "hints": "Consider all the possible positions of the b in the string.",
+    "score": 10,
+    "alphabet": "ab",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "test-1-2",
+    "questionType": "Regex",
+    "questionContent": "Provide a regular expression that contains the substring acb at least three times.",
+    "answer": "(a∪b∪c)*acb(a∪b∪c)*acb(a∪b∪c)*acb(a∪b∪c)*",
+    "hints": ["There can be any number of alphabet characters before and after the substring.", "The substring can be repeated any number of times."],
+    "score": 10,
+    "alphabet": "abc",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "test-1-3",
+    "questionType": "Regex",
+    "questionContent": "Provide a regular expression where every even position is a or b, every odd position is c or d.",
+    "answer": "((c∪d)(a∪b))*∪(c∪d)((a∪b)(c∪d))*",
+    "hints": ["Consider the possible positions of the c and d in the string.", "Consider the possible positions of the a and b in the string."],
+    "score": 10,
+    "alphabet": "abcd",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "test-1-4",
+    "questionType": "Regex",
+    "questionContent": "Provide a regular expression where every odd position is b",
+    "answer": "(b(a∪b))*(b∪ε)",
+    "hints": ["Consider edge cases for odd positions.", "Consider the possible positions of the a in the string."],
+    "score": 10,
+    "alphabet": "abε",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "test-1-5",
+    "questionType": "Regex",
+    "questionContent": "Provide a regular expression that contains at most one a.",
+    "answer": "b*ab*∪b*",
+    "hints": ["Consider the possible positions of the a in the string.", "Consider the possible positions of the b in the string."],
+    "score": 10,
+    "alphabet": "ab",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
   }
 ]
