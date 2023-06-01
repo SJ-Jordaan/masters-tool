@@ -55,7 +55,7 @@ const LevelProgress = () => {
 
   const quitAndNavigateHome = () => {
     quitLevel(level.levelId);
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   const submitAndEvaluateAnswer = (answer) => {

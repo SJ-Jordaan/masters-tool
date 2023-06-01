@@ -66,7 +66,7 @@ const LevelEnd = ({
       <div className="flex space-x-4">
         <button
           className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/", { replace: true })}
         >
           Go Home
         </button>
@@ -76,11 +76,11 @@ const LevelEnd = ({
             const nextLevel = levels.find((level) => !level.isCompleted);
 
             if (!nextLevel) {
-              navigate("/");
+              navigate("/", { replace: true });
               toast("You have completed all levels!");
               return;
             }
-            navigate(`/level/${nextLevel.levelId}`);
+            navigate(`/level/${nextLevel.levelId}`, { replace: true });
           }}
         >
           Next Level
