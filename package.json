@@ -1,6 +1,6 @@
 {
   "name": "masters-tool",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": true,
   "homepage": "https://sj-jordaan.github.io/masters-tool",
   "dependencies": {
@@ -54,7 +54,7 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "push": ""
+    "prep": "node scripts/versioning.js patch && git add package.json src/common/constants/build.js && git commit -m \"chore: update version\""
   },
   "eslintConfig": {
     "extends": [
