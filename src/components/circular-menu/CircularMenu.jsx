@@ -28,8 +28,8 @@ const CircularMenu = ({ items }) => {
       <menu className="items-wrapper">
         {items.map((item) =>
           cloneElement(item, {
-            onClick: handleItemClick(item.props.onClick),
-            style: { ...item.style, cursor: "pointer" },
+            onMouseUp: handleItemClick(item.props.onClick),
+            onClick: undefined,
           })
         )}
       </menu>
