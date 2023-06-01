@@ -36,6 +36,7 @@ const RegexQuestionForm = ({
         ))}
       </div>
       <RegExpKeyboard
+        showSpecial={question.questionType !== "Regex Accepts String"}
         alphabet={question.alphabet}
         operators={question.operators}
         onInput={handleInput}

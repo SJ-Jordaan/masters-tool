@@ -15,6 +15,7 @@ export const RegExpKeyboard = ({
   onUndo,
   onRedo,
   onReset,
+  showSpecial
 }) => {
   const handleButtonClick = (input) => {
     onInput(input);
@@ -61,20 +62,24 @@ export const RegExpKeyboard = ({
           </button>
         ))}
       </div>
-      <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
-        <button
-          onClick={() => handleButtonClick(alphabetString)}
-          className="btn btn-square w-14 h-14 text-xl"
-        >
-          Σ<sub>∪</sub>
-        </button>
-        <button
-          onClick={() => handleButtonClick(alphabetStar)}
-          className="btn btn-square w-14 h-14 text-xl"
-        >
-          (Σ<sub>∪</sub>)<sup>*</sup>
-        </button>
-      </div>
+      {
+        showSpecial && (
+          <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => handleButtonClick(alphabetString)}
+              className="btn btn-square w-14 h-14 text-xl"
+            >
+              Σ<sub>∪</sub>
+            </button>
+            <button
+              onClick={() => handleButtonClick(alphabetStar)}
+              className="btn btn-square w-14 h-14 text-xl"
+            >
+              (Σ<sub>∪</sub>)<sup>*</sup>
+            </button>
+          </div>
+        )
+      }
     </div>
   );
 };
