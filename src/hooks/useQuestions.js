@@ -13,7 +13,7 @@ const createQuestion = (q) =>
     q.questionContent,
     q.alphabet,
     q.answer,
-    q.hint,
+    q.hints,
     q.score,
     q.isCompleted,
     q.operators,

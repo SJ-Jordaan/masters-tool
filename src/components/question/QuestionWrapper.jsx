@@ -4,7 +4,6 @@ import RegexQuestionForm from "./question-types/RegexQuestionForm";
 import { toast } from "react-toastify";
 import {
   AiOutlineBulb,
-  AiOutlineCheck,
   AiOutlineClose,
   AiOutlineLeft,
   AiOutlineRight,
@@ -29,6 +28,7 @@ const QuestionWrapper = ({
   const question = questions.find((q) => q.questionId === questionId);
   const [playCorrect] = useSound(correct, { volume: 0.25 });
   const [playIncorrect] = useSound(incorrect, { volume: 0.25 });
+  const [hintIndex, setHintIndex] = React.useState(0);
 
   const {
     answer,
@@ -41,7 +41,7 @@ const QuestionWrapper = ({
 
   const requestHint = () => {
     onHintRequest();
-    toast(question.hint, {
+    toast(question.hints[hintIndex], {
       type: "info",
       toastId: "hint",
       autoClose: 5000,
@@ -50,9 +50,15 @@ const QuestionWrapper = ({
         fontSize: "1.2rem",
       },
     });
+    setHintIndex((p) => (p + 1 < question.hints.length ? p + 1 : 0));
   };
 
   const handleAnswerSubmission = () => {
+    if (question.isCompleted) {
+      nextQuestion();
+      return;
+    }
+
     const result = onSubmit(answer);
     if (result.equal) {
       playCorrect();
@@ -185,7 +191,11 @@ const QuestionWrapper = ({
         onClick={handleAnswerSubmission}
         className="h-16 w-16 btn btn-success btn-circle fixed bottom-4 right-4"
       >
-        <AiOutlineCheck className="h-7 w-7" />
+        {question.isCompleted ? (
+          <span className={`text-xs`}>Next</span>
+        ) : (
+          <span className={`text-xs`}>Submit</span>
+        )}
       </button>
     </div>
   );

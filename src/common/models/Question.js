@@ -5,7 +5,7 @@ export class Question {
     questionContent,
     alphabet,
     answer,
-    hint,
+    hints,
     score,
     isCompleted = false,
     operators = [],
@@ -15,7 +15,7 @@ export class Question {
     this.questionType = questionType;
     this.questionContent = questionContent;
     this.answer = answer;
-    this.hint = hint;
+    this.hints = typeof hints === "string" ? [hints] : hints;
     this.score = score;
     this.alphabet =
       typeof alphabet === "string" ? alphabet.split("") : alphabet;
