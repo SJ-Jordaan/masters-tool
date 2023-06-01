@@ -22,12 +22,15 @@ const CircularMenu = ({ items }) => {
       id="circularMenu"
       className={`circular-menu circular-menu-left ${isActive ? "active" : ""}`}
     >
-      <button className="floating-btn" onClick={toggleMenu}>
+      <button className="floating-btn cursor-pointer" onClick={toggleMenu}>
         <AiOutlineMenu className="w-6 h-6" />
       </button>
       <menu className="items-wrapper">
         {items.map((item) =>
-          cloneElement(item, { onClick: handleItemClick(item.props.onClick) })
+          cloneElement(item, {
+            onClick: handleItemClick(item.props.onClick),
+            style: { ...item.style, cursor: "pointer" },
+          })
         )}
       </menu>
     </div>
