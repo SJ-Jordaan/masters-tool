@@ -13,18 +13,15 @@ const RegexQuestionForm = ({
 }) => {
   return (
     <div className="flex flex-col items-center w-full px-2">
-      <p className="text-xs bg-gray-900 rounded p-1.5 mb-0">
-        {question.questionType}
-      </p>
-      <div className="divider mt-0" />
+      <div className="divider mt-0 mb-0.5" />
       <p className="">
         {`Given the alphabet Σ = {${displayAlphabet(question.alphabet).join(
           ","
         )}}`}
       </p>
-      <div className="divider" />
+      <div className="divider mt-0.5" />
       <p className="text-xl">{question.questionContent}</p>
-      <div className="w-full max-w-sm border rounded-md p-2 text-center my-4 overflow-auto min-h-12 flex justify-center items-center">
+      <div className="w-full max-w-sm border border-accent rounded-md p-2 text-center my-4 overflow-auto min-h-12 flex justify-center items-center">
         {answer.split("").map((char, index) => (
           <span
             key={index}

@@ -15,12 +15,12 @@ export const Header = () => {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src={user.avatar} alt="" />
+              <img src={user.avatar} alt="avatar" />
             </div>
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content p-2 shadow bg-gray-600 rounded-box w-52"
+            className="menu menu-compact bg-accent dropdown-content p-4 shadow text-white rounded-box"
           >
             <Link to={"/user/view"}>Profile</Link>
           </ul>

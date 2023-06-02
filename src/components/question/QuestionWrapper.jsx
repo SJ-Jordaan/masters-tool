@@ -55,7 +55,7 @@ const QuestionWrapper = ({
 
   const handleAnswerSubmission = () => {
     if (question.isCompleted) {
-      nextQuestion();
+      handleNextQuestion();
       return;
     }
 
@@ -152,7 +152,7 @@ const QuestionWrapper = ({
           ))}
         </ul>
       </div>
-      <div className="w-full p-2">{renderQuestionTypeComponent()}</div>
+      <div className={`w-full p-2`}>{renderQuestionTypeComponent()}</div>
       <CircularMenu
         items={[
           <button
@@ -164,7 +164,7 @@ const QuestionWrapper = ({
           </button>,
           <button
             key="prev"
-            className="menu-item btn btn-circle"
+            className="menu-item btn btn-circle border-0 bg-transparent"
             onClick={handlePrevQuestion}
           >
             <AiOutlineLeft className="h-6 w-6" />
@@ -172,7 +172,7 @@ const QuestionWrapper = ({
           </button>,
           <button
             key="next"
-            className="menu-item btn btn-circle"
+            className="menu-item btn btn-circle border-0 bg-transparent"
             onClick={handleNextQuestion}
           >
             <AiOutlineRight className="h-6 w-6" />

@@ -22,16 +22,16 @@ const LevelOverview = ({ level }) => {
   const progress = totalScore !== 0 ? (score / totalScore) * 100 : 0;
 
   return (
-    <div className="bg-gray-700 rounded-lg shadow p-4 mb-4 space-y-4">
+    <div className="rounded-lg shadow p-4 mb-4 space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">{levelName}</h2>
+        <h2 className="text-xl font-bold">{levelName}</h2>
         <span
-          className={`inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 ${
+          className={`inline-block rounded-full px-3 py-1 text-sm text-white ${
             isCompleted
               ? "bg-green-500"
               : isStarted
-              ? "bg-blue-500"
-              : "bg-gray-500"
+              ? "bg-primary"
+              : "bg-accent"
           }`}
         >
           {isCompleted ? "Completed" : isStarted ? "Started" : "Not Started"}
@@ -45,7 +45,7 @@ const LevelOverview = ({ level }) => {
           Progress:{" "}
           <span className="text-green-400">{progress.toFixed(2)}%</span>
         </p>
-        <div className="h-2 bg-gray-800 rounded">
+        <div className="h-2 rounded">
           <div
             className="h-full bg-green-500 rounded"
             style={{ width: `${progress}%` }}
@@ -77,7 +77,7 @@ const LevelOverview = ({ level }) => {
             e.preventDefault();
           }
         }}
-        className={`btn btn-outline w-full text-center hover:bg-blue-700 text-white px-4 py-2 rounded ${
+        className={`btn btn-outline w-full px-4 py-2 rounded ${
           isCompleted && "hidden"
         }`}
       >

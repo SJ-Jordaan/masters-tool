@@ -11,6 +11,12 @@ function App() {
   const { waitingWorker, reloadPage, showReload } = useServiceWorker();
   const { user } = useContext(UserContext);
 
+  // initially set the theme and "listen" for changes to apply them to the HTML tag
+  React.useEffect(() => {
+    const theme = localStorage.getItem("theme") || "dark";
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, []);
+
   function getRoutes() {
     if (!user) {
       return <Route path={"/"} element={<ProfileView />} />;

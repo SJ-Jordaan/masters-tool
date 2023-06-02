@@ -25,7 +25,7 @@ const CircularMenu = ({ items }) => {
       className={`circular-menu circular-menu-left ${isActive ? "active" : ""}`}
     >
       <button className="floating-btn" onClick={toggleMenu}>
-        <AiOutlineMenu className="w-6 h-6" />
+        <AiOutlineMenu className="w-6 h-6 text-white" />
       </button>
       <menu className="items-wrapper">
         {items.map((item) =>

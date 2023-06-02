@@ -23,11 +23,7 @@ const OverallProgress = ({ categories, levels }) => {
           totalPossibleScore > 0 ? (totalScore / totalPossibleScore) * 100 : 0;
 
         return (
-          <Link
-            to={`/library/${category.id}`}
-            className="stat bg-gray-700 hover:bg-gray-600"
-            key={index}
-          >
+          <Link to={`/library/${category.id}`} className="stat" key={index}>
             <div className="stat-figure">
               <div
                 className="radial-progress text-green-600"
