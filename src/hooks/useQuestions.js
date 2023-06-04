@@ -6,19 +6,8 @@ import {
 import questionsData from "../data/questions.json";
 import { Question } from "../common/models/Question";
 
-const createQuestion = (q) =>
-  new Question(
-    q.questionId,
-    q.questionType,
-    q.questionContent,
-    q.alphabet,
-    q.answer,
-    q.hints,
-    q.score,
-    q.isCompleted,
-    q.operators,
-    q.isGenerated
-  );
+const createQuestion = (q) => new Question({ ...q });
+
 const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
 

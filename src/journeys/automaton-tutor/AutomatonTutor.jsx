@@ -24,7 +24,7 @@ export const AutomatonTutor = () => {
     initialStateId,
     finalStateIds,
     setTargetState,
-    fixStates
+    fixStates,
   } = useAutomatonTutorStore();
   const { isLocked } = useGraphStore();
   const { currentState, isSimulating } = useSimulationStore();
@@ -119,11 +119,7 @@ export const AutomatonTutor = () => {
 
   function nodePaint(node, color = "black", ctx) {
     // Make a white circle with a black border, with text inside using name
-    const {
-      name,
-      x,
-      y
-    } = node;
+    const { name, x, y } = node;
 
     const nodeSize = 9;
     const fontSize = 4;
@@ -168,49 +164,53 @@ export const AutomatonTutor = () => {
 
       const quadPointX = x;
       const quadPointY = y - nodeSize * 2;
-      
+
       const endPointX = x + nodeSize;
       const endPointY = y - nodeSize * 2;
-      
-      const arrowAngle = Math.atan2(quadPointX - endPointX, quadPointY - endPointY) + Math.PI;
-      
+
+      const arrowAngle =
+        Math.atan2(quadPointX - endPointX, quadPointY - endPointY) + Math.PI;
+
       ctx.beginPath();
       ctx.setLineDash([1, 2]);
       ctx.moveTo(startPointX, startPointY);
-      
+
       ctx.quadraticCurveTo(quadPointX, quadPointY, endPointX, endPointY);
       ctx.stroke();
       ctx.beginPath();
       ctx.setLineDash([]);
-      
-      ctx.moveTo(endPointX - (2 * Math.sin(arrowAngle - Math.PI / 4)), 
-                  endPointY - (2 * Math.cos(arrowAngle - Math.PI / 4)));
-      
+
+      ctx.moveTo(
+        endPointX - 2 * Math.sin(arrowAngle - Math.PI / 4),
+        endPointY - 2 * Math.cos(arrowAngle - Math.PI / 4)
+      );
+
       ctx.lineTo(endPointX, endPointY);
-      
-      ctx.lineTo(endPointX - (2 * Math.sin(arrowAngle + Math.PI / 4)), 
-                  endPointY - (2 * Math.cos(arrowAngle + Math.PI / 4)));
-      
+
+      ctx.lineTo(
+        endPointX - 2 * Math.sin(arrowAngle + Math.PI / 4),
+        endPointY - 2 * Math.cos(arrowAngle + Math.PI / 4)
+      );
+
       ctx.stroke();
     }
-    
+
     if (finalStateIds.includes(node.id)) {
       // Draw a second circle inside the first one
       ctx.beginPath();
-      ctx.arc(x, y, nodeSize - (nodeSize / 6), 0, 2 * Math.PI, false);
+      ctx.arc(x, y, nodeSize - nodeSize / 6, 0, 2 * Math.PI, false);
       ctx.fillStyle = color;
       ctx.fill();
       // Add the border
       ctx.strokeStyle = "black";
       ctx.stroke();
 
-      
       // Add the text at the bottom of the circle
       ctx.fillStyle = "black";
       ctx.font = `${fontSize}px sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(name, x, y + (nodeSize - nodeSize / 6) - (fontSize / 2) - 1);
+      ctx.fillText(name, x, y + (nodeSize - nodeSize / 6) - fontSize / 2 - 1);
       return;
     }
 
@@ -224,7 +224,7 @@ export const AutomatonTutor = () => {
 
   return (
     <div className="relative">
-      <div className="absolute w-screen h-screen z-1">
+      <div className="absolute w-full h-full z-1">
         <ForceGraph2D
           ref={graphRef}
           graphData={graphData}
@@ -245,7 +245,9 @@ export const AutomatonTutor = () => {
           enablePanInteraction={!(isLocked || isSimulating)}
           enableNodeDrag={!(isLocked || isSimulating)}
           nodePointerAreaPaint={nodePaint}
-          nodeCanvasObject={(node, ctx) => nodePaint(node, colorNodes(node), ctx)}
+          nodeCanvasObject={(node, ctx) =>
+            nodePaint(node, colorNodes(node), ctx)
+          }
         />
         <div>
           <label

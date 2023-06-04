@@ -49,6 +49,7 @@ const useEvaluateAnswer = (questions) => {
           }
         // eslint-disable-next-line no-fallthrough
         case "Regex":
+        case "Automaton to Regex":
           let m1 = parse(
             normaliseAlphabet(answer),
             normaliseAlphabet(question.alphabet)

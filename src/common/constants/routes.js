@@ -1,7 +1,6 @@
 import { AutomatonTutor, Homepage, Library, NotFound } from "../../journeys";
 
 import { Colonisers } from "../../journeys/colonisers/Colonisers";
-import { RegexCalc } from "../../journeys/regex-calc/RegexCalc";
 import ProfileView from "../../components/user-profile/ProfileView";
 import LevelSelector from "../../components/level/LevelSelector";
 import LevelProgress from "../../components/level/LevelProgress";
@@ -33,12 +32,6 @@ export const AppRoutes = [
   {
     path: "/colonisers",
     element: <Colonisers />,
-    isAuthenticated: false,
-    exact: true,
-  },
-  {
-    path: "/regex/calculator",
-    element: <RegexCalc />,
     isAuthenticated: false,
     exact: true,
   },

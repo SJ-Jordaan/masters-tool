@@ -1,5 +1,5 @@
 export class Question {
-  constructor(
+  constructor({
     questionId,
     questionType,
     questionContent,
@@ -9,8 +9,9 @@ export class Question {
     score,
     isCompleted = false,
     operators = [],
-    isGenerated = false
-  ) {
+    isGenerated = false,
+    automaton = null,
+  }) {
     this.questionId = questionId;
     this.questionType = questionType;
     this.questionContent = questionContent;
@@ -22,6 +23,7 @@ export class Question {
     this.isCompleted = isCompleted;
     this.operators = operators;
     this.isGenerated = isGenerated;
+    this.automaton = automaton;
   }
 
   complete() {

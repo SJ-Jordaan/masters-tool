@@ -13,6 +13,7 @@ import useAnswerHistory from "../../hooks/useAnswerHistory";
 import useSound from "use-sound";
 import correct from "../../common/sounds/correct.mp3";
 import incorrect from "../../common/sounds/incorrect.mp3";
+import ToRegexQuestionForm from "./question-types/ToRegexQuestionForm";
 
 const QuestionWrapper = ({
   questionId,
@@ -114,6 +115,18 @@ const QuestionWrapper = ({
       case "Regex Accepts String":
         return (
           <RegexQuestionForm
+            question={question}
+            answer={answer}
+            handleInput={handleInput}
+            handleDelete={handleDelete}
+            handleUndo={handleUndo}
+            handleRedo={handleRedo}
+            handleReset={resetAnswerHistory}
+          />
+        );
+      case "Automaton to Regex":
+        return (
+          <ToRegexQuestionForm
             question={question}
             answer={answer}
             handleInput={handleInput}

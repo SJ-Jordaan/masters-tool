@@ -1,5 +1,18 @@
 [
   {
+    "levelId": "regex-auto-test",
+    "categoryId": "2",
+    "levelName": "Regex Auto Test",
+    "description": "Regex Auto Test",
+    "questionIds": [
+      "regex-auto-1-1",
+      "regex-auto-1-2",
+      "regex-auto-1-3",
+      "regex-auto-1-4",
+      "regex-auto-1-5"
+    ]
+  },
+  {
     "levelId": "test-1",
     "categoryId": "2",
     "levelName": "Class Test 1",

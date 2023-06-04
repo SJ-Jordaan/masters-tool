@@ -175,7 +175,10 @@
     "questionType": "Regex",
     "questionContent": "Provide a regular expression that contains the substring acb at least three times.",
     "answer": "(a∪b∪c)*acb(a∪b∪c)*acb(a∪b∪c)*acb(a∪b∪c)*",
-    "hints": ["There can be any number of alphabet characters before and after the substring.", "The substring can be repeated any number of times."],
+    "hints": [
+      "There can be any number of alphabet characters before and after the substring.",
+      "The substring can be repeated any number of times."
+    ],
     "score": 10,
     "alphabet": "abc",
     "operators": [
@@ -190,7 +193,10 @@
     "questionType": "Regex",
     "questionContent": "Provide a regular expression where every even position is a or b, every odd position is c or d.",
     "answer": "((c∪d)(a∪b))*∪(c∪d)((a∪b)(c∪d))*",
-    "hints": ["Consider the possible positions of the c and d in the string.", "Consider the possible positions of the a and b in the string."],
+    "hints": [
+      "Consider the possible positions of the c and d in the string.",
+      "Consider the possible positions of the a and b in the string."
+    ],
     "score": 10,
     "alphabet": "abcd",
     "operators": [
@@ -205,7 +211,10 @@
     "questionType": "Regex",
     "questionContent": "Provide a regular expression where every odd position is b",
     "answer": "(b(a∪b))*(b∪ε)",
-    "hints": ["Consider edge cases for odd positions.", "Consider the possible positions of the a in the string."],
+    "hints": [
+      "Consider edge cases for odd positions.",
+      "Consider the possible positions of the a in the string."
+    ],
     "score": 10,
     "alphabet": "abε",
     "operators": [
@@ -220,7 +229,95 @@
     "questionType": "Regex",
     "questionContent": "Provide a regular expression that contains at most one a.",
     "answer": "b*ab*∪b*",
-    "hints": ["Consider the possible positions of the a in the string.", "Consider the possible positions of the b in the string."],
+    "hints": [
+      "Consider the possible positions of the a in the string.",
+      "Consider the possible positions of the b in the string."
+    ],
+    "score": 10,
+    "alphabet": "ab",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "regex-auto-1-3",
+    "questionType": "Automaton to Regex",
+    "questionContent": "Convert the given automaton to a regular expression.",
+    "answer": "(a∪b)*c(d∪e)*",
+    "hints": [
+      "Consider the possible paths from the start state to the final state."
+    ],
+    "score": 10,
+    "alphabet": "abcde",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "regex-auto-1-1",
+    "questionType": "Automaton to Regex",
+    "questionContent": "Convert the given automaton to a regular expression.",
+    "answer": "a*b*",
+    "hints": [
+      "Consider the possible paths from the start state to the final state."
+    ],
+    "score": 10,
+    "alphabet": "ab",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "regex-auto-1-2",
+    "questionType": "Automaton to Regex",
+    "questionContent": "Convert the given automaton to a regular expression.",
+    "answer": "a*b(a*b)*a*",
+    "hints": [
+      "Consider the possible paths from the start state to the final state."
+    ],
+    "score": 10,
+    "alphabet": "ab",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "regex-auto-1-4",
+    "questionType": "Automaton to Regex",
+    "questionContent": "Convert the given automaton to a regular expression.",
+    "answer": "(aba∪b)*",
+    "hints": [
+      "Consider the possible paths from the start state to the final state."
+    ],
+    "score": 10,
+    "alphabet": "ab",
+    "operators": [
+      "∪",
+      "*",
+      "(",
+      ")"
+    ]
+  },
+  {
+    "questionId": "regex-auto-1-5",
+    "questionType": "Automaton to Regex",
+    "questionContent": "Convert the given automaton to a regular expression.",
+    "answer": "aaa*∪(a∪b)*",
+    "hints": [
+      "Consider the possible paths from the start state to the final state."
+    ],
     "score": 10,
     "alphabet": "ab",
     "operators": [
