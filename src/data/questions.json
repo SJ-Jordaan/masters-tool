@@ -326,5 +326,16 @@
       "(",
       ")"
     ]
+  },
+  {
+    "questionId": "auto-1-1",
+    "questionType": "Construct Automaton",
+    "questionContent": "Construct an automaton that accepts the language of strings that contain at least one a and at least one b.",
+    "answer": "",
+    "hints": [
+      "Consider the possible positions of the a and b in the string."
+    ],
+    "score": 10,
+    "alphabet": "ab"
   }
 ]

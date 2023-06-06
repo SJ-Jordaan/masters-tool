@@ -14,6 +14,7 @@ import useSound from "use-sound";
 import correct from "../../common/sounds/correct.mp3";
 import incorrect from "../../common/sounds/incorrect.mp3";
 import ToRegexQuestionForm from "./question-types/ToRegexQuestionForm";
+import AutomataQuestionForm from "./question-types/AutomataQuestionForm";
 
 const QuestionWrapper = ({
   questionId,
@@ -136,6 +137,18 @@ const QuestionWrapper = ({
             handleReset={resetAnswerHistory}
           />
         );
+      case "Construct Automaton":
+        return (
+          <AutomataQuestionForm
+            question={question}
+            answer={answer}
+            handleInput={handleInput}
+            handleDelete={handleDelete}
+            handleUndo={handleUndo}
+            handleRedo={handleRedo}
+            handleReset={resetAnswerHistory}
+          />
+        );
       default:
         return null;
     }
@@ -165,7 +178,7 @@ const QuestionWrapper = ({
           ))}
         </ul>
       </div>
-      <div className={`w-full p-2`}>{renderQuestionTypeComponent()}</div>
+      <div className={`w-full h-full p-2`}>{renderQuestionTypeComponent()}</div>
       <CircularMenu
         items={[
           <button
