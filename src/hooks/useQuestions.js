@@ -10,7 +10,6 @@ const createQuestion = (q) => new Question({ ...q });
 
 const useQuestions = () => {
   const [questions, setQuestions] = useState([]);
-
   const saveQuestionProgressToLocalStorage = (questions) => {
     const progressQuestions = questions.filter(
       (question) => question.isCompleted || question.isGenerated

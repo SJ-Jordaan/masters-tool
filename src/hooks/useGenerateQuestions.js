@@ -11,7 +11,6 @@ const useGenerateQuestions = (setQuestions) => {
           questionId: Date.now().toString() + i, // or however you generate question IDs
           type: questionTypes[i % questionTypes.length], // cycles through question types
         }));
-
       const alphabet = [
         ["a", "b"],
         ["a", "b", "c"],
@@ -48,21 +47,19 @@ const useGenerateQuestions = (setQuestions) => {
           regexType,
           questionStub.type
         );
-
-        return new Question(
-          questionStub.questionId,
-          questionStub.type,
-          questionConfig.questionText,
-          alphabet.join(""),
-          questionConfig.re,
-          questionConfig.hints,
-          difficulty * 4 + 5,
-          false,
+        return new Question({
+          questionId: questionStub.questionId,
+          questionType: questionStub.type,
+          questionContent: questionConfig.questionText,
+          alphabet: alphabet.join(""),
+          answer: questionConfig.re,
+          hints: questionConfig.hints,
+          score: difficulty * 4 + 5,
+          isCompleted: false,
           operators,
-          true
-        );
+          isGenerated: true
+        });
       });
-
       // add new questions to your questions state array
       setQuestions((prevQuestions) => [...prevQuestions, ...newQuestions]);
 
