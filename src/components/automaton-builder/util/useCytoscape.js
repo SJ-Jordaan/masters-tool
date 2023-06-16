@@ -4,9 +4,6 @@ import { useMemo, useRef } from "react";
 
 export default function useCytoscape({ automaton, onNodeClick }) {
   const cyInstance = useRef(null);
-  const handleNodeClick = (event) => {
-    onNodeClick(event.target);
-  };
 
   const cyComponent = useMemo(
     () => (
@@ -67,15 +64,15 @@ export default function useCytoscape({ automaton, onNodeClick }) {
         stylesheet={DarkTheme}
         cy={(cy) => {
           cyInstance.current = cy;
-          cy.on("tap", "node", handleNodeClick);
+          cy.on("tap", "node", (event) => onNodeClick(event.target));
         }}
       />
     ),
     [
-      ...automaton.finals,
-      ...automaton.initial,
-      ...automaton.states,
-      ...automaton.transitions,
+      automaton.finals,
+      automaton.initial,
+      automaton.states,
+      automaton.transitions,
       onNodeClick,
     ]
   );
