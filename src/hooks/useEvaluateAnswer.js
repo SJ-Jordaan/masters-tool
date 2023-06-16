@@ -116,6 +116,8 @@ const useEvaluateAnswer = (questions) => {
             message: "The string is not accepted by the given regex.",
           };
 
+        case "Construct Automaton":
+          return { equal: false, counterExamples: null };
         default:
           return { equal: false, counterExamples: null };
       }

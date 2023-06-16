@@ -6,8 +6,15 @@ const useAnswerHistory = () => {
   const [historyIndex, setHistoryIndex] = useState(0);
 
   const handleInput = useCallback(
-    (char) => {
-      const newAnswer = answer + char;
+    (input) => {
+      let newAnswer;
+      if (typeof input === "string") {
+        newAnswer = answer + input;
+      } else if (typeof input === "object" && input !== null) {
+        newAnswer = { ...answer, ...input };
+      } else {
+        return;
+      }
       history.current = [
         ...history.current.slice(0, historyIndex + 1),
         newAnswer,
@@ -19,7 +26,7 @@ const useAnswerHistory = () => {
   );
 
   const handleDelete = useCallback(() => {
-    const newAnswer = answer.slice(0, -1);
+    const newAnswer = typeof answer === "string" ? answer.slice(0, -1) : {};
     history.current = [
       ...history.current.slice(0, historyIndex + 1),
       newAnswer,

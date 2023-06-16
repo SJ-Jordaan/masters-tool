@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import AutomatonBuilder from "../../automaton-builder/AutomatonBuilder";
 import to_NFA from "dfa-lib/regex";
 import { normaliseAlphabet } from "../../../common/helpers/regex";
@@ -12,10 +12,10 @@ const AutomataQuestionForm = ({
   handleRedo,
   handleReset,
 }) => {
-  const generateAutomaton = (regex, alphabet) => {
+  const automaton = useMemo(() => {
     const dfa = to_NFA(
-      normaliseAlphabet(regex),
-      normaliseAlphabet(alphabet)
+      normaliseAlphabet(question.answer),
+      normaliseAlphabet(question.alphabet)
     ).minimized();
     const stateMap = new Map(dfa.states.map((state, i) => [state, String(i)]));
 
@@ -39,10 +39,29 @@ const AutomataQuestionForm = ({
           }).length,
         };
       }),
-      transitions: transitions,
+      transitions: [],
       initial: stateMap.get(dfa.initial),
       finals: dfa.final.map((state) => stateMap.get(state)),
     };
+  }, [question.alphabet, question.answer]);
+
+  const handleNewTransition = (startNodeId, endNodeId, symbol) => {
+    // Create a new version of the automaton with the transition added.
+    // The exact implementation depends on how your automaton and transitions are structured.
+    const newAutomaton = {
+      ...automaton,
+      transitions: [
+        ...automaton.transitions,
+        {
+          startNodeId,
+          endNodeId,
+          symbol,
+        },
+      ],
+    };
+
+    // Pass the new automaton to handleInput.
+    handleInput(newAutomaton);
   };
 
   return (
@@ -51,9 +70,9 @@ const AutomataQuestionForm = ({
 
       <div className="w-full h-96">
         <AutomatonBuilder
-          automaton={generateAutomaton(question.answer, question.alphabet)}
+          automaton={automaton}
           answer={answer}
-          handleInput={handleInput}
+          handleInput={handleNewTransition}
           handleDelete={handleDelete}
           handleUndo={handleUndo}
           handleRedo={handleRedo}

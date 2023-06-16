@@ -26,7 +26,6 @@ const CreateLevel = ({ onCreate }) => {
       numQuestions
     );
     const questionIds = newQuestions.map((question) => question.questionId);
-
     const newLevel = {
       levelId: Date.now().toString(),
       categoryId: "3",
@@ -39,7 +38,6 @@ const CreateLevel = ({ onCreate }) => {
         0
       ),
     };
-
     addLevel(newLevel);
     onCreate();
   };
