@@ -1,6 +1,6 @@
 {
   "name": "masters-tool",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "private": true,
   "homepage": "https://sj-jordaan.github.io/masters-tool",
   "dependencies": {
