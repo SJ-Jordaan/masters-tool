@@ -37,14 +37,32 @@ const AutomataQuestionForm = ({
       transitions: transitions,
       initial: stateMap.get(dfa.initial),
       finals: dfa.final.map((state) => stateMap.get(state)),
+      current: {
+        state: stateMap.get(dfa.initial),
+        symbol: dfa.alphabet[0],
+        transition: transitions.find(
+          (transition) =>
+            transition.from === stateMap.get(dfa.initial) &&
+            transition.label === dfa.alphabet[0]
+        ),
+      },
     };
   }, [question.alphabet, question.answer]);
 
-  const handleNewTransition = (startNodeId, endNodeId, symbol) => {
+  const handleNewTransition = (startNodeId, symbol, endNodeId) => {
     // Create a new version of the automaton with the transition added.
     // The exact implementation depends on how your automaton and transitions are structured.
     const newAutomaton = {
       ...automaton,
+      current: {
+        state: startNodeId,
+        symbol: symbol,
+        transition: {
+          from: startNodeId,
+          to: endNodeId,
+          label: symbol,
+        },
+      },
       transitions: answer.transitions.map((transition) => {
         if (transition.from === startNodeId && transition.label === symbol) {
           return {
@@ -74,7 +92,6 @@ const AutomataQuestionForm = ({
       <div className="w-full h-96">
         {answer && (
           <>
-            <AutomatonRenderer automaton={answer} height={200} />
             <AutomatonBuilder
               automaton={automaton}
               answer={answer}

@@ -1,7 +1,12 @@
 import React from "react";
 import { Graphviz } from "graphviz-react";
 
-const AutomatonRenderer = ({ automaton, height = null }) => {
+const AutomatonRenderer = ({
+  automaton,
+  height = null,
+  highlightedState,
+  highlightedTransition,
+}) => {
   const automatonToDOT = (automaton) => {
     const color =
       document.documentElement.dataset.theme === "dark" ? "white" : "black";
@@ -16,10 +21,25 @@ const AutomatonRenderer = ({ automaton, height = null }) => {
     dot += `  node [shape = doublecircle]; ${automaton.finals.join(" ")};\n`;
     dot += `  node [shape = circle];\n`;
 
-    dot += `  ini [shape=point, label=""];\n`;
-    dot += `  ini -> ${automaton.initial};\n`;
+    dot += `  ini [shape=point, label="initial" color="${
+      highlightedState === automaton.initial ? "green" : color
+    }" fontcolor="${
+      highlightedState === automaton.initial ? "green" : color
+    }"];\n`;
+    dot += `  ini -> ${automaton.initial} [label="initial" color="${
+      highlightedState === automaton.initial ? "green" : color
+    }" fontcolor="${
+      highlightedState === automaton.initial ? "green" : color
+    }"];\n`;
     dot += `  ${automaton.states
-      .map((state) => `${state} [label="${state}"];`)
+      .map(
+        (state) =>
+          `${state} [label="${state}" ${
+            highlightedState === state || highlightedTransition.to === state
+              ? "color=green fontcolor=green"
+              : ""
+          }];`
+      )
       .join("\n")}\n`;
 
     // group transitions by 'from' and 'to', join labels with comma
@@ -42,9 +62,15 @@ const AutomatonRenderer = ({ automaton, height = null }) => {
     );
 
     for (let transition of groupedTransitions) {
+      const isHighlighted =
+        transition.from === highlightedTransition.from &&
+        transition.to === highlightedTransition.to &&
+        transition.label.includes(highlightedTransition.label);
       dot += `  ${transition.from} -> ${
         transition.to
-      } [label = "${transition.label.join(",")}" fontcolor="${color}"];\n`;
+      } [label = "${transition.label.join(",")}" fontcolor="${
+        isHighlighted ? "green" : color
+      }" color="${isHighlighted ? "green" : color}"];\n`;
     }
 
     dot += `}\n`;
