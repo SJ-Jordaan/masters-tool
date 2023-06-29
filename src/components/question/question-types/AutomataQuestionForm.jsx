@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from "react";
 import AutomatonBuilder from "../../automaton-builder/AutomatonBuilder";
 import to_NFA from "dfa-lib/regex";
 import { normaliseAlphabet } from "../../../common/helpers/regex";
-import AutomatonRenderer from "../../automaton-renderer/AutomatonRenderer";
 
 const AutomataQuestionForm = ({
   question,
