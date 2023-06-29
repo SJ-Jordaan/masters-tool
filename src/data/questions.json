@@ -330,10 +330,21 @@
   {
     "questionId": "auto-1-1",
     "questionType": "Construct Automaton",
-    "questionContent": "Construct an automaton that accepts the language of strings that contain at least one a and at least one b.",
-    "answer": "",
+    "questionContent": "Construct an automaton that accepts the language of strings that start with at least two a's followed by one b.",
+    "answer": "aaa*b",
     "hints": [
-      "Consider the possible positions of the a and b in the string."
+      "Consider the what happens if this pattern is ever broken."
+    ],
+    "score": 10,
+    "alphabet": "ab"
+  },
+  {
+    "questionId": "auto-1-2",
+    "questionType": "Construct Automaton",
+    "questionContent": "Construct an automaton that accepts the language of strings that accepts exactly one a and exactly one b.",
+    "answer": "(ab)|(ba)",
+    "hints": [
+      "Consider the permutations."
     ],
     "score": 10,
     "alphabet": "ab"

@@ -5,7 +5,8 @@
     "levelName": "Auto Test 1",
     "description": "Auto Test 1",
     "questionIds": [
-      "auto-1-1"
+      "auto-1-1",
+      "auto-1-2"
     ]
   },
   {

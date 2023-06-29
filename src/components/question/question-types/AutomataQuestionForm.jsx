@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import AutomatonBuilder from "../../automaton-builder/AutomatonBuilder";
 import to_NFA from "dfa-lib/regex";
 import { normaliseAlphabet } from "../../../common/helpers/regex";
+import AutomatonRenderer from "../../automaton-renderer/AutomatonRenderer";
 
 const AutomataQuestionForm = ({
   question,
@@ -17,13 +18,14 @@ const AutomataQuestionForm = ({
       normaliseAlphabet(question.answer),
       normaliseAlphabet(question.alphabet)
     ).minimized();
+
     const stateMap = new Map(dfa.states.map((state, i) => [state, String(i)]));
 
     const transitions = dfa.states.flatMap((state) => {
       return dfa.alphabet.flatMap((char) => {
         return {
           from: stateMap.get(state),
-          to: stateMap.get(dfa.delta[state][char]),
+          to: "",
           label: char,
         };
       });
@@ -31,15 +33,8 @@ const AutomataQuestionForm = ({
 
     return {
       states: Array.from(stateMap.values()),
-      alphabet: dfa.alphabet.map((char) => {
-        return {
-          char: char,
-          count: transitions.filter((transition) => {
-            return transition.label === char;
-          }).length,
-        };
-      }),
-      transitions: [],
+      alphabet: dfa.alphabet,
+      transitions: transitions,
       initial: stateMap.get(dfa.initial),
       finals: dfa.final.map((state) => stateMap.get(state)),
     };
@@ -50,34 +45,47 @@ const AutomataQuestionForm = ({
     // The exact implementation depends on how your automaton and transitions are structured.
     const newAutomaton = {
       ...automaton,
-      transitions: [
-        ...automaton.transitions,
-        {
-          startNodeId,
-          endNodeId,
-          symbol,
-        },
-      ],
+      transitions: answer.transitions.map((transition) => {
+        if (transition.from === startNodeId && transition.label === symbol) {
+          return {
+            ...transition,
+            to: endNodeId,
+          };
+        } else {
+          return transition;
+        }
+      }),
     };
 
     // Pass the new automaton to handleInput.
     handleInput(newAutomaton);
   };
 
+  useEffect(() => {
+    if (!answer) {
+      handleInput(automaton);
+    }
+  }, [handleInput, automaton, answer]);
+
   return (
     <div className="flex flex-col items-center w-full h-full px-2">
       <p className="text-xl">{question.questionContent}</p>
 
       <div className="w-full h-96">
-        <AutomatonBuilder
-          automaton={automaton}
-          answer={answer}
-          handleInput={handleNewTransition}
-          handleDelete={handleDelete}
-          handleUndo={handleUndo}
-          handleRedo={handleRedo}
-          handleReset={handleReset}
-        />
+        {answer && (
+          <>
+            <AutomatonRenderer automaton={answer} height={200} />
+            <AutomatonBuilder
+              automaton={automaton}
+              answer={answer}
+              handleInput={handleNewTransition}
+              handleDelete={handleDelete}
+              handleUndo={handleUndo}
+              handleRedo={handleRedo}
+              handleReset={handleReset}
+            />
+          </>
+        )}
       </div>
     </div>
   );

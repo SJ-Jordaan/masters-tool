@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import to_NFA from "dfa-lib/regex";
 import { displayAlphabet, normaliseAlphabet } from "../common/helpers/regex";
 import { toast } from "react-toastify";
+import { NFA } from "dfa-lib";
 
 function union(l1, l2) {
   return l1
@@ -30,6 +31,30 @@ function parse(s1, alphabet) {
   }
 }
 
+function convertToNFA(automaton) {
+  const alphabet = automaton.alphabet;
+
+  // Convert transitions into delta structure
+  const delta = {};
+  automaton.states.forEach((state) => {
+    delta[state] = {};
+  });
+
+  automaton.transitions.forEach((transition) => {
+    if (!(transition.label in delta[transition.from])) {
+      delta[transition.from][transition.label] = [];
+    }
+    if (transition.to) {
+      delta[transition.from][transition.label].push(transition.to);
+    }
+  });
+
+  const initial = [automaton.initial];
+  const final = automaton.finals;
+
+  return new NFA(alphabet, delta, initial, final);
+}
+
 const useEvaluateAnswer = (questions) => {
   return useCallback(
     (questionId, answer) => {
@@ -38,88 +63,102 @@ const useEvaluateAnswer = (questions) => {
         return { equal: false, counterExamples: null };
       }
 
-      switch (question.questionType) {
-        case "Regex Equivalence":
-          if (question.answer === answer) {
-            return {
-              equal: false,
-              counterExamples: null,
-              message: "You can't use the same regex",
-            };
-          }
-        // eslint-disable-next-line no-fallthrough
-        case "Regex":
-        case "Automaton to Regex":
-          let m1 = parse(
-            normaliseAlphabet(answer),
-            normaliseAlphabet(question.alphabet)
-          );
-          let m2 = parse(
-            normaliseAlphabet(question.answer),
-            normaliseAlphabet(question.alphabet)
-          );
+      if (
+        question.questionType === "Regex Equivalence" &&
+        question.answer === answer
+      ) {
+        return {
+          equal: false,
+          counterExamples: null,
+          message: "You can't use the same regex",
+        };
+      }
 
-          if (!m1 || !m2) {
-            return { equal: false, counterExamples: null };
-          }
-          let counterExamples = findEquivalenceCounterexamples(m1, m2);
+      const handleEquivalenceEvaluation = (m1, m2) => {
+        if (!m1 || !m2) {
+          console.log("m1 or m2 is null", m1, m2);
+          return { equal: false, counterExamples: null };
+        }
 
-          if (counterExamples[0] === null && counterExamples[1] === null) {
-            toast(`Correct answer! +${question.score} points`, {
-              position: "bottom-center",
-              autoClose: 2000,
-              style: {
-                fontSize: "1.2rem",
-              },
-            });
+        let counterExamples = findEquivalenceCounterexamples(m1, m2);
 
-            return {
-              equal: true,
-              counterExamples: null,
-              score: question.score,
-            };
-          }
+        if (counterExamples[0] === null && counterExamples[1] === null) {
+          toast(`Correct answer! +${question.score} points`, {
+            position: "bottom-center",
+            autoClose: 2000,
+            style: {
+              fontSize: "1.2rem",
+            },
+          });
 
           return {
-            equal: false,
-            counterExamples: displayAlphabet(counterExamples),
-            score: 0,
+            equal: true,
+            counterExamples: null,
+            score: question.score,
           };
+        }
 
-        case "Regex Accepts String":
-          let m = parse(
-            normaliseAlphabet(question.answer.replace(/\s/g, "")),
-            normaliseAlphabet(question.alphabet)
-          );
+        return {
+          equal: false,
+          counterExamples: displayAlphabet(counterExamples),
+          score: 0,
+        };
+      };
 
-          if (!m) {
-            return { equal: false, counterExamples: null };
-          }
+      if (
+        question.questionType === "Regex Equivalence" ||
+        question.questionType === "Regex" ||
+        question.questionType === "Automaton to Regex" ||
+        question.questionType === "Construct Automaton"
+      ) {
+        let m1 =
+          question.questionType === "Construct Automaton"
+            ? convertToNFA(answer)
+            : parse(
+                normaliseAlphabet(answer),
+                normaliseAlphabet(question.alphabet)
+              );
 
-          if (m.accepts(normaliseAlphabet(answer))) {
-            toast(`Correct answer! +${question.score} points`, {
-              position: "bottom-center",
-              autoClose: 2000,
-              style: {
-                fontSize: "1.2rem",
-              },
-            });
-            return {
-              equal: true,
-              counterExamples: null,
-              score: question.score,
-            };
-          }
+        let m2 = parse(
+          normaliseAlphabet(question.answer),
+          normaliseAlphabet(question.alphabet)
+        );
 
+        console.log("m1", m1);
+        console.log("m2", m2);
+
+        return handleEquivalenceEvaluation(m1, m2);
+      } else if (question.questionType === "Regex Accepts String") {
+        let m = parse(
+          normaliseAlphabet(question.answer.replace(/\s/g, "")),
+          normaliseAlphabet(question.alphabet)
+        );
+
+        if (!m) {
+          return { equal: false, counterExamples: null };
+        }
+
+        if (m.accepts(normaliseAlphabet(answer))) {
+          toast(`Correct answer! +${question.score} points`, {
+            position: "bottom-center",
+            autoClose: 2000,
+            style: {
+              fontSize: "1.2rem",
+            },
+          });
           return {
-            equal: false,
-            message: "The string is not accepted by the given regex.",
+            equal: true,
+            counterExamples: null,
+            score: question.score,
           };
+        }
 
-        case "Construct Automaton":
-          return { equal: false, counterExamples: null };
-        default:
-          return { equal: false, counterExamples: null };
+        return {
+          equal: false,
+          message: "The string is not accepted by the given regex.",
+        };
+      } else {
+        return { equal: false, counterExamples: null };
       }
     },
     [questions]

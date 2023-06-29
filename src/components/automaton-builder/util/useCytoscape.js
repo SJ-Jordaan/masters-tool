@@ -10,15 +10,53 @@ export default function useCytoscape({ automaton, onNodeClick }) {
       <CytoscapeComponent
         className="h-full"
         elements={[
-          ...automaton.states.flatMap((state) => ({
-            data: { id: state, label: state },
-            classes:
-              state === automaton.initial
-                ? "initial"
-                : automaton.finals.includes(state)
-                ? "final"
-                : "",
-          })),
+          ...automaton.states.flatMap((state) => {
+            if (state === automaton.initial) {
+              const ghostNodeId = `ghost-${state}`;
+              return [
+                // Add the initial node
+                {
+                  data: { id: state, label: state },
+                  classes: "initial",
+                },
+                // Add a ghost node
+                {
+                  data: { id: ghostNodeId },
+                  classes: "initial-ghost",
+                },
+                // Add a ghost edge from the ghost node to the initial node
+                {
+                  data: {
+                    id: `edge-${ghostNodeId}-${state}`,
+                    label: "Initial",
+                    source: ghostNodeId,
+                    target: state,
+                  },
+                  classes: "initial-ghost",
+                },
+              ];
+            } else if (automaton.finals.includes(state)) {
+              const ghostNodeId = `ghost-${state}`;
+              return [
+                {
+                  data: { id: state, label: state },
+                  classes: "final",
+                },
+                // Add a ghost node for final state
+                {
+                  data: { id: ghostNodeId },
+                  classes: "final-ghost",
+                },
+              ];
+            } else {
+              return [
+                {
+                  data: { id: state, label: state },
+                  classes: "",
+                },
+              ];
+            }
+          }),
           ...automaton.transitions.map((transition) => ({
             data: {
               id: `${transition.from}-${transition.to}-${
@@ -31,41 +69,67 @@ export default function useCytoscape({ automaton, onNodeClick }) {
           })),
         ]}
         layout={{
-          name: "grid",
-          fit: true, // whether to fit the viewport to the graph
-          padding: 30, // padding used on fit
-          boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-          avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
-          avoidOverlapPadding: 10, // extra spacing around nodes when avoidOverlap: true
-          nodeDimensionsIncludeLabels: false, // Excludes the label when calculating node bounding boxes for the layout algorithm
-          spacingFactor: undefined, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
-          condense: false, // uses all available space on false, uses minimal space on true
-          rows: undefined, // force num of rows in the grid
-          cols: undefined, // force num of columns in the grid
-          position: function (node) {}, // returns { row, col } for element
-          sort: undefined, // a sorting function to order the nodes; e.g. function(a, b){ return a.data('weight') - b.data('weight') }
-          animate: false, // whether to transition the node positions
-          animationDuration: 500, // duration of animation in ms if enabled
-          animationEasing: undefined, // easing of animation if enabled
-          animateFilter: function (node, i) {
-            return true;
-          }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
-          ready: undefined, // callback on layoutready
-          stop: undefined, // callback on layoutstop
-          transform: function (node, position) {
-            return position;
-          }, // transform a given node position. Useful for changing flow direction in discrete layouts
-          zoomingEnabled: false,
-          userZoomingEnabled: false,
-          panningEnabled: false,
-          userPanningEnabled: false,
-          autoungrabify: true,
+          name: "preset", // Set initial layout to preset
         }}
         stylesheet={DarkTheme}
         cy={(cy) => {
           cyInstance.current = cy;
           cy.on("tap", "node", (event) => onNodeClick(event.target));
+
+          const initialNode = cy.nodes(".initial");
+          const initialGhostNode = cy.nodes(".initial-ghost");
+
+          // Apply a grid layout to non-initial nodes
+          const layout = cy
+            .elements(":not(.initial):not(.initial-ghost)")
+            .layout({
+              name: "grid",
+              fit: true,
+              boundingBox: undefined,
+              // padding: 30,
+              avoidOverlap: true,
+              avoidOverlapPadding: 10,
+              nodeDimensionsIncludeLabels: false,
+              condense: false,
+              rows: undefined,
+              cols: undefined,
+              sort: undefined,
+              animate: false,
+              animationDuration: 500,
+              ready: undefined,
+              stop: undefined,
+              transform: function (node, position) {
+                return position;
+              },
+            });
+
+          layout.run();
+
+          layout.one("layoutstop", () => {
+            // Find new position for initial node based on the new layout.
+            const nonInitialNodes = cy.nodes(":not(.initial,.initial-ghost)");
+            const minX = Math.min(
+              ...nonInitialNodes.map((node) => node.position("x")).values()
+            );
+            const minY = Math.min(
+              ...nonInitialNodes.map((node) => node.position("y")).values()
+            );
+
+            const initialNodePos = { x: minX - 50, y: minY + 50 }; // 50 is just an arbitrary distance
+
+            // Move initial node and ghost node to new position.
+            initialNode.position(initialNodePos);
+            initialGhostNode.position({
+              x: initialNodePos.x - 30,
+              y: initialNodePos.y,
+            }); // 30 is the distance from the ghost node to the initial node.
+          });
         }}
+        zoomingEnabled={false}
+        userZoomingEnabled={false}
+        panningEnabled={false}
+        userPanningEnabled={false}
+        autoungrabify={true}
       />
     ),
     [

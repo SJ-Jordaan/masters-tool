@@ -1,7 +1,7 @@
 import React from "react";
 import { Graphviz } from "graphviz-react";
 
-const AutomatonRenderer = ({ automaton }) => {
+const AutomatonRenderer = ({ automaton, height = null }) => {
   const automatonToDOT = (automaton) => {
     const color =
       document.documentElement.dataset.theme === "dark" ? "white" : "black";
@@ -18,10 +18,16 @@ const AutomatonRenderer = ({ automaton }) => {
 
     dot += `  ini [shape=point, label=""];\n`;
     dot += `  ini -> ${automaton.initial};\n`;
+    dot += `  ${automaton.states
+      .map((state) => `${state} [label="${state}"];`)
+      .join("\n")}\n`;
 
     // group transitions by 'from' and 'to', join labels with comma
     const groupedTransitions = automaton.transitions.reduce(
       (acc, transition) => {
+        if (!transition.to) {
+          return acc;
+        }
         const existingTransition = acc.find(
           (t) => t.from === transition.from && t.to === transition.to
         );
@@ -51,8 +57,8 @@ const AutomatonRenderer = ({ automaton }) => {
       <Graphviz
         dot={automatonToDOT(automaton)}
         options={{
-          height: null,
-          width: window.innerWidth,
+          height: height,
+          width: 350,
         }}
       />
     </div>
