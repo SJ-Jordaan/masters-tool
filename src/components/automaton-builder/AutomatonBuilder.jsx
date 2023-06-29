@@ -1,6 +1,7 @@
 import React from "react";
 import AutomatonRenderer from "../automaton-renderer/AutomatonRenderer";
 import { AiOutlineClear, AiOutlineRedo, AiOutlineUndo } from "react-icons/ai";
+import { ArrowDownIcon } from "@heroicons/react/solid";
 
 const AutomatonBuilder = ({
   answer,
@@ -31,39 +32,49 @@ const AutomatonBuilder = ({
   };
 
   return (
-    <>
+    <div className={"flex flex-col justify-center"}>
+      <h5 className={"text-xl my-1 self-center"}>View</h5>
       <AutomatonRenderer
         automaton={answer}
         height={200}
         highlightedState={answer.current.state}
         highlightedTransition={answer.current.transition}
       />
-      <div className="p-4 space-y-4">
-        <div className="tabs tabs-boxed flex flex-wrap">
+      <div className={"divider mt-1 mb-0"} />
+      <div className="flex flex-col justify-center">
+        <h5 className={"text-xl my-1 self-center"}>Build</h5>
+        <div className="flex flex-wrap gap-3 items-start justify-center">
           {answer.states.map((state, index) => (
-            <div
-              className={`tab ${
-                answer.current.state === state && "tab-active"
-              } flex-1`}
-              onClick={() => {
-                handleStateSelect(
-                  state,
-                  answer.alphabet[0],
-                  answer.transitions.find(
-                    (transition) =>
-                      transition.from === state &&
-                      transition.label === answer.alphabet[0]
-                  ).to
-                );
-              }}
-              key={`state-${index}`}
-            >
-              {state}
-              {isMissingTransition(state) && "*"}
+            <div className={"flex flex-col"}>
+              <div
+                onClick={() => {
+                  handleStateSelect(
+                    state,
+                    answer.alphabet[0],
+                    answer.transitions.find(
+                      (transition) =>
+                        transition.from === state &&
+                        transition.label === answer.alphabet[0]
+                    ).to
+                  );
+                }}
+                key={`state-${index}`}
+                className={`w-12 h-12 flex items-center justify-center border rounded-full ${
+                  answer.current.state === state
+                    ? "border-[#00ff00] text-[#00ff00]"
+                    : isMissingTransition(state) &&
+                      "border-red-400 text-red-400"
+                }`}
+              >
+                {state}
+              </div>
+              {answer.current.state === state && (
+                <ArrowDownIcon className="w-6 h-6 self-center text-[#00ff00]" />
+              )}
             </div>
           ))}
         </div>
-        <div className="tabs tabs-boxed flex flex-wrap">
+        <div className="tabs tabs-boxed flex flex-wrap justify-center">
           {answer.alphabet.map((symbol, index) => (
             <div
               className={`tab ${
@@ -87,12 +98,15 @@ const AutomatonBuilder = ({
             </div>
           ))}
         </div>
-        <div className="tabs tabs-boxed flex flex-wrap">
-          {answer.states.map((state, index) => {
-            const isActive = answer.current.transition.to === state;
-            return (
+        <div className="flex flex-wrap gap-3 justify-center items-end">
+          {answer.states.map((state, index) => (
+            <div className={"flex flex-col"}>
+              {answer.current.transition.to === state ? (
+                <ArrowDownIcon className="w-6 h-6 self-center text-[#00ff00]" />
+              ) : (
+                <div className="w-6 h-6 self-center" />
+              )}
               <div
-                className={`tab ${isActive && "tab-active"} flex-1`}
                 onClick={() =>
                   handleStateSelect(
                     answer.current.state,
@@ -100,14 +114,18 @@ const AutomatonBuilder = ({
                     state
                   )
                 }
-                key={`end-${index}`}
+                key={`to-state-${index}`}
+                className={`w-12 h-12 flex items-center justify-center border rounded-full ${
+                  answer.current.transition.to === state &&
+                  "border-[#00ff00] text-[#00ff00]"
+                }`}
               >
                 {state}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
-        <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
+        <div className="flex flex-1 flex-wrap items-center justify-center gap-3 my-4">
           <button onClick={handleReset} className="btn btn-square w-14 h-14">
             <AiOutlineClear className="w-6 h-6" />
           </button>
@@ -119,7 +137,7 @@ const AutomatonBuilder = ({
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
