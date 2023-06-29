@@ -4,8 +4,8 @@ import { Graphviz } from "graphviz-react";
 const AutomatonRenderer = ({
   automaton,
   height = null,
-  highlightedState,
-  highlightedTransition,
+  highlightedState = null,
+  highlightedTransition = {},
 }) => {
   const automatonToDOT = (automaton) => {
     const color =
