@@ -59,7 +59,7 @@ export const LibraryItemOverview = () => {
           <LevelSelector categoryId={id} />
         )}
       </div>
-      <BottomNavbar />
+      {/*<BottomNavbar />*/}
     </div>
   );
 };

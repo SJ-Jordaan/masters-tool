@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const LevelEnd = ({
   score,
@@ -9,7 +9,7 @@ const LevelEnd = ({
   hintsUsed,
   incorrectAttempts,
   achievements,
-  levels,
+  // levels,
 }) => {
   const navigate = useNavigate();
 
@@ -66,25 +66,25 @@ const LevelEnd = ({
       <div className="flex space-x-4">
         <button
           className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => navigate("/", { replace: true })}
+          onClick={() => navigate("/library/4", { replace: true })}
         >
           Go Home
         </button>
-        <button
-          className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
-          onClick={() => {
-            const nextLevel = levels.find((level) => !level.isCompleted);
+        {/*<button*/}
+        {/*  className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"*/}
+        {/*  onClick={() => {*/}
+        {/*    const nextLevel = levels.find((level) => !level.isCompleted);*/}
 
-            if (!nextLevel) {
-              navigate("/", { replace: true });
-              toast("You have completed all levels!");
-              return;
-            }
-            navigate(`/level/${nextLevel.levelId}`, { replace: true });
-          }}
-        >
-          Next Level
-        </button>
+        {/*    if (!nextLevel) {*/}
+        {/*      navigate("/", { replace: true });*/}
+        {/*      toast("You have completed all levels!");*/}
+        {/*      return;*/}
+        {/*    }*/}
+        {/*    navigate(`/level/${nextLevel.levelId}`, { replace: true });*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  Next Level*/}
+        {/*</button>*/}
       </div>
     </div>
   );

@@ -171,9 +171,12 @@ const QuestionWrapper = ({
   );
 
   return (
-    <div className="">
+    <div id={"initial-greeting"} className="">
       <ReactJoyride
-        steps={!completedOnboarding && ONBOARDING_STEPS[question.questionType]}
+        key={`joyride-${question.questionType}`}
+        steps={
+          !completedOnboarding ? ONBOARDING_STEPS[question.questionType] : []
+        }
         continuous={true}
         showProgress={true}
         showSkipButton={true}

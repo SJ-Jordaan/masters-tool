@@ -134,7 +134,7 @@
   {
     "questionId": "11",
     "questionType": "Regex Accepts String",
-    "questionContent": "Provide a string that is recognised by the given regular expression '(a∪b)*c(d∪e)*'.",
+    "questionContent": "Provide a string that is recognised by the given regular expression: (a∪b)*c(d∪e)*",
     "answer": "(a∪b)*c(d∪e)*",
     "hints": "This regular expression matches strings with zero or more 'a' or 'b', followed by 'c', and then zero or more 'd' or 'e'.",
     "score": 25,
@@ -143,7 +143,7 @@
   {
     "questionId": "12",
     "questionType": "Regex Equivalence",
-    "questionContent": "Provide an equivalent regular expression to '(a∪b)*c(d∪e)*'.",
+    "questionContent": "Provide an equivalent regular expression to (a∪b)*c(d∪e)*",
     "answer": "(a∪b)*c(d∪e)*",
     "hints": "The order of 'a' and 'b', and 'c' and 'd' in the expression does not matter.",
     "score": 25,

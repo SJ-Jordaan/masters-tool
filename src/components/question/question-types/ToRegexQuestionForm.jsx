@@ -46,13 +46,18 @@ const ToRegexQuestionForm = ({
 
   return (
     <div className="flex flex-col items-center w-full px-2">
-      <p className="text-xl">{question.questionContent}</p>
+      <p id={"question-content"} className="text-xl">
+        {question.questionContent}
+      </p>
       <div className="h-full">
         <AutomatonRenderer
           automaton={generateAutomaton(question.answer, question.alphabet)}
         />
       </div>
-      <div className="w-full max-w-sm border border-accent rounded-md p-2 text-center my-4 overflow-auto min-h-12 flex justify-center items-center">
+      <div
+        id={"regex-solution"}
+        className="w-full max-w-sm border border-accent rounded-md p-2 text-center my-4 overflow-auto min-h-12 flex justify-center items-center"
+      >
         {answer.split("").map((char, index) => (
           <span
             key={index}

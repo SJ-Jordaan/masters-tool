@@ -27,7 +27,7 @@ const ProfileView = () => {
     const user = localStorage.getItem("user");
     localStorage.clear();
     localStorage.setItem("user", user);
-    navigate("/", { replace: true });
+    navigate("/library/4", { replace: true });
     window.location.reload();
   };
 
@@ -99,8 +99,11 @@ const ProfileView = () => {
           Clear Progress
         </button>
       </div>
-      <Link to={"/"} className="btn btn-success fixed bottom-4 w-80 mx-4">
-        Home
+      <Link
+        to={"/library/4"}
+        className="btn btn-success fixed bottom-4 w-80 mx-4"
+      >
+        Ready!
       </Link>
     </div>
   );

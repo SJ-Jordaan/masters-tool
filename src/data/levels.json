@@ -1,5 +1,18 @@
 [
   {
+    "levelId": "experiment",
+    "categoryId": "4",
+    "levelName": "Experiment",
+    "description": "One question per question type",
+    "questionIds": [
+      "11",
+      "12",
+      "10",
+      "regex-auto-1-1",
+      "auto-1-1"
+    ]
+  },
+  {
     "levelId": "auto-1",
     "categoryId": "1",
     "levelName": "Auto Test 1",

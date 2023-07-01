@@ -15,7 +15,7 @@ export const RegExpKeyboard = ({
   onUndo,
   onRedo,
   onReset,
-  showSpecial
+  showSpecial,
 }) => {
   const handleButtonClick = (input) => {
     onInput(input);
@@ -25,8 +25,14 @@ export const RegExpKeyboard = ({
   const alphabetStar = `${alphabetString}*`;
 
   return (
-    <div className="flex flex-wrap flex-col justify-center mt-2 space-y-4">
-      <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
+    <div
+      id={"regex-keyboard"}
+      className="flex flex-wrap flex-col justify-center mt-2 space-y-4"
+    >
+      <div
+        id={"regex-utility"}
+        className="flex flex-1 flex-wrap items-center justify-center gap-3"
+      >
         <button onClick={onReset} className="btn btn-square w-14 h-14">
           <AiOutlineClear className="w-6 h-6" />
         </button>
@@ -40,7 +46,10 @@ export const RegExpKeyboard = ({
           <AiOutlineDelete className="w-6 h-6" />
         </button>
       </div>
-      <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
+      <div
+        id={"regex-operators"}
+        className="flex flex-1 flex-wrap items-center justify-center gap-3"
+      >
         {operators.map((operator) => (
           <button
             key={operator}
@@ -51,7 +60,10 @@ export const RegExpKeyboard = ({
           </button>
         ))}
       </div>
-      <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
+      <div
+        id={"regex-alphabet"}
+        className="flex flex-1 flex-wrap items-center justify-center gap-3"
+      >
         {alphabet.map((char) => (
           <button
             key={char}
@@ -62,24 +74,25 @@ export const RegExpKeyboard = ({
           </button>
         ))}
       </div>
-      {
-        showSpecial && (
-          <div className="flex flex-1 flex-wrap items-center justify-center gap-3">
-            <button
-              onClick={() => handleButtonClick(alphabetString)}
-              className="btn btn-square w-14 h-14 text-xl"
-            >
-              Σ<sub>∪</sub>
-            </button>
-            <button
-              onClick={() => handleButtonClick(alphabetStar)}
-              className="btn btn-square w-14 h-14 text-xl"
-            >
-              (Σ<sub>∪</sub>)<sup>*</sup>
-            </button>
-          </div>
-        )
-      }
+      {showSpecial && (
+        <div
+          id={"regex-special"}
+          className="flex flex-1 flex-wrap items-center justify-center gap-3"
+        >
+          <button
+            onClick={() => handleButtonClick(alphabetString)}
+            className="btn btn-square w-14 h-14 text-xl"
+          >
+            Σ<sub>∪</sub>
+          </button>
+          <button
+            onClick={() => handleButtonClick(alphabetStar)}
+            className="btn btn-square w-14 h-14 text-xl"
+          >
+            (Σ<sub>∪</sub>)<sup>*</sup>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

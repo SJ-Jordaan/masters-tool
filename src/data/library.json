@@ -20,5 +20,12 @@
     "route": "/library/3",
     "description": "You can create your own exercises and practice them in this section.",
     "isCustom": true
+  },
+  {
+    "id": "4",
+    "title": "Experiment",
+    "shortDescription": "Experimental Analysis of Questions",
+    "route": "/library/4",
+    "description": "You will be asked to complete one of each question type. Once completed, please fill in the accompanying questionnaire to provide us with feedback."
   }
 ]

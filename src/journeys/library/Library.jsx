@@ -28,7 +28,7 @@ export const Library = () => {
           </Link>
         ))}
       </div>
-      <BottomNavbar />
+      {/*<BottomNavbar />*/}
     </div>
   );
 };
