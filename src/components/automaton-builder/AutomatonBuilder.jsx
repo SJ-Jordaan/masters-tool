@@ -92,8 +92,8 @@ const AutomatonBuilder = ({
           >
             {answer.states.map((state) => (
               <ArcherElement
-                key={`from-${state}`}
                 id={`from-${state}`}
+                key={`from-${state}`}
                 relations={
                   answer.current.from === state
                     ? answer.transitions
@@ -117,7 +117,9 @@ const AutomatonBuilder = ({
                     : []
                 }
               >
-                <div className="flex flex-col">{renderState(state, true)}</div>
+                <div id={`from-${state}`} className="flex flex-col">
+                  {renderState(state, true)}
+                </div>
               </ArcherElement>
             ))}
           </div>
@@ -127,7 +129,9 @@ const AutomatonBuilder = ({
           >
             {answer.states.map((state) => (
               <ArcherElement key={`to-${state}`} id={`to-${state}`}>
-                <div className="flex flex-col">{renderState(state, false)}</div>
+                <div id={`to-${state}`} className="flex flex-col">
+                  {renderState(state, false)}
+                </div>
               </ArcherElement>
             ))}
           </div>

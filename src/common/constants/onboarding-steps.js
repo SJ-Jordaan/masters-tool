@@ -27,12 +27,21 @@ export const ONBOARDING_STEPS = {
       content:
         "Finally you will be presented with symbols to add. You may add or remove as you wish.",
     },
+    {
+      target: "#from-0",
+      content: "State 0 is the initial state and is selected by default.",
+    },
+    {
+      target: "#to-1",
+      content:
+        "To start off, select state 1 and add a transition with symbol a. The rest is up to you!",
+    },
   ],
   "Automaton to Regex": [
     {
       target: "#automaton-view",
       content:
-        "This question introduces an automaton visualisation. Everything else is remains the same.",
+        "This question introduces an automaton visualisation. Everything else remains the same.",
       disableBeacon: true,
     },
   ],

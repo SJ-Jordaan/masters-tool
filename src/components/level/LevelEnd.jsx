@@ -31,7 +31,7 @@ const LevelEnd = ({
               className="h-full bg-yellow-400 rounded text-xs flex items-center justify-center"
               style={{ width: `${(score / totalScore) * 100}%` }}
             >
-              {(score / totalScore) * 100}%
+              {((score / totalScore) * 100).toFixed(2)}%
             </div>
           </div>
         </div>
