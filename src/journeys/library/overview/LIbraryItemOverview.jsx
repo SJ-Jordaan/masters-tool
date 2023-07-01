@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { HiOutlineAcademicCap, HiOutlineClipboardList } from "react-icons/hi";
 import LevelSelector from "../../../components/level/LevelSelector";
 import { Header } from "../../../components/layout/Header";
-import { BottomNavbar } from "../../../components";
+// import { BottomNavbar } from "../../../components";
 import categories from "../../../data/library.json";
 import CreateLevel from "../../../components/question/question-types/CreateLevel";
 
