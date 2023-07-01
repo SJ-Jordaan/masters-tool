@@ -100,7 +100,9 @@ const AutomataQuestionForm = ({
 
   return (
     <div className="flex flex-col items-center w-full h-full px-2">
-      <p className="text-xl">{question.questionContent}</p>
+      <p id={"question-content"} className="text-xl">
+        {question.questionContent}
+      </p>
 
       <div className="w-full h-96">
         {answer && (

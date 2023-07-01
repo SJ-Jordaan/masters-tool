@@ -85,66 +85,77 @@ const AutomatonBuilder = ({
       <div className={"divider mt-1 mb-0"} />
       <h5 className={"text-xl my-1 self-center"}>Build</h5>
       <ArcherContainer>
-        <div className="flex flex-wrap gap-3 items-start justify-center mb-8">
-          {answer.states.map((state) => (
-            <ArcherElement
-              key={`from-${state}`}
-              id={`from-${state}`}
-              relations={
-                answer.current.from === state
-                  ? answer.transitions
-                      .filter((t) => t.from === state)
-                      .filter(
-                        (t, index, self) =>
-                          self.findIndex((s) => s.to === t.to) === index
-                      )
-                      .map((transition) => ({
-                        targetId: `to-${transition.to}`,
-                        targetAnchor: "top",
-                        sourceAnchor: "bottom",
-                        style: {
-                          strokeColor:
-                            answer.current.to === transition.to
-                              ? "#00ff00"
-                              : "white",
-                          strokeWidth: 1,
-                        },
-                      }))
-                  : []
-              }
-            >
-              <div className="flex flex-col">{renderState(state, true)}</div>
-            </ArcherElement>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-3 justify-center items-end mt-4">
-          {answer.states.map((state) => (
-            <ArcherElement key={`to-${state}`} id={`to-${state}`}>
-              <div className="flex flex-col">{renderState(state, false)}</div>
-            </ArcherElement>
-          ))}
-        </div>
-        <div className="flex flex-wrap justify-center items-center w-max mx-auto mt-4">
-          {answer.current.to ? (
-            answer.alphabet.map((symbol, index) => (
-              <div
-                key={`symbol-${index}`}
-                className={`p-3 border ${
-                  currentTransitionIncludesSymbol(symbol)
-                    ? "border-[#00ff00] text-[#00ff00]"
-                    : ""
-                }`}
-                onClick={() => handleSymbolSelect(symbol)}
+        <div id={"transition-table"}>
+          <div
+            id={"from-states"}
+            className="flex flex-wrap gap-3 items-start justify-center mb-8"
+          >
+            {answer.states.map((state) => (
+              <ArcherElement
+                key={`from-${state}`}
+                id={`from-${state}`}
+                relations={
+                  answer.current.from === state
+                    ? answer.transitions
+                        .filter((t) => t.from === state)
+                        .filter(
+                          (t, index, self) =>
+                            self.findIndex((s) => s.to === t.to) === index
+                        )
+                        .map((transition) => ({
+                          targetId: `to-${transition.to}`,
+                          targetAnchor: "top",
+                          sourceAnchor: "bottom",
+                          style: {
+                            strokeColor:
+                              answer.current.to === transition.to
+                                ? "#00ff00"
+                                : "white",
+                            strokeWidth: 1,
+                          },
+                        }))
+                    : []
+                }
               >
-                {symbol}
-              </div>
-            ))
-          ) : (
-            <div
-              className="p-3 border border-transparent"
-              key={`symbols-hidden`}
-            />
-          )}
+                <div className="flex flex-col">{renderState(state, true)}</div>
+              </ArcherElement>
+            ))}
+          </div>
+          <div
+            id={"to-states"}
+            className="flex flex-wrap gap-3 justify-center items-end mt-4"
+          >
+            {answer.states.map((state) => (
+              <ArcherElement key={`to-${state}`} id={`to-${state}`}>
+                <div className="flex flex-col">{renderState(state, false)}</div>
+              </ArcherElement>
+            ))}
+          </div>
+          <div
+            id={"input-symbol"}
+            className="flex flex-wrap justify-center items-center w-max mx-auto mt-4"
+          >
+            {answer.current.to ? (
+              answer.alphabet.map((symbol, index) => (
+                <div
+                  key={`symbol-${index}`}
+                  className={`p-3 border ${
+                    currentTransitionIncludesSymbol(symbol)
+                      ? "border-[#00ff00] text-[#00ff00]"
+                      : ""
+                  }`}
+                  onClick={() => handleSymbolSelect(symbol)}
+                >
+                  {symbol}
+                </div>
+              ))
+            ) : (
+              <div
+                className="p-3 border border-transparent"
+                key={`symbols-hidden`}
+              />
+            )}
+          </div>
         </div>
       </ArcherContainer>
       <div className="flex flex-1 flex-wrap items-center justify-center gap-3 my-4">

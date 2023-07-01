@@ -24,8 +24,9 @@ const ProfileView = () => {
   };
 
   const clearProgress = () => {
-    localStorage.removeItem("levels");
-    localStorage.removeItem("questions");
+    const user = localStorage.getItem("user");
+    localStorage.clear();
+    localStorage.setItem("user", user);
     navigate("/", { replace: true });
     window.location.reload();
   };

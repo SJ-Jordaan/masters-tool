@@ -83,7 +83,7 @@ const AutomatonRenderer = ({
   };
 
   return (
-    <div className="bg-transparent">
+    <div id={"automaton-view"} className="bg-transparent">
       <Graphviz
         dot={automatonToDOT()}
         options={{

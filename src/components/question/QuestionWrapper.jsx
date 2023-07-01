@@ -15,6 +15,8 @@ import correct from "../../common/sounds/correct.mp3";
 import incorrect from "../../common/sounds/incorrect.mp3";
 import ToRegexQuestionForm from "./question-types/ToRegexQuestionForm";
 import AutomataQuestionForm from "./question-types/AutomataQuestionForm";
+import ReactJoyride from "react-joyride";
+import { ONBOARDING_STEPS } from "../../common/constants/onboarding-steps";
 
 const QuestionWrapper = ({
   questionId,
@@ -164,9 +166,24 @@ const QuestionWrapper = ({
     resetAnswerHistory();
   };
 
+  const completedOnboarding = localStorage.getItem(
+    `onboarding-${question.questionType}`
+  );
+
   return (
     <div className="">
-      <div className="flex w-full items-center">
+      <ReactJoyride
+        steps={!completedOnboarding && ONBOARDING_STEPS[question.questionType]}
+        continuous={true}
+        showProgress={true}
+        showSkipButton={true}
+        callback={(data) => {
+          if (data.action === "skip" || data.status === "finished") {
+            localStorage.setItem(`onboarding-${question.questionType}`, "true");
+          }
+        }}
+      />
+      <div id={"question-progress"} className="flex w-full items-center">
         <ul className="steps m-2 w-full">
           {levelProgress.map((completed, index) => (
             <li
@@ -214,6 +231,7 @@ const QuestionWrapper = ({
         ]}
       />
       <button
+        id={"submit-button"}
         onClick={handleAnswerSubmission}
         className="h-16 w-16 btn btn-success btn-circle fixed bottom-4 right-4"
       >
