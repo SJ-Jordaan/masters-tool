@@ -83,11 +83,11 @@ export const ONBOARDING_STEPS = {
       target: "#question-content",
       content:
         "The previous question asked for a string, but now you need to provide a regular expression.",
+      disableBeacon: true,
     },
     {
       target: "#regex-solution",
       content: "As you build your regular expression, it will appear here.",
-      disableBeacon: true,
     },
     {
       target: "#regex-keyboard",
