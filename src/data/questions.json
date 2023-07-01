@@ -120,7 +120,7 @@
     "questionId": "10",
     "questionType": "Regex",
     "questionContent": "Provide a regular expression that matches any string containing 'abc' or 'de' anywhere in it.",
-    "answer": "(a ∪ b ∪ c ∪ d ∪ e)* (abc ∪ de) (a ∪ b ∪ c ∪ d ∪ e)*",
+    "answer": "(a∪b∪c∪d∪e)*(abc∪de)(a∪b∪c∪d∪e)*",
     "hints": "Remember, the '*' operator allows for zero or more repetitions.",
     "score": 25,
     "alphabet": "abcde",
