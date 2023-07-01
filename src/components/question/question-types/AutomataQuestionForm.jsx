@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import AutomatonBuilder from "../../automaton-builder/AutomatonBuilder";
 import to_NFA from "dfa-lib/regex";
 import { normaliseAlphabet } from "../../../common/helpers/regex";
@@ -12,77 +12,91 @@ const AutomataQuestionForm = ({
   handleRedo,
   handleReset,
 }) => {
-  const automaton = useMemo(() => {
+  useEffect(() => {
     const dfa = to_NFA(
       normaliseAlphabet(question.answer),
       normaliseAlphabet(question.alphabet)
     ).minimized();
+    const stateMap = new Map();
+    stateMap.set(dfa.initial, "0");
 
-    const stateMap = new Map(dfa.states.map((state, i) => [state, String(i)]));
+    let i = 1;
+    for (const state of dfa.states) {
+      if (state !== dfa.initial) {
+        stateMap.set(state, String(i++));
+      }
+    }
 
-    const transitions = dfa.states.flatMap((state) => {
-      return dfa.alphabet.flatMap((char) => {
-        return {
-          from: stateMap.get(state),
-          to: "",
-          label: char,
-        };
-      });
-    });
-
-    return {
-      states: Array.from(stateMap.values()),
-      alphabet: dfa.alphabet,
-      transitions: transitions,
-      initial: stateMap.get(dfa.initial),
-      finals: dfa.final.map((state) => stateMap.get(state)),
-      current: {
-        state: stateMap.get(dfa.initial),
-        symbol: dfa.alphabet[0],
-        transition: transitions.find(
-          (transition) =>
-            transition.from === stateMap.get(dfa.initial) &&
-            transition.label === dfa.alphabet[0]
-        ),
-      },
-    };
-  }, [question.alphabet, question.answer]);
-
-  const handleNewTransition = (startNodeId, symbol, endNodeId) => {
-    // Create a new version of the automaton with the transition added.
-    // The exact implementation depends on how your automaton and transitions are structured.
-    const newAutomaton = {
-      ...automaton,
-      current: {
-        state: startNodeId,
-        symbol: symbol,
-        transition: {
-          from: startNodeId,
-          to: endNodeId,
-          label: symbol,
+    if (!answer) {
+      handleInput({
+        states: Array.from(stateMap.values()),
+        alphabet: dfa.alphabet,
+        transitions: [],
+        finals: dfa.final,
+        initial: stateMap.get(dfa.initial),
+        current: {
+          from: stateMap.get(dfa.initial),
+          symbols: [],
+          to: null,
         },
-      },
-      transitions: answer.transitions.map((transition) => {
-        if (transition.from === startNodeId && transition.label === symbol) {
-          return {
-            ...transition,
-            to: endNodeId,
-          };
-        } else {
-          return transition;
-        }
-      }),
-    };
+      });
+    }
+  }, [question, handleInput, answer]);
 
-    // Pass the new automaton to handleInput.
-    handleInput(newAutomaton);
+  const handleTransitionInput = (from, to = null, symbols = []) => {
+    // Split the existing transitions into two arrays:
+    // those that match the current 'from' state and those that don't
+    const [matchingTransitions, nonMatchingTransitions] = partition(
+      answer.transitions,
+      (t) => t.from === from
+    );
+
+    if (to) {
+      // For each symbol, check if a transition already exists from 'from' to 'to'
+      // Add new transitions where they do not already exist
+      const newTransitions = symbols
+        .filter(
+          (symbol) =>
+            !matchingTransitions.some((t) => t.to === to && t.label === symbol)
+        )
+        .map((symbol) => ({ from, to, label: symbol }));
+
+      // For each existing transition from 'from' to 'to', check if its symbol is still in the new symbols list
+      // If it is not, then it will be excluded, effectively deleting the transition
+      const updatedTransitions = matchingTransitions.filter(
+        (t) => t.to !== to || symbols.includes(t.label)
+      );
+
+      handleInput({
+        ...answer,
+        transitions: [
+          ...nonMatchingTransitions,
+          ...newTransitions,
+          ...updatedTransitions,
+        ],
+        current: { from, to, symbols },
+      });
+    } else {
+      // If there's no 'to' state, we simply update the 'from' state and reset 'to' and 'symbols'
+      handleInput({
+        ...answer,
+        transitions: answer.transitions,
+        current: { from, to: null, symbols: [] },
+      });
+    }
   };
 
-  useEffect(() => {
-    if (!answer) {
-      handleInput(automaton);
-    }
-  }, [handleInput, automaton, answer]);
+  // Helper function to partition an array into two arrays based on a predicate
+  function partition(array, isValid) {
+    return array.reduce(
+      ([pass, fail], elem) => {
+        return isValid(elem)
+          ? [[...pass, elem], fail]
+          : [pass, [...fail, elem]];
+      },
+      [[], []]
+    );
+  }
 
   return (
     <div className="flex flex-col items-center w-full h-full px-2">
@@ -90,17 +104,14 @@ const AutomataQuestionForm = ({
 
       <div className="w-full h-96">
         {answer && (
-          <>
-            <AutomatonBuilder
-              automaton={automaton}
-              answer={answer}
-              handleInput={handleNewTransition}
-              handleDelete={handleDelete}
-              handleUndo={handleUndo}
-              handleRedo={handleRedo}
-              handleReset={handleReset}
-            />
-          </>
+          <AutomatonBuilder
+            answer={answer}
+            handleInput={handleTransitionInput}
+            handleDelete={handleDelete}
+            handleUndo={handleUndo}
+            handleRedo={handleRedo}
+            handleReset={handleReset}
+          />
         )}
       </div>
     </div>

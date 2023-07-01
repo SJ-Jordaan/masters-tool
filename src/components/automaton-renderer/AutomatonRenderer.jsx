@@ -5,9 +5,9 @@ const AutomatonRenderer = ({
   automaton,
   height = null,
   highlightedState = null,
-  highlightedTransition = {},
+  highlightedTransitions = [],
 }) => {
-  const automatonToDOT = (automaton) => {
+  const automatonToDOT = () => {
     const color =
       document.documentElement.dataset.theme === "dark" ? "white" : "black";
 
@@ -35,7 +35,8 @@ const AutomatonRenderer = ({
       .map(
         (state) =>
           `${state} [label="${state}" ${
-            highlightedState === state || highlightedTransition.to === state
+            highlightedState === state ||
+            highlightedTransitions.find((t) => t.to === state)
               ? "color=green fontcolor=green"
               : ""
           }];`
@@ -62,10 +63,13 @@ const AutomatonRenderer = ({
     );
 
     for (let transition of groupedTransitions) {
-      const isHighlighted =
-        transition.from === highlightedTransition.from &&
-        transition.to === highlightedTransition.to &&
-        transition.label.includes(highlightedTransition.label);
+      const isHighlighted = highlightedTransitions.some(
+        (t) =>
+          t.from === transition.from &&
+          t.to === transition.to &&
+          transition.label.includes(t.label)
+      );
+
       dot += `  ${transition.from} -> ${
         transition.to
       } [label = "${transition.label.join(",")}" fontcolor="${
@@ -81,7 +85,7 @@ const AutomatonRenderer = ({
   return (
     <div className="bg-transparent">
       <Graphviz
-        dot={automatonToDOT(automaton)}
+        dot={automatonToDOT()}
         options={{
           height: height,
           width: 350,

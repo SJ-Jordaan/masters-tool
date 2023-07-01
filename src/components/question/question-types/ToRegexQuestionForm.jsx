@@ -18,7 +18,15 @@ const ToRegexQuestionForm = ({
       normaliseAlphabet(regex),
       normaliseAlphabet(alphabet)
     ).minimized();
-    const stateMap = new Map(dfa.states.map((state, i) => [state, String(i)]));
+    const stateMap = new Map();
+    stateMap.set(dfa.initial, "0");
+
+    let i = 1;
+    for (const state of dfa.states) {
+      if (state !== dfa.initial) {
+        stateMap.set(state, String(i++));
+      }
+    }
 
     return {
       states: Array.from(stateMap.values()),

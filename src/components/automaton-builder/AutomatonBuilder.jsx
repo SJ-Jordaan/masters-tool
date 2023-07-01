@@ -1,7 +1,7 @@
 import React from "react";
 import AutomatonRenderer from "../automaton-renderer/AutomatonRenderer";
 import { AiOutlineClear, AiOutlineRedo, AiOutlineUndo } from "react-icons/ai";
-import { ArrowDownIcon } from "@heroicons/react/solid";
+import { ArcherContainer, ArcherElement } from "react-archer";
 
 const AutomatonBuilder = ({
   answer,
@@ -10,25 +10,62 @@ const AutomatonBuilder = ({
   handleRedo,
   handleReset,
 }) => {
-  const isMissingTransition = (state, symbol = null) => {
-    if (symbol === null) {
-      // Check if a state is missing any transition
-      return !answer.transitions
-        .filter((transition) => transition.from === state)
-        .every((transition) => transition.to !== "");
-    } else {
-      // Check if a state-symbol pair is missing a transition
-      return !answer.transitions.some(
-        (transition) =>
-          transition.from === state &&
-          transition.label === symbol &&
-          transition.to !== ""
-      );
-    }
+  const currentTransitionIncludesState = (state, isFromState) => {
+    return isFromState
+      ? answer.current.from === state
+      : answer.current.to === state;
   };
 
-  const handleStateSelect = (from, symbol, to) => {
-    handleInput(from, symbol, to);
+  const currentTransitionIncludesSymbol = (symbol) => {
+    return answer.current.symbols.includes(symbol);
+  };
+
+  const handleStateSelect = (state) => {
+    handleInput(state, null, []);
+  };
+
+  const handleToStateSelect = (state) => {
+    const transitionSymbols = answer.transitions
+      .filter((t) => t.to === state && t.from === answer.current.from)
+      .map((t) => t.label);
+    handleInput(answer.current.from, state, transitionSymbols);
+  };
+
+  const handleSymbolSelect = (symbol) => {
+    if (!answer.current.from || !answer.current.to) return;
+
+    if (currentTransitionIncludesSymbol(symbol)) {
+      handleInput(
+        answer.current.from,
+        answer.current.to,
+        answer.current.symbols.filter((s) => s !== symbol)
+      );
+
+      return;
+    }
+
+    handleInput(answer.current.from, answer.current.to, [
+      ...answer.current.symbols,
+      symbol,
+    ]);
+  };
+
+  const renderState = (state, isFromState = false) => {
+    const isActive = currentTransitionIncludesState(state, isFromState);
+    return (
+      <div
+        onClick={
+          isFromState
+            ? () => handleStateSelect(state)
+            : () => handleToStateSelect(state)
+        }
+        className={`w-12 h-12 flex items-center justify-center border rounded-full ${
+          isActive ? "border-[#00ff00] text-[#00ff00]" : ""
+        }`}
+      >
+        {state}
+      </div>
+    );
   };
 
   return (
@@ -37,105 +74,89 @@ const AutomatonBuilder = ({
       <AutomatonRenderer
         automaton={answer}
         height={200}
-        highlightedState={answer.current.state}
-        highlightedTransition={answer.current.transition}
+        highlightedState={answer.current.from}
+        highlightedTransitions={answer.current.symbols.map((symbol) => ({
+          from: answer.current.from,
+          label: symbol,
+          to: answer.current.to,
+        }))}
       />
+
       <div className={"divider mt-1 mb-0"} />
-      <div className="flex flex-col justify-center">
-        <h5 className={"text-xl my-1 self-center"}>Build</h5>
-        <div className="flex flex-wrap gap-3 items-start justify-center">
-          {answer.states.map((state, index) => (
-            <div className={"flex flex-col"}>
-              <div
-                onClick={() => {
-                  handleStateSelect(
-                    state,
-                    answer.alphabet[0],
-                    answer.transitions.find(
-                      (transition) =>
-                        transition.from === state &&
-                        transition.label === answer.alphabet[0]
-                    ).to
-                  );
-                }}
-                key={`state-${index}`}
-                className={`w-12 h-12 flex items-center justify-center border rounded-full ${
-                  answer.current.state === state
-                    ? "border-[#00ff00] text-[#00ff00]"
-                    : isMissingTransition(state) &&
-                      "border-red-400 text-red-400"
-                }`}
-              >
-                {state}
-              </div>
-              {answer.current.state === state && (
-                <ArrowDownIcon className="w-6 h-6 self-center text-[#00ff00]" />
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="tabs tabs-boxed flex flex-wrap justify-center">
-          {answer.alphabet.map((symbol, index) => (
-            <div
-              className={`tab ${
-                answer.current.symbol === symbol && "tab-active"
-              } flex-1`}
-              onClick={() => {
-                handleStateSelect(
-                  answer.current.state,
-                  symbol,
-                  answer.transitions.find(
-                    (transition) =>
-                      transition.from === answer.current.state &&
-                      transition.label === symbol
-                  ).to
-                );
-              }}
-              key={`symbol-${index}`}
+      <h5 className={"text-xl my-1 self-center"}>Build</h5>
+      <ArcherContainer>
+        <div className="flex flex-wrap gap-3 items-start justify-center mb-8">
+          {answer.states.map((state) => (
+            <ArcherElement
+              key={`from-${state}`}
+              id={`from-${state}`}
+              relations={
+                answer.current.from === state
+                  ? answer.transitions
+                      .filter((t) => t.from === state)
+                      .filter(
+                        (t, index, self) =>
+                          self.findIndex((s) => s.to === t.to) === index
+                      )
+                      .map((transition) => ({
+                        targetId: `to-${transition.to}`,
+                        targetAnchor: "top",
+                        sourceAnchor: "bottom",
+                        style: {
+                          strokeColor:
+                            answer.current.to === transition.to
+                              ? "#00ff00"
+                              : "white",
+                          strokeWidth: 1,
+                        },
+                      }))
+                  : []
+              }
             >
-              {symbol}
-              {isMissingTransition(answer.current.state, symbol) && "*"}
-            </div>
+              <div className="flex flex-col">{renderState(state, true)}</div>
+            </ArcherElement>
           ))}
         </div>
-        <div className="flex flex-wrap gap-3 justify-center items-end">
-          {answer.states.map((state, index) => (
-            <div className={"flex flex-col"}>
-              {answer.current.transition.to === state ? (
-                <ArrowDownIcon className="w-6 h-6 self-center text-[#00ff00]" />
-              ) : (
-                <div className="w-6 h-6 self-center" />
-              )}
+        <div className="flex flex-wrap gap-3 justify-center items-end mt-4">
+          {answer.states.map((state) => (
+            <ArcherElement key={`to-${state}`} id={`to-${state}`}>
+              <div className="flex flex-col">{renderState(state, false)}</div>
+            </ArcherElement>
+          ))}
+        </div>
+        <div className="flex flex-wrap justify-center items-center w-max mx-auto mt-4">
+          {answer.current.to ? (
+            answer.alphabet.map((symbol, index) => (
               <div
-                onClick={() =>
-                  handleStateSelect(
-                    answer.current.state,
-                    answer.current.symbol,
-                    state
-                  )
-                }
-                key={`to-state-${index}`}
-                className={`w-12 h-12 flex items-center justify-center border rounded-full ${
-                  answer.current.transition.to === state &&
-                  "border-[#00ff00] text-[#00ff00]"
+                key={`symbol-${index}`}
+                className={`p-3 border ${
+                  currentTransitionIncludesSymbol(symbol)
+                    ? "border-[#00ff00] text-[#00ff00]"
+                    : ""
                 }`}
+                onClick={() => handleSymbolSelect(symbol)}
               >
-                {state}
+                {symbol}
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div
+              className="p-3 border border-transparent"
+              key={`symbols-hidden`}
+            />
+          )}
         </div>
-        <div className="flex flex-1 flex-wrap items-center justify-center gap-3 my-4">
-          <button onClick={handleReset} className="btn btn-square w-14 h-14">
-            <AiOutlineClear className="w-6 h-6" />
-          </button>
-          <button onClick={handleUndo} className="btn btn-square w-14 h-14">
-            <AiOutlineUndo className="w-6 h-6" />
-          </button>
-          <button onClick={handleRedo} className="btn btn-square w-14 h-14">
-            <AiOutlineRedo className="w-6 h-6" />
-          </button>
-        </div>
+      </ArcherContainer>
+      <div className="flex flex-1 flex-wrap items-center justify-center gap-3 my-4">
+        <button onClick={handleReset} className="btn btn-square w-14 h-14">
+          <AiOutlineClear className="w-6 h-6" />
+        </button>
+        <button onClick={handleUndo} className="btn btn-square w-14 h-14">
+          <AiOutlineUndo className="w-6 h-6" />
+        </button>
+        <button onClick={handleRedo} className="btn btn-square w-14 h-14">
+          <AiOutlineRedo className="w-6 h-6" />
+        </button>
       </div>
     </div>
   );
