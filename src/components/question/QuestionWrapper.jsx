@@ -140,6 +140,7 @@ const QuestionWrapper = ({
           />
         );
       case "Construct Automaton":
+      case "Construct Automaton Missing Symbols":
         return (
           <AutomataQuestionForm
             question={question}

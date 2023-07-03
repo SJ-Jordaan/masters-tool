@@ -5,6 +5,7 @@ import { ArcherContainer, ArcherElement } from "react-archer";
 
 const AutomatonBuilder = ({
   answer,
+  isTransitionsProvided,
   handleInput,
   handleUndo,
   handleRedo,
@@ -14,6 +15,16 @@ const AutomatonBuilder = ({
     return isFromState
       ? answer.current.from === state
       : answer.current.to === state;
+  };
+
+  const getIncomingStates = (state) => {
+    return answer.transitions
+      .filter((t) => t.to === state && t.from === answer.current.from)
+      .map((t) => t.from);
+  };
+
+  const getOutgoingStates = (state) => {
+    return answer.transitions.filter((t) => t.from === state).map((t) => t.to);
   };
 
   const currentTransitionIncludesSymbol = (symbol) => {
@@ -90,50 +101,60 @@ const AutomatonBuilder = ({
             id={"from-states"}
             className="flex flex-wrap gap-3 items-start justify-center mb-8"
           >
-            {answer.states.map((state) => (
-              <ArcherElement
-                id={`from-${state}`}
-                key={`from-${state}`}
-                relations={
-                  answer.current.from === state
-                    ? answer.transitions
-                        .filter((t) => t.from === state)
-                        .filter(
-                          (t, index, self) =>
-                            self.findIndex((s) => s.to === t.to) === index
-                        )
-                        .map((transition) => ({
-                          targetId: `to-${transition.to}`,
-                          targetAnchor: "top",
-                          sourceAnchor: "bottom",
-                          style: {
-                            strokeColor:
-                              answer.current.to === transition.to
-                                ? "#00ff00"
-                                : "white",
-                            strokeWidth: 1,
-                          },
-                        }))
-                    : []
-                }
-              >
-                <div id={`from-${state}`} className="flex flex-col">
-                  {renderState(state, true)}
-                </div>
-              </ArcherElement>
-            ))}
+            {answer.states
+              .filter(
+                (state) =>
+                  !isTransitionsProvided || getOutgoingStates(state).length > 0
+              )
+              .map((state) => (
+                <ArcherElement
+                  id={`from-${state}`}
+                  key={`from-${state}`}
+                  relations={
+                    answer.current.from === state
+                      ? answer.transitions
+                          .filter((t) => t.from === state)
+                          .filter(
+                            (t, index, self) =>
+                              self.findIndex((s) => s.to === t.to) === index
+                          )
+                          .map((transition) => ({
+                            targetId: `to-${transition.to}`,
+                            targetAnchor: "top",
+                            sourceAnchor: "bottom",
+                            style: {
+                              strokeColor:
+                                answer.current.to === transition.to
+                                  ? "#00ff00"
+                                  : "white",
+                              strokeWidth: 1,
+                            },
+                          }))
+                      : []
+                  }
+                >
+                  <div id={`from-${state}`} className="flex flex-col">
+                    {renderState(state, true)}
+                  </div>
+                </ArcherElement>
+              ))}
           </div>
           <div
             id={"to-states"}
             className="flex flex-wrap gap-3 justify-center items-end mt-4"
           >
-            {answer.states.map((state) => (
-              <ArcherElement key={`to-${state}`} id={`to-${state}`}>
-                <div id={`to-${state}`} className="flex flex-col">
-                  {renderState(state, false)}
-                </div>
-              </ArcherElement>
-            ))}
+            {answer.states
+              .filter(
+                (state) =>
+                  !isTransitionsProvided || getIncomingStates(state).length > 0
+              )
+              .map((state) => (
+                <ArcherElement key={`to-${state}`} id={`to-${state}`}>
+                  <div id={`to-${state}`} className="flex flex-col">
+                    {renderState(state, false)}
+                  </div>
+                </ArcherElement>
+              ))}
           </div>
           <div
             id={"input-symbol"}

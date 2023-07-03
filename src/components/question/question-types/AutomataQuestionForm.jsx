@@ -17,6 +17,7 @@ const AutomataQuestionForm = ({
       normaliseAlphabet(question.answer),
       normaliseAlphabet(question.alphabet)
     ).minimized();
+
     const stateMap = new Map();
     stateMap.set(dfa.initial, "0");
 
@@ -27,15 +28,83 @@ const AutomataQuestionForm = ({
       }
     }
 
+    const transitionsProvided =
+      question.questionType === "Construct Automaton Missing Symbols";
+    // Create an empty array for the transitions
+    let transitions = [];
+
+    // Populate transitions array using the delta object
+    Object.entries(dfa.delta).forEach(([fromState, transition]) => {
+      Object.entries(transition).forEach(([symbol, toState]) => {
+        // Only add transitions where there is a "to" state
+        if (toState) {
+          transitions.push({
+            from: stateMap.get(fromState),
+            to: stateMap.get(toState),
+            label: "",
+          });
+        }
+      });
+    });
+
+    // Create a set for visited states and a queue for BFS
+    const visited = new Set();
+    const queue = [stateMap.get(dfa.initial)];
+
+    // Perform BFS to find all reachable states
+    while (queue.length) {
+      const currentState = queue.shift();
+      visited.add(currentState);
+
+      transitions
+        .filter((t) => t.from === currentState)
+        .forEach((t) => {
+          if (!visited.has(t.to)) {
+            queue.push(t.to);
+          }
+        });
+    }
+
+    // Filter out states and transitions not connected to the initial state
+    const filteredStates = Array.from(stateMap.values()).filter((state) =>
+      visited.has(state)
+    );
+    const filteredTransitions = transitions.filter(
+      (t) => visited.has(t.from) && visited.has(t.to)
+    );
+
+    // Create a new stateMap for the filtered states
+    const filteredStateMap = new Map();
+    filteredStateMap.set(filteredStates[0], "0");
+
+    let j = 1;
+    for (const state of filteredStates) {
+      if (state !== filteredStates[0]) {
+        filteredStateMap.set(state, String(j++));
+      }
+    }
+
+    // Re-map transitions with the new state names
+    const reMappedTransitions = filteredTransitions.map((t) => ({
+      from: filteredStateMap.get(t.from),
+      to: filteredStateMap.get(t.to),
+      label: t.label,
+    }));
+
+    // Re-map final states with the new state names
+    const reMappedFinals = dfa.final.map((state) =>
+      filteredStateMap.get(state)
+    );
+
     if (!answer) {
       handleInput({
-        states: Array.from(stateMap.values()),
+        states: Array.from(filteredStateMap.values()),
         alphabet: dfa.alphabet,
-        transitions: [],
-        finals: dfa.final,
-        initial: stateMap.get(dfa.initial),
+        transitions: transitionsProvided ? reMappedTransitions : [],
+        finals: reMappedFinals,
+        initial: filteredStateMap.get(filteredStates[0]),
         current: {
-          from: stateMap.get(dfa.initial),
+          from: filteredStateMap.get(filteredStates[0]),
           symbols: [],
           to: null,
         },
@@ -108,6 +177,9 @@ const AutomataQuestionForm = ({
         {answer && (
           <AutomatonBuilder
             answer={answer}
+            isTransitionsProvided={
+              question.questionType === "Construct Automaton Missing Symbols"
+            }
             handleInput={handleTransitionInput}
             handleDelete={handleDelete}
             handleUndo={handleUndo}

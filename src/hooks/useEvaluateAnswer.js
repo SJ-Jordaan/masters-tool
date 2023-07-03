@@ -41,6 +41,10 @@ function convertToNFA(automaton) {
   });
 
   automaton.transitions.forEach((transition) => {
+    if (transition.label === "") {
+      return;
+    }
+
     if (!(transition.label in delta[transition.from])) {
       delta[transition.from][transition.label] = [];
     }
@@ -109,10 +113,12 @@ const useEvaluateAnswer = (questions) => {
         question.questionType === "Regex Equivalence" ||
         question.questionType === "Regex" ||
         question.questionType === "Automaton to Regex" ||
-        question.questionType === "Construct Automaton"
+        question.questionType === "Construct Automaton" ||
+        question.questionType === "Construct Automaton Missing Symbols"
       ) {
         let m1 =
-          question.questionType === "Construct Automaton"
+          question.questionType === "Construct Automaton" ||
+          question.questionType === "Construct Automaton Missing Symbols"
             ? convertToNFA(answer)
             : parse(
                 normaliseAlphabet(answer),

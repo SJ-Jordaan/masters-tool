@@ -37,6 +37,14 @@ export const ONBOARDING_STEPS = {
         "To start off, select state 1 and add a transition with symbol a. The rest is up to you!",
     },
   ],
+  "Construct Automaton Missing Symbols": [
+    {
+      target: "#automaton-view",
+      content:
+        "You will now only need to fill in the missing transition labels.",
+      disableBeacon: true,
+    },
+  ],
   "Automaton to Regex": [
     {
       target: "#automaton-view",
