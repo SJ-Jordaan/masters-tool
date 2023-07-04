@@ -63,9 +63,15 @@ const LevelEnd = ({
         )}
       </div>
 
-      <div className="flex space-x-4">
+      <div className="flex flex-col space-x-4 gap-8">
         <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="btn btn-info"
+          onClick={() => window.open("https://forms.gle/ed1EZBBZnhC7hd8t5")}
+        >
+          Provide Feedback
+        </button>
+        <button
+          className="btn btn-ghost"
           onClick={() => navigate("/library/4", { replace: true })}
         >
           Go Home

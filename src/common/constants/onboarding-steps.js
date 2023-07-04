@@ -2,7 +2,7 @@ export const ONBOARDING_STEPS = {
   "Construct Automaton": [
     {
       target: "#question-content",
-      content: "You will be building an automaton now.",
+      content: "You will be constructing an automaton now.",
       disableBeacon: true,
     },
     {
@@ -12,7 +12,7 @@ export const ONBOARDING_STEPS = {
     },
     {
       target: "#transition-table",
-      content: "You will update the transition table with a 3 step process.",
+      content: "You will update the transition function with a 3 step process.",
     },
     {
       target: "#from-states",
@@ -25,7 +25,7 @@ export const ONBOARDING_STEPS = {
     {
       target: "#input-symbol",
       content:
-        "Finally you will be presented with symbols to add. You may add or remove as you wish.",
+        "Finally you will be presented with symbols to label the transition. You may add or remove as you wish.",
     },
     {
       target: "#from-0",
@@ -34,7 +34,7 @@ export const ONBOARDING_STEPS = {
     {
       target: "#to-1",
       content:
-        "To start off, select state 1 and add a transition with symbol a. The rest is up to you!",
+        "To start off, select State 1 as the destination of the transition and label the transition with the symbol 'a'. The rest is up to you!",
     },
   ],
   "Construct Automaton Missing Symbols": [
@@ -70,11 +70,11 @@ export const ONBOARDING_STEPS = {
     },
     {
       target: "#regex-solution",
-      content: "As you build your string, it will appear here.",
+      content: "As you construct your string, it will appear here.",
     },
     {
       target: "#regex-keyboard",
-      content: "Build up your string using these buttons.",
+      content: "Construct your string using these buttons.",
     },
     {
       target: "#regex-utility",
@@ -83,7 +83,7 @@ export const ONBOARDING_STEPS = {
     },
     {
       target: "#regex-alphabet",
-      content: "Symbols in your alphabet will appear here",
+      content: "Symbols of your alphabet will appear here.",
     },
     {
       target: "#circularMenu",
@@ -97,6 +97,14 @@ export const ONBOARDING_STEPS = {
   ],
   "Regex Equivalence": [
     {
+      target: "#circularMenu",
+      content:
+        "Don't forget you can request hints or move to another question if you get stuck.",
+      disableBeacon: true,
+    },
+  ],
+  Regex: [
+    {
       target: "#question-content",
       content:
         "The previous question asked for a string, but now you need to provide a regular expression.",
@@ -104,7 +112,7 @@ export const ONBOARDING_STEPS = {
     },
     {
       target: "#regex-solution",
-      content: "As you build your regular expression, it will appear here.",
+      content: "As you construct your regular expression, it will appear here.",
     },
     {
       target: "#regex-keyboard",
@@ -117,20 +125,12 @@ export const ONBOARDING_STEPS = {
     },
     {
       target: "#regex-operators",
-      content: "You may use any of these regular operators in your solution.",
+      content: "You may use any of these regular operations in your solution.",
     },
     {
       target: "#regex-special",
       content:
         "These are shortcuts for common regex patterns. Play around with them to see what they do!",
-    },
-  ],
-  Regex: [
-    {
-      target: "#circularMenu",
-      content:
-        "Don't forget you can request hints or move to another question if you get stuck.",
-      disableBeacon: true,
     },
   ],
 };

@@ -119,7 +119,7 @@
   {
     "questionId": "10",
     "questionType": "Regex",
-    "questionContent": "Provide a regular expression that matches any string containing 'abc' or 'de' anywhere in it.",
+    "questionContent": "Provide a regular expression that describes the language of strings containing 'abc' or 'de' as a substring.",
     "answer": "(a∪b∪c∪d∪e)*(abc∪de)(a∪b∪c∪d∪e)*",
     "hints": "Remember, the '*' operator allows for zero or more repetitions.",
     "score": 25,
@@ -134,7 +134,7 @@
   {
     "questionId": "11",
     "questionType": "Regex Accepts String",
-    "questionContent": "Provide a string that is recognised by the given regular expression: (a∪b)*c(d∪e)*",
+    "questionContent": "Provide a string that is contained in the language described by the regular expression: (a∪b)*c(d∪e)*",
     "answer": "(a∪b)*c(d∪e)*",
     "hints": "This regular expression matches strings with zero or more 'a' or 'b', followed by 'c', and then zero or more 'd' or 'e'.",
     "score": 25,
@@ -143,13 +143,12 @@
   {
     "questionId": "12",
     "questionType": "Regex Equivalence",
-    "questionContent": "Provide an equivalent regular expression to (a∪b)*c(d∪e)*",
-    "answer": "(a∪b)*c(d∪e)*",
-    "hints": "The order of 'a' and 'b', and 'c' and 'd' in the expression does not matter.",
+    "questionContent": "Provide a regular expression that is not equal but equivalent to: abb*∪a",
+    "answer": "abb*∪a",
+    "hints": "Remember that ab* = a(ε∪bb*)",
     "score": 25,
-    "alphabet": "abcde",
+    "alphabet": "ab",
     "operators": [
-      "∪",
       "*",
       "(",
       ")"
@@ -262,7 +261,7 @@
   {
     "questionId": "regex-auto-1-1",
     "questionType": "Automaton to Regex",
-    "questionContent": "Convert the given automaton to a regular expression.",
+    "questionContent": "Provide a regular expression that describes the language of the given automaton.",
     "answer": "a*b*",
     "hints": [
       "Consider the possible paths from the start state to the final state."
@@ -341,7 +340,7 @@
   {
     "questionId": "auto-1-2",
     "questionType": "Construct Automaton Missing Symbols",
-    "questionContent": "Construct an automaton that accepts the language of strings that accepts exactly one a and exactly one b.",
+    "questionContent": "Construct an automaton that accepts the language of strings that consist of exactly one 'a' and exactly one 'b'.",
     "answer": "(ab)|(ba)",
     "hints": [
       "Consider the permutations."

@@ -78,7 +78,7 @@ const QuestionWrapper = ({
       const [submission, memo] = result.counterExamples;
 
       if (submission) {
-        toast(`Your solution incorrectly recognised ${submission}`, {
+        toast(`Your solution incorrectly accepts ${submission}`, {
           type: "error",
           toastId: "counter-example",
           autoClose: 5000,
@@ -88,7 +88,7 @@ const QuestionWrapper = ({
           },
         });
       } else {
-        toast(`Your solution incorrectly rejected ${memo}`, {
+        toast(`Your solution incorrectly rejects ${memo}`, {
           type: "error",
           toastId: "counter-example",
           autoClose: 5000,
