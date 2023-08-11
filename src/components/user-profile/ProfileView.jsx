@@ -99,11 +99,11 @@ const ProfileView = () => {
           Clear Progress
         </button>
       </div>
-      <Link
-        to={"/library/4"}
-        className="btn btn-success fixed bottom-4 w-80 mx-4"
-      >
-        Ready!
+      <Link to={"/tutor"} className="btn btn-accent mt-auto w-80 mx-4">
+        Sandbox
+      </Link>
+      <Link to={"/library/4"} className="btn btn-success mt-auto w-80 mx-4">
+        Tutor
       </Link>
     </div>
   );
