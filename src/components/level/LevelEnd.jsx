@@ -66,16 +66,16 @@ const LevelEnd = ({
       <div className="flex flex-col space-x-4 gap-8">
         <button
           className="btn btn-info"
-          onClick={() => window.open("https://forms.gle/ed1EZBBZnhC7hd8t5")}
+          onClick={() => window.open("https://forms.gle/jiW8dwwQA9D4MvUA7")}
         >
           Provide Feedback
         </button>
-        <button
-          className="btn btn-ghost"
-          onClick={() => navigate("/library/4", { replace: true })}
-        >
-          Go Home
-        </button>
+        {/*<button*/}
+        {/*  className="btn btn-ghost"*/}
+        {/*  onClick={() => navigate("/library/4", { replace: true })}*/}
+        {/*>*/}
+        {/*  Go Home*/}
+        {/*</button>*/}
         {/*<button*/}
         {/*  className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"*/}
         {/*  onClick={() => {*/}

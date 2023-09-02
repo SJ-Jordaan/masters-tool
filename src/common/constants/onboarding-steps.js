@@ -47,14 +47,6 @@ export const ONBOARDING_STEPS = {
   ],
   "Automaton to Regex": [
     {
-      target: "#automaton-view",
-      content:
-        "This question introduces an automaton visualisation. Everything else remains the same.",
-      disableBeacon: true,
-    },
-  ],
-  "Regex Accepts String": [
-    {
       target: "#initial-greeting",
       content: "Welcome to the experiment!",
       disableBeacon: true,
@@ -69,12 +61,16 @@ export const ONBOARDING_STEPS = {
       content: "For this task and all others, your question will appear here.",
     },
     {
+      target: "#automaton-view",
+      content: "This question introduces an automaton visualisation.",
+    },
+    {
       target: "#regex-solution",
-      content: "As you construct your string, it will appear here.",
+      content: "As you construct your regular expression, it will appear here.",
     },
     {
       target: "#regex-keyboard",
-      content: "Construct your string using these buttons.",
+      content: "Construct your regular expression using these buttons.",
     },
     {
       target: "#regex-utility",
@@ -82,8 +78,13 @@ export const ONBOARDING_STEPS = {
         "If you make a mistake, you can clear all, undo, redo, or delete the last symbol.",
     },
     {
-      target: "#regex-alphabet",
-      content: "Symbols of your alphabet will appear here.",
+      target: "#regex-operators",
+      content: "You may use any of these regular operations in your solution.",
+    },
+    {
+      target: "#regex-special",
+      content:
+        "These are shortcuts for common regex patterns. Play around with them to see what they do!",
     },
     {
       target: "#circularMenu",
@@ -95,42 +96,84 @@ export const ONBOARDING_STEPS = {
       content: "When you are ready, click here to submit and get feedback.",
     },
   ],
-  "Regex Equivalence": [
-    {
-      target: "#circularMenu",
-      content:
-        "Don't forget you can request hints or move to another question if you get stuck.",
-      disableBeacon: true,
-    },
-  ],
-  Regex: [
-    {
-      target: "#question-content",
-      content:
-        "The previous question asked for a string, but now you need to provide a regular expression.",
-      disableBeacon: true,
-    },
-    {
-      target: "#regex-solution",
-      content: "As you construct your regular expression, it will appear here.",
-    },
-    {
-      target: "#regex-keyboard",
-      content:
-        "You are now provided with a richer set of features to solve the problem.",
-    },
-    {
-      target: "#regex-utility",
-      content: "These buttons remain the same as in the previous question.",
-    },
-    {
-      target: "#regex-operators",
-      content: "You may use any of these regular operations in your solution.",
-    },
-    {
-      target: "#regex-special",
-      content:
-        "These are shortcuts for common regex patterns. Play around with them to see what they do!",
-    },
-  ],
+  // "Regex Accepts String": [
+  //   {
+  //     target: "#initial-greeting",
+  //     content: "Welcome to the experiment!",
+  //     disableBeacon: true,
+  //   },
+  //   {
+  //     target: "#initial-greeting",
+  //     content:
+  //       "I will guide you through these questions using popups like this one.",
+  //   },
+  //   {
+  //     target: "#question-content",
+  //     content: "For this task and all others, your question will appear here.",
+  //   },
+  //   {
+  //     target: "#regex-solution",
+  //     content: "As you construct your string, it will appear here.",
+  //   },
+  //   {
+  //     target: "#regex-keyboard",
+  //     content: "Construct your string using these buttons.",
+  //   },
+  //   {
+  //     target: "#regex-utility",
+  //     content:
+  //       "If you make a mistake, you can clear all, undo, redo, or delete the last symbol.",
+  //   },
+  //   {
+  //     target: "#regex-alphabet",
+  //     content: "Symbols of your alphabet will appear here.",
+  //   },
+  //   {
+  //     target: "#circularMenu",
+  //     content:
+  //       "If you get stuck, you can press this button to get hints, or move to another question.",
+  //   },
+  //   {
+  //     target: "#submit-button",
+  //     content: "When you are ready, click here to submit and get feedback.",
+  //   },
+  // ],
+  // "Regex Equivalence": [
+  //   {
+  //     target: "#circularMenu",
+  //     content:
+  //       "Don't forget you can request hints or move to another question if you get stuck.",
+  //     disableBeacon: true,
+  //   },
+  // ],
+  // Regex: [
+  //   {
+  //     target: "#question-content",
+  //     content:
+  //       "The previous question asked for a string, but now you need to provide a regular expression.",
+  //     disableBeacon: true,
+  //   },
+  //   {
+  //     target: "#regex-solution",
+  //     content: "As you construct your regular expression, it will appear here.",
+  //   },
+  //   {
+  //     target: "#regex-keyboard",
+  //     content:
+  //       "You are now provided with a richer set of features to solve the problem.",
+  //   },
+  //   {
+  //     target: "#regex-utility",
+  //     content: "These buttons remain the same as in the previous question.",
+  //   },
+  //   {
+  //     target: "#regex-operators",
+  //     content: "You may use any of these regular operations in your solution.",
+  //   },
+  //   {
+  //     target: "#regex-special",
+  //     content:
+  //       "These are shortcuts for common regex patterns. Play around with them to see what they do!",
+  //   },
+  // ],
 };

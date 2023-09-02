@@ -5,9 +5,6 @@
     "levelName": "Experiment",
     "description": "One question per question type",
     "questionIds": [
-      "11",
-      "10",
-      "12",
       "regex-auto-1-1",
       "auto-1-1",
       "auto-1-2"

@@ -27,7 +27,7 @@ const ProfileView = () => {
     const user = localStorage.getItem("user");
     localStorage.clear();
     localStorage.setItem("user", user);
-    navigate("/library/4", { replace: true });
+    navigate("/level/experiment", { replace: true });
     window.location.reload();
   };
 
@@ -80,31 +80,34 @@ const ProfileView = () => {
           <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
         </svg>
       </label>
-      <h2 className="text-4xl font-bold mb-2">User Profile</h2>
-      <div className="w-24 h-24">
-        <img
-          className="object-cover rounded-full"
-          src={user.avatar}
-          alt="User avatar"
-        />
-      </div>
-      <p className="text-xl">
-        <strong>{user.username}</strong>
-      </p>
-      <div className="flex items-center gap-4">
-        <button className="btn btn-primary" onClick={handleEditClick}>
-          Edit Profile
-        </button>
-        <button className="btn btn-error" onClick={clearProgress}>
-          Clear Progress
-        </button>
-      </div>
-      <Link to={"/tutor"} className="btn btn-accent mt-auto w-80 mx-4">
-        Sandbox
+      {/*<h2 className="text-4xl font-bold mb-2">User Profile</h2>*/}
+      {/*<div className="w-24 h-24">*/}
+      {/*  <img*/}
+      {/*    className="object-cover rounded-full"*/}
+      {/*    src={user.avatar}*/}
+      {/*    alt="User avatar"*/}
+      {/*  />*/}
+      {/*</div>*/}
+      {/*<p className="text-xl">*/}
+      {/*  <strong>{user.username}</strong>*/}
+      {/*</p>*/}
+      {/*<div className="flex items-center gap-4">*/}
+      {/*<button className="btn btn-primary" onClick={handleEditClick}>*/}
+      {/*  Edit Profile*/}
+      {/*</button>*/}
+      {/*</div>*/}
+      {/*<Link to={"/tutor"} className="btn btn-accent mt-auto w-80 mx-4">*/}
+      {/*  Sandbox*/}
+      {/*</Link>*/}
+      <Link
+        to={"/level/experiment"}
+        className="btn btn-success mt-auto w-80 mx-4"
+      >
+        Start Experiment
       </Link>
-      <Link to={"/library/4"} className="btn btn-success mt-auto w-80 mx-4">
-        Tutor
-      </Link>
+      <button className="btn btn-error" onClick={clearProgress}>
+        Clear Progress
+      </button>
     </div>
   );
 };
