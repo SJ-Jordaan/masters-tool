@@ -11,7 +11,7 @@ const LevelEnd = ({
   achievements,
   // levels,
 }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const minutes = Math.floor(timeTaken / 60);
   const seconds = timeTaken % 60;
