@@ -1,6 +1,6 @@
 import React from "react";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LevelEnd = ({
   score,
@@ -9,9 +9,9 @@ const LevelEnd = ({
   hintsUsed,
   incorrectAttempts,
   achievements,
-  // levels,
+  levels,
 }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const minutes = Math.floor(timeTaken / 60);
   const seconds = timeTaken % 60;
@@ -65,32 +65,26 @@ const LevelEnd = ({
 
       <div className="flex flex-col space-x-4 gap-8">
         <button
-          className="btn btn-info"
-          onClick={() => window.open("https://forms.gle/jiW8dwwQA9D4MvUA7")}
+          className="btn btn-ghost"
+          onClick={() => navigate("/", { replace: true })}
         >
-          Provide Feedback
+          Go Home
         </button>
-        {/*<button*/}
-        {/*  className="btn btn-ghost"*/}
-        {/*  onClick={() => navigate("/library/4", { replace: true })}*/}
-        {/*>*/}
-        {/*  Go Home*/}
-        {/*</button>*/}
-        {/*<button*/}
-        {/*  className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"*/}
-        {/*  onClick={() => {*/}
-        {/*    const nextLevel = levels.find((level) => !level.isCompleted);*/}
+        <button
+          className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded"
+          onClick={() => {
+            const nextLevel = levels.find((level) => !level.isCompleted);
 
-        {/*    if (!nextLevel) {*/}
-        {/*      navigate("/", { replace: true });*/}
-        {/*      toast("You have completed all levels!");*/}
-        {/*      return;*/}
-        {/*    }*/}
-        {/*    navigate(`/level/${nextLevel.levelId}`, { replace: true });*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  Next Level*/}
-        {/*</button>*/}
+            if (!nextLevel) {
+              navigate("/", { replace: true });
+              toast("You have completed all levels!");
+              return;
+            }
+            navigate(`/level/${nextLevel.levelId}`, { replace: true });
+          }}
+        >
+          Next Level
+        </button>
       </div>
     </div>
   );

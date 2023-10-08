@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { HiOutlineClipboardList } from "react-icons/hi";
+import { HiOutlineAcademicCap, HiOutlineClipboardList } from "react-icons/hi";
 import LevelSelector from "../../../components/level/LevelSelector";
 import { Header } from "../../../components/layout/Header";
-// import { BottomNavbar } from "../../../components";
+import { BottomNavbar } from "../../../components";
 import categories from "../../../data/library.json";
 import CreateLevel from "../../../components/question/question-types/CreateLevel";
 
@@ -32,15 +32,15 @@ export const LibraryItemOverview = () => {
     <div className="min-h-screen pb-16">
       <Header />
       <div className="tabs">
-        {/*<button*/}
-        {/*  className={`tab tab-bordered flex-1 ${*/}
-        {/*    activeTab === "overview" ? "tab-active" : ""*/}
-        {/*  }`}*/}
-        {/*  onClick={() => setActiveTab("overview")}*/}
-        {/*>*/}
-        {/*  <HiOutlineAcademicCap className="mr-2" />*/}
-        {/*  Overview*/}
-        {/*</button>*/}
+        <button
+          className={`tab tab-bordered flex-1 ${
+            activeTab === "overview" ? "tab-active" : ""}
+          }`}
+        onClick={() => setActiveTab("overview")}
+        >
+         <HiOutlineAcademicCap className="mr-2" />
+        Overview
+        </button>
         <button
           className={`tab tab-bordered flex-1 ${
             activeTab === "exercises" ? "tab-active" : ""
@@ -59,7 +59,7 @@ export const LibraryItemOverview = () => {
           <LevelSelector categoryId={id} />
         )}
       </div>
-      {/*<BottomNavbar />*/}
+      <BottomNavbar />
     </div>
   );
 };

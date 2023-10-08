@@ -8,7 +8,7 @@ export const Header = () => {
 
   return (
     <div className="navbar justify-between">
-      <Link to={"/library/4"} className="btn btn-ghost normal-case text-xl">
+      <Link to={"/"} className="btn btn-ghost normal-case text-xl">
         AutomaTutor <sub className="text-xs ml-1">v{Build.version}</sub>
       </Link>
       <div className="flex-none">

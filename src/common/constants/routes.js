@@ -1,4 +1,4 @@
-import { AutomatonTutor, Library, NotFound } from "../../journeys";
+import { AutomatonTutor, Homepage, Library, NotFound } from "../../journeys";
 
 import { Colonisers } from "../../journeys/colonisers/Colonisers";
 import ProfileView from "../../components/user-profile/ProfileView";
@@ -9,7 +9,7 @@ import { LibraryItemOverview } from "../../journeys/library/overview/LIbraryItem
 export const AppRoutes = [
   {
     path: "/",
-    element: <ProfileView />,
+    element: <Homepage />,
     isAuthenticated: false,
     exact: true,
   },

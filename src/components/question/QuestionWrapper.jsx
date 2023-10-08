@@ -27,8 +27,10 @@ const QuestionWrapper = ({
   onHintRequest,
   onSubmit,
   levelProgress,
+  showTutorial
 }) => {
   const { questions, completeQuestion } = useContext(QuestionContext);
+  
   const question = questions.find((q) => q.questionId === questionId);
   const [playCorrect] = useSound(correct, { volume: 0.25 });
   const [playIncorrect] = useSound(incorrect, { volume: 0.25 });
@@ -167,7 +169,7 @@ const QuestionWrapper = ({
     resetAnswerHistory();
   };
 
-  const completedOnboarding = localStorage.getItem(
+  const completedOnboarding = !showTutorial || localStorage.getItem(
     `onboarding-${question.questionType}`
   );
 

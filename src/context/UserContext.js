@@ -11,10 +11,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userData = getFromLocalStorage("user") || {
-      username: "Anon",
-      avatar: "/masters-tool/avatars/avataaars(1).svg",
-    };
+    const userData = getFromLocalStorage("user");
     if (userData) {
       setUser(
         new User(

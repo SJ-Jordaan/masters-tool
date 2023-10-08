@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import avatars from "../../data/avatars.json";
-import { useNavigate } from "react-router-dom";
 
 const ProfileEdit = ({ setEditing }) => {
   const { user, saveUser } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
@@ -20,7 +18,6 @@ const ProfileEdit = ({ setEditing }) => {
     e.preventDefault();
     saveUser({ username, avatar });
     setEditing?.(false);
-    navigate("/library/4", { replace: true });
   };
 
   return (

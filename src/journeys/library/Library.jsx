@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { BottomNavbar } from "../../components";
+import { BottomNavbar } from "../../components";
 import { Header } from "../../components/layout/Header";
 import categories from "../../data/library.json";
 
@@ -28,7 +28,7 @@ export const Library = () => {
           </Link>
         ))}
       </div>
-      {/*<BottomNavbar />*/}
+      <BottomNavbar />
     </div>
   );
 };

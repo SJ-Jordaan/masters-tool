@@ -88,6 +88,7 @@ const LevelProgress = () => {
     <div className="space-y-4">
       <QuestionWrapper
         questionId={level.currentQuestion}
+        showTutorial={level.levelId === 'experiment'}
         onSubmit={submitAndEvaluateAnswer}
         totalQuestions={level.questionIds.length}
         currentQuestion={level.currentQuestionIndex}
