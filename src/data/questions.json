@@ -264,7 +264,10 @@
     "questionContent": "Provide a regular expression that describes the language of the given automaton.",
     "answer": "a*b*",
     "hints": [
-      "Consider the possible paths from the start state to the final state."
+      "Reject strings with the substring ba",
+      "The initial state is an accepting state",
+      "Accept strings that consist of a's only",
+      "Accept strings that consist of b's only"
     ],
     "score": 10,
     "alphabet": "ab",
@@ -332,7 +335,10 @@
     "questionContent": "Construct an automaton that accepts the language of strings that start with at least two a's followed by one b.",
     "answer": "aaa*b",
     "hints": [
-      "Consider the what happens if this pattern is ever broken."
+      "there is an a-labelled self-loop in the automaton",
+      "there is only one b-labelled transition in the automaton",
+      "The transition into State 3 must be labelled b",
+      "You only need four transitions"
     ],
     "score": 10,
     "alphabet": "ab"
@@ -343,7 +349,10 @@
     "questionContent": "Construct an automaton that accepts the language of strings that consist of exactly one 'a' and exactly one 'b'.",
     "answer": "(ab)|(ba)",
     "hints": [
-      "Consider the permutations."
+      "The automaton must accept ab",
+      "The automaton must accept ba",
+      "The automaton must reject aa",
+      "There must be two b-labelled transitions"
     ],
     "score": 10,
     "alphabet": "ab"
