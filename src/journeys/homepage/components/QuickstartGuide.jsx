@@ -17,7 +17,7 @@ const QuickstartGuide = ({ steps }) => {
                   {title}
                 </h3>
                 <img
-                  src={`${process.env.PUBLIC_URL}/${img}`}
+                  src={`${img}`}
                   alt=""
                   className="object-cover aspect-video mt-2 md:mt-4 rounded-lg ring ring-gray-600 w-full"
                 />
