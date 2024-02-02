@@ -55,10 +55,10 @@ const ContextMenu = forwardRef((props, ref) => {
               </button>
             </li>
             <li>
-              <a href="/masters-tool/tutor">Restart</a>
+              <a href="/tutor">Restart</a>
             </li>
             <li>
-              <a href="/masters-tool">Exit Builder</a>
+              <a href="/">Exit Builder</a>
             </li>
           </ul>
         </div>
